@@ -1099,9 +1099,7 @@
                     </button>
                 </li>
             </ul>
-            <button class="theme-toggle mobile-theme-toggle" id="mobileThemeToggle" aria-label="Toggle dark mode">
-                <i class="fas fa-moon"></i>
-            </button>
+            
         </div>
     </header>
     
@@ -1132,31 +1130,8 @@
                         <h3>Website Development</h3>
                         <p>From responsive websites to complex web applications, we build solutions that work flawlessly across all devices.</p>
                     </div>
-                    <div class="service-card fade-up">
-                        <i class="fas fa-mobile-alt"></i>
-                        <h3>Mobile Applications</h3>
-                        <p>Native and cross-platform mobile applications that provide seamless user experience and powerful functionality.</p>
-                    </div>
-                    <div class="service-card fade-up">
-                        <i class="fas fa-paint-brush"></i>
-                        <h3>UI/UX Design</h3>
-                        <p>User-centered design that combines aesthetics with functionality to create engaging digital experiences.</p>
-                    </div>
-                    <div class="service-card fade-up">
-                        <i class="fas fa-shopping-cart"></i>
-                        <h3>E-Commerce Solutions</h3>
-                        <p>Custom online stores that drive sales and provide excellent shopping experiences for your customers.</p>
-                    </div>
-                    <div class="service-card fade-up">
-                        <i class="fas fa-search"></i>
-                        <h3>SEO Optimization</h3>
-                        <p>Improve your visibility online and attract more qualified traffic to your digital platforms.</p>
-                    </div>
-                    <div class="service-card fade-up">
-                        <i class="fas fa-cogs"></i>
-                        <h3>Maintenance & Support</h3>
-                        <p>Ongoing technical support and maintenance to ensure your digital assets remain secure and up-to-date.</p>
-                    </div>
+
+                    
                 </div>
             </div>
         </section>
@@ -1268,8 +1243,7 @@
                 <div class="portfolio-filter fade-up">
                     <button class="filter-btn active" data-filter="all">All</button>
                     <button class="filter-btn" data-filter="web">Web Development</button>
-                    <button class="filter-btn" data-filter="app">Mobile Apps</button>
-                    <button class="filter-btn" data-filter="ecommerce">E-Commerce</button>
+                    
                 </div>
                 <div class="portfolio-grid">
                     <div class="portfolio-item fade-up" data-category="web">
@@ -1279,41 +1253,29 @@
                             <p>Modern responsive website for a financial consulting firm</p>
                         </div>
                     </div>
-                    <div class="portfolio-item fade-up" data-category="app">
-                        <img src="/api/placeholder/400/300" alt="Project 2">
-                        <div class="portfolio-overlay">
-                            <h3>Healthcare Application</h3>
-                            <p>Mobile app for patient management and telehealth consultations</p>
-                        </div>
-                    </div>
+                    
                     <div class="portfolio-item fade-up" data-category="web">
-                        <img src="/api/placeholder/400/300" alt="Project 3">
+                        <img src="/api/placeholder/400/300" alt="Project 2">
                         <div class="portfolio-overlay">
                             <h3>Real Estate Platform</h3>
                             <p>Property listing platform with advanced search and filtering capabilities</p>
                         </div>
                     </div>
-                    <div class="portfolio-item fade-up" data-category="web ecommerce">
-                        <img src="/api/placeholder/400/300" alt="Project 4">
+                    <div class="portfolio-item fade-up" data-category="web">
+                        <img src="/api/placeholder/400/300" alt="Project 3">
                         <div class="portfolio-overlay">
                             <h3>Financial Dashboard</h3>
                             <p>Data visualization and analytics tools for financial management</p>
                         </div>
                     </div>
-                    <div class="portfolio-item fade-up" data-category="web app">
-                        <img src="/api/placeholder/400/300" alt="Project 5">
+                    <div class="portfolio-item fade-up" data-category="web">
+                        <img src="/api/placeholder/400/300" alt="Project 4">
                         <div class="portfolio-overlay">
                             <h3>Educational Platform</h3>
                             <p>Online learning system with course management and student tracking</p>
                         </div>
                     </div>
-                    <div class="portfolio-item fade-up" data-category="app ecommerce">
-                        <img src="/api/placeholder/400/300" alt="Project 6">
-                        <div class="portfolio-overlay">
-                            <h3>Restaurant Ordering System</h3>
-                            <p>Integrated online ordering platform with kitchen management features</p>
-                        </div>
-                    </div>
+                    
                 </div>
             </div>
         </section>
@@ -1440,10 +1402,6 @@
                         <h3>Our Services</h3>
                         <ul>
                             <li><a href="#">Website Development</a></li>
-                            <li><a href="#">Mobile Applications</a></li>
-                            <li><a href="#">UI/UX Design</a></li>
-                            <li><a href="#">E-Commerce Solutions</a></li>
-                            <li><a href="#">SEO Optimization</a></li>
                         </ul>
                     </div>
                     <div class="footer-col">
@@ -1502,7 +1460,7 @@
         
         // Check for saved theme preference or use preferred color scheme
         const currentTheme = localStorage.getItem('theme') || 
-                            (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+                            (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
         
         // Set the theme on initial load
         if (currentTheme === 'dark') {
