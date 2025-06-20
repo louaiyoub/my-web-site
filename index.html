@@ -1072,10 +1072,6 @@
             opacity: 1;
             transform: translate(0, 0);
         }
-        .service {
-            text-decoration: none;
-
-        }
     </style>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
@@ -1103,7 +1099,9 @@
                     </button>
                 </li>
             </ul>
-            
+            <button class="theme-toggle mobile-theme-toggle" id="mobileThemeToggle" aria-label="Toggle dark mode">
+                <i class="fas fa-moon"></i>
+            </button>
         </div>
     </header>
     
@@ -1129,21 +1127,36 @@
                     <p>We offer comprehensive digital solutions to help your business thrive in the digital landscape.</p>
                 </div>
                 <div class="services-grid">
-                    
-                    <a class="service" href="LNCT aboutus.html">
-                        <div class="service-card fade-up">
-                            <i class="fas fa-laptop-code"></i>
-                            <h3>Website Development</h3>
-                            <p>From responsive websites to complex web applications, we build solutions that work flawlessly across all devices.</p>
-                        </div>
-                    </a>
                     <div class="service-card fade-up">
                         <i class="fas fa-laptop-code"></i>
                         <h3>Website Development</h3>
                         <p>From responsive websites to complex web applications, we build solutions that work flawlessly across all devices.</p>
                     </div>
-                    
-                   
+                    <div class="service-card fade-up">
+                        <i class="fas fa-mobile-alt"></i>
+                        <h3>Mobile Applications</h3>
+                        <p>Native and cross-platform mobile applications that provide seamless user experience and powerful functionality.</p>
+                    </div>
+                    <div class="service-card fade-up">
+                        <i class="fas fa-paint-brush"></i>
+                        <h3>UI/UX Design</h3>
+                        <p>User-centered design that combines aesthetics with functionality to create engaging digital experiences.</p>
+                    </div>
+                    <div class="service-card fade-up">
+                        <i class="fas fa-shopping-cart"></i>
+                        <h3>E-Commerce Solutions</h3>
+                        <p>Custom online stores that drive sales and provide excellent shopping experiences for your customers.</p>
+                    </div>
+                    <div class="service-card fade-up">
+                        <i class="fas fa-search"></i>
+                        <h3>SEO Optimization</h3>
+                        <p>Improve your visibility online and attract more qualified traffic to your digital platforms.</p>
+                    </div>
+                    <div class="service-card fade-up">
+                        <i class="fas fa-cogs"></i>
+                        <h3>Maintenance & Support</h3>
+                        <p>Ongoing technical support and maintenance to ensure your digital assets remain secure and up-to-date.</p>
+                    </div>
                 </div>
             </div>
         </section>
@@ -1153,19 +1166,19 @@
             <div class="container">
                 <div class="counter-grid">
                     <div class="counter-item">
-                        <h3 class="counter" data-target="75000">0</h3>
+                        <h3 class="counter" data-target="750">0</h3>
                         <p>Projects Completed</p>
                     </div>
                     <div class="counter-item">
-                        <h3 class="counter" data-target="32000">0</h3>
+                        <h3 class="counter" data-target="320">0</h3>
                         <p>Happy Clients</p>
                     </div>
                     <div class="counter-item">
-                        <h3 class="counter" data-target="3">0</h3>
+                        <h3 class="counter" data-target="25">0</h3>
                         <p>Team Members</p>
                     </div>
                     <div class="counter-item">
-                        <h3 class="counter" data-target="1">0</h3>
+                        <h3 class="counter" data-target="15">0</h3>
                         <p>Years Experience</p>
                     </div>
                 </div>
@@ -1178,7 +1191,7 @@
                 <div class="about-grid">
                     <div class="about-content slide-in-left">
                         <h2>About LNC TECHNOLOGIE</h2>
-                        <p>Founded in 4/6/2025, LNC TECHNOLOGIE has grown to become a leading provider of web and application development services. Our team of experienced developers, designers, and digital strategists work together to create innovative solutions that help businesses succeed in the digital age.</p>
+                        <p>Founded in 2010, LNC TECHNOLOGIE has grown to become a leading provider of web and application development services. Our team of experienced developers, designers, and digital strategists work together to create innovative solutions that help businesses succeed in the digital age.</p>
                         <p>We believe in building long-term relationships with our clients, understanding their unique challenges, and delivering solutions that exceed expectations. Our commitment to quality, innovation, and customer satisfaction has earned us the trust of businesses across various industries.</p>
                         <p>Our mission is to empower organizations through technology, helping them reach their full potential in an increasingly digital world.</p>
                         <a href="#contact" class="btn btn-primary">Contact Us</a>
@@ -1255,6 +1268,8 @@
                 <div class="portfolio-filter fade-up">
                     <button class="filter-btn active" data-filter="all">All</button>
                     <button class="filter-btn" data-filter="web">Web Development</button>
+                    <button class="filter-btn" data-filter="app">Mobile Apps</button>
+                    <button class="filter-btn" data-filter="ecommerce">E-Commerce</button>
                 </div>
                 <div class="portfolio-grid">
                     <div class="portfolio-item fade-up" data-category="web">
@@ -1264,13 +1279,34 @@
                             <p>Modern responsive website for a financial consulting firm</p>
                         </div>
                     </div>
-                    <div class="portfolio-item fade-up" data-category="web">
+                    <div class="portfolio-item fade-up" data-category="app">
                         <img src="/api/placeholder/400/300" alt="Project 2">
                         <div class="portfolio-overlay">
-                        <h3>E-commerce Platform</h3>
-                        <p>Full-featured e-commerce site with payment integration</p>
+                            <h3>Healthcare Application</h3>
+                            <p>Mobile app for patient management and telehealth consultations</p>
+                        </div>
                     </div>
-
+                    <div class="portfolio-item fade-up" data-category="web">
+                        <img src="/api/placeholder/400/300" alt="Project 3">
+                        <div class="portfolio-overlay">
+                            <h3>Real Estate Platform</h3>
+                            <p>Property listing platform with advanced search and filtering capabilities</p>
+                        </div>
+                    </div>
+                    <div class="portfolio-item fade-up" data-category="web ecommerce">
+                        <img src="/api/placeholder/400/300" alt="Project 4">
+                        <div class="portfolio-overlay">
+                            <h3>Financial Dashboard</h3>
+                            <p>Data visualization and analytics tools for financial management</p>
+                        </div>
+                    </div>
+                    <div class="portfolio-item fade-up" data-category="web app">
+                        <img src="/api/placeholder/400/300" alt="Project 5">
+                        <div class="portfolio-overlay">
+                            <h3>Educational Platform</h3>
+                            <p>Online learning system with course management and student tracking</p>
+                        </div>
+                    </div>
                     <div class="portfolio-item fade-up" data-category="app ecommerce">
                         <img src="/api/placeholder/400/300" alt="Project 6">
                         <div class="portfolio-overlay">
@@ -1311,13 +1347,13 @@
                         </div>
                         <div class="testimonial">
                             <img src="/api/placeholder/200/200" alt="Client 2">
-                            <p>"Working with LNC TECHNOLOGIE on our web sete was a game-changer for our business. Their technical expertise and attention to detail resulted in an app that our customers love using. We continue to partner with them for all our digital needs."</p>
+                            <p>"Working with LNC TECHNOLOGIE on our mobile application was a game-changer for our business. Their technical expertise and attention to detail resulted in an app that our customers love using. We continue to partner with them for all our digital needs."</p>
                             <h4>Michael Rodriguez</h4>
                             <small>CEO, TechSolutions Inc.</small>
                         </div>
                         <div class="testimonial">
                             <img src="/api/placeholder/200/200" alt="Client 3">
-                            <p>"The web site developed by LNC TECHNOLOGIE has revolutionized our online business. Sales have increased by 80% since launch, and the system is incredibly easy to manage. Their ongoing support has been exceptional."</p>
+                            <p>"The e-commerce platform developed by LNC TECHNOLOGIE has revolutionized our online business. Sales have increased by 80% since launch, and the system is incredibly easy to manage. Their ongoing support has been exceptional."</p>
                             <h4>Olivia Chen</h4>
                             <small>E-Commerce Manager, StyleHub</small>
                         </div>
@@ -1344,7 +1380,7 @@
                             </div>
                             <div>
                                 <i class="fas fa-phone"></i>
-                                <span>+213 552 56 70 96</span>
+                                <span>+1 (555) 123-4567</span>
                             </div>
                             <div>
                                 <i class="fas fa-envelope"></i>
@@ -1352,7 +1388,7 @@
                             </div>
                             <div>
                                 <i class="fas fa-clock"></i>
-                                <span>Sunday - thursday: 9:00 AM - 6:00 PM</span>
+                                <span>Monday - Friday: 9:00 AM - 6:00 PM</span>
                             </div>
                         </div>
                     </div>
@@ -1404,6 +1440,10 @@
                         <h3>Our Services</h3>
                         <ul>
                             <li><a href="#">Website Development</a></li>
+                            <li><a href="#">Mobile Applications</a></li>
+                            <li><a href="#">UI/UX Design</a></li>
+                            <li><a href="#">E-Commerce Solutions</a></li>
+                            <li><a href="#">SEO Optimization</a></li>
                         </ul>
                     </div>
                     <div class="footer-col">
@@ -1462,7 +1502,7 @@
         
         // Check for saved theme preference or use preferred color scheme
         const currentTheme = localStorage.getItem('theme') || 
-                            (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+                            (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
         
         // Set the theme on initial load
         if (currentTheme === 'dark') {
