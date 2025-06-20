@@ -1,0 +1,1719 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LNC TECHNOLOGIE - Web & Application Development</title>
+    <style>
+        :root {
+            --primary: #0047AB;
+            --primary-light: #3F75D5;
+            --primary-dark: #00347D;
+            --accent: #00A3E0;
+            --white: #ffffff;
+            --light-gray: #f5f7fa;
+            --dark-gray: #333333;
+            
+            /* Dark mode variables */
+            --bg-color: #ffffff;
+            --text-color: #333333;
+            --card-bg: #f5f7fa;
+            --header-bg: var(--primary);
+            --footer-bg: var(--primary-dark);
+            --section-bg: #ffffff;
+            --section-alt-bg: #f5f7fa;
+            --input-bg: rgba(255, 255, 255, 0.8);
+            --contact-form-bg: rgba(255, 255, 255, 0.1);
+        }
+        
+        /* Dark mode styles */
+        body.dark-mode {
+            --bg-color: #121212;
+            --text-color: #e0e0e0;
+            --card-bg: #1e1e1e;
+            --header-bg: #001a3d;
+            --footer-bg: #000d1f;
+            --section-bg: #121212;
+            --section-alt-bg: #1e1e1e;
+            --input-bg: rgba(30, 30, 30, 0.8);
+            --contact-form-bg: rgba(30, 30, 30, 0.3);
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            scroll-behavior: smooth;
+        }
+        
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            line-height: 1.6;
+            overflow-x: hidden;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+        
+        header {
+            background-color: var(--header-bg);
+            color: var(--white);
+            padding: 1rem 0;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 100;
+            transition: all 0.3s ease;
+        }
+        
+        header.scrolled {
+            background-color: rgba(0, 26, 61, 0.9);
+            padding: 0.7rem 0;
+        }
+        
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .nav-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: relative;
+        }
+        
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--white);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+        }
+        
+        .logo span {
+            color: var(--accent);
+        }
+        
+        .nav-menu {
+            display: flex;
+            list-style: none;
+        }
+        
+        .nav-menu li {
+            margin-left: 2rem;
+        }
+        
+        .nav-menu a {
+            color: var(--white);
+            text-decoration: none;
+            font-weight: 500;
+            position: relative;
+            padding: 5px 0;
+        }
+        
+        .nav-menu a::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background-color: var(--white);
+            transition: width 0.3s ease;
+        }
+        
+        .nav-menu a:hover::after {
+            width: 100%;
+        }
+        
+        .theme-toggle {
+            background: transparent;
+            border: none;
+            color: var(--white);
+            font-size: 1.2rem;
+            cursor: pointer;
+            margin-left: 1.5rem;
+            transition: transform 0.3s ease;
+        }
+        
+        .theme-toggle:hover {
+            transform: rotate(30deg);
+        }
+        
+        .hamburger {
+            display: none;
+            cursor: pointer;
+        }
+        
+        .hamburger div {
+            width: 25px;
+            height: 3px;
+            background-color: var(--white);
+            margin: 5px;
+            transition: all 0.3s ease;
+        }
+        
+        .main-content {
+            margin-top: 80px;
+        }
+        
+        .hero {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);
+            color: var(--white);
+            padding: 8rem 0 5rem;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('/api/placeholder/1400/800') center/cover;
+            opacity: 0.1;
+        }
+        
+        .hero-content {
+            max-width: 800px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 2;
+        }
+        
+        .hero h1 {
+            font-size: 3.5rem;
+            margin-bottom: 1.5rem;
+            animation: fadeIn 1s ease-out;
+        }
+        
+        .hero p {
+            font-size: 1.3rem;
+            margin-bottom: 2.5rem;
+            animation: fadeIn 1s ease-out 0.3s forwards;
+            opacity: 0;
+        }
+        
+        .hero-buttons {
+            animation: fadeIn 1s ease-out 0.6s forwards;
+            opacity: 0;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .btn {
+            display: inline-block;
+            background-color: var(--white);
+            color: var(--primary);
+            padding: 0.8rem 2rem;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s;
+            margin: 0 0.5rem 0.5rem;
+            border: 2px solid transparent;
+        }
+        
+        .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        .btn-outline {
+            background-color: transparent;
+            border: 2px solid var(--white);
+            color: var(--white);
+        }
+        
+        .btn-outline:hover {
+            background-color: var(--white);
+            color: var(--primary);
+        }
+        
+        .btn-primary {
+            background-color: var(--primary);
+            color: var(--white);
+        }
+        
+        .btn-primary:hover {
+            background-color: var(--primary-dark);
+        }
+        
+        .floating-shapes {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            pointer-events: none;
+        }
+        
+        .shape {
+            position: absolute;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.1);
+            animation: float 15s linear infinite;
+        }
+        
+        @keyframes float {
+            0% { transform: translateY(0) rotate(0deg); opacity: 0; }
+            10% { opacity: 1; }
+            90% { opacity: 1; }
+            100% { transform: translateY(-1000px) rotate(720deg); opacity: 0; }
+        }
+        
+        .services {
+            padding: 6rem 0;
+            background-color: var(--section-bg);
+        }
+        
+        .section-header {
+            text-align: center;
+            margin-bottom: 4rem;
+        }
+        
+        .section-header h2 {
+            color: var(--primary);
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            position: relative;
+            display: inline-block;
+        }
+        
+        .section-header h2::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 50px;
+            height: 3px;
+            background-color: var(--accent);
+        }
+        
+        .section-header p {
+            max-width: 600px;
+            margin: 1rem auto 0;
+            color: var(--text-color);
+            opacity: 0.8;
+        }
+        
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+        
+        .service-card {
+            background-color: var(--card-bg);
+            border-radius: 8px;
+            padding: 2.5rem 2rem;
+            text-align: center;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            position: relative;
+            top: 0;
+        }
+        
+        .service-card:hover {
+            top: -10px;
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+        }
+        
+        .service-card i {
+            font-size: 3rem;
+            color: var(--primary);
+            margin-bottom: 1.5rem;
+            transition: transform 0.3s ease;
+        }
+        
+        .service-card:hover i {
+            transform: scale(1.1);
+        }
+        
+        .service-card h3 {
+            color: var(--primary-dark);
+            margin-bottom: 1rem;
+        }
+        
+        .service-card p {
+            color: var(--text-color);
+        }
+        
+        .counter-section {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+            color: var(--white);
+            padding: 4rem 0;
+            text-align: center;
+        }
+        
+        .counter-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+        }
+        
+        .counter-item h3 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+        
+        .counter-item p {
+            font-size: 1.1rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        
+        .about {
+            padding: 6rem 0;
+            background-color: var(--section-alt-bg);
+        }
+        
+        .about-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: center;
+        }
+        
+        .about-content h2 {
+            color: var(--primary);
+            margin-bottom: 1.5rem;
+            font-size: 2.2rem;
+            position: relative;
+        }
+        
+        .about-content h2::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 0;
+            width: 50px;
+            height: 3px;
+            background-color: var(--accent);
+        }
+        
+        .about-content p {
+            margin-bottom: 1.5rem;
+            color: var(--text-color);
+        }
+        
+        .about-image {
+            overflow: hidden;
+            border-radius: 8px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            position: relative;
+        }
+        
+        .about-image img {
+            width: 100%;
+            display: block;
+            transition: transform 0.5s ease;
+        }
+        
+        .about-image:hover img {
+            transform: scale(1.03);
+        }
+        
+        .team-section {
+            background-color: var(--section-bg);
+            padding: 6rem 0;
+        }
+        
+        .team-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 2rem;
+        }
+        
+        .team-member {
+            background-color: var(--card-bg);
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            transition: transform 0.3s ease;
+        }
+        
+        .team-member:hover {
+            transform: translateY(-10px);
+        }
+        
+        .team-image {
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .team-image img {
+            width: 100%;
+            display: block;
+            transition: transform 0.5s ease;
+        }
+        
+        .team-member:hover .team-image img {
+            transform: scale(1.05);
+        }
+        
+        .team-info {
+            padding: 1.5rem;
+            text-align: center;
+        }
+        
+        .team-info h3 {
+            margin-bottom: 0.5rem;
+            color: var(--primary-dark);
+        }
+        
+        .team-info p {
+            color: var(--accent);
+            margin-bottom: 1rem;
+        }
+        
+        .social-links {
+            display: flex;
+            justify-content: center;
+        }
+        
+        .social-links a {
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            background-color: var(--primary);
+            color: var(--white);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 0 5px;
+            transition: all 0.3s ease;
+        }
+        
+        .social-links a:hover {
+            background-color: var(--accent);
+            transform: translateY(-3px);
+        }
+        
+        .portfolio {
+            padding: 6rem 0;
+            background-color: var(--section-alt-bg);
+        }
+        
+        .portfolio-filter {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-bottom: 3rem;
+        }
+        
+        .filter-btn {
+            background-color: transparent;
+            border: none;
+            color: var(--text-color);
+            padding: 0.5rem 1.5rem;
+            margin: 0.5rem;
+            cursor: pointer;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            border-radius: 20px;
+        }
+        
+        .filter-btn:hover, .filter-btn.active {
+            background-color: var(--primary);
+            color: var(--white);
+        }
+        
+        .portfolio-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+        
+        .portfolio-item {
+            border-radius: 8px;
+            overflow: hidden;
+            position: relative;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            cursor: pointer;
+        }
+        
+        .portfolio-item img {
+            width: 100%;
+            display: block;
+            transition: transform 0.5s;
+        }
+        
+        .portfolio-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 71, 171, 0.8);
+            color: var(--white);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 1rem;
+            opacity: 0;
+            transition: opacity 0.3s;
+            text-align: center;
+        }
+        
+        .portfolio-overlay h3 {
+            margin-bottom: 1rem;
+            transform: translateY(-20px);
+            transition: transform 0.3s ease;
+        }
+        
+        .portfolio-overlay p {
+            transform: translateY(20px);
+            transition: transform 0.3s ease;
+        }
+        
+        .portfolio-item:hover .portfolio-overlay {
+            opacity: 1;
+        }
+        
+        .portfolio-item:hover .portfolio-overlay h3,
+        .portfolio-item:hover .portfolio-overlay p {
+            transform: translateY(0);
+        }
+        
+        .portfolio-item:hover img {
+            transform: scale(1.1);
+        }
+        
+        /* Modal styles */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.8);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+        
+        .modal-content {
+            background-color: var(--card-bg);
+            color: var(--text-color);
+            border-radius: 8px;
+            max-width: 900px;
+            width: 90%;
+            position: relative;
+            overflow: hidden;
+            animation: modalOpen 0.4s ease;
+        }
+        
+        @keyframes modalOpen {
+            from { opacity: 0; transform: translateY(-50px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .close-modal {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            font-size: 24px;
+            color: var(--white);
+            cursor: pointer;
+            z-index: 10;
+            background-color: rgba(0, 0, 0, 0.5);
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .modal-img {
+            width: 100%;
+        }
+        
+        .modal-text {
+            padding: 20px;
+        }
+        
+        .modal-text h3 {
+            color: var(--primary);
+            margin-bottom: 10px;
+            font-size: 1.8rem;
+        }
+        
+        .testimonials {
+            padding: 6rem 0;
+            background-color: var(--section-bg);
+        }
+        
+        .testimonial-slider {
+            max-width: 800px;
+            margin: 0 auto;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .testimonial-container {
+            display: flex;
+            transition: transform 0.5s ease;
+        }
+        
+        .testimonial {
+            min-width: 100%;
+            padding: 2rem;
+            background-color: var(--card-bg);
+            border-radius: 8px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            text-align: center;
+        }
+        
+        .testimonial img {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            margin: 0 auto 1rem;
+            object-fit: cover;
+        }
+        
+        .testimonial p {
+            font-style: italic;
+            margin-bottom: 1rem;
+            color: var(--text-color);
+        }
+        
+        .testimonial h4 {
+            color: var(--primary);
+            margin-bottom: 0.3rem;
+        }
+        
+        .testimonial small {
+            color: var(--text-color);
+            opacity: 0.7;
+        }
+        
+        .testimonial-nav {
+            display: flex;
+            justify-content: center;
+            margin-top: 2rem;
+        }
+        
+        .testimonial-nav button {
+            background-color: transparent;
+            border: none;
+            color: var(--primary);
+            font-size: 1.5rem;
+            cursor: pointer;
+            margin: 0 10px;
+            transition: transform 0.3s ease;
+        }
+        
+        .testimonial-nav button:hover {
+            transform: scale(1.2);
+        }
+        
+        .contact {
+            padding: 6rem 0;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);
+            color: var(--white);
+            position: relative;
+        }
+        
+        .contact::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('/api/placeholder/1400/800') center/cover;
+            opacity: 0.05;
+        }
+        
+        .contact-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .contact-info h2 {
+            margin-bottom: 1.5rem;
+            font-size: 2.2rem;
+            position: relative;
+        }
+        
+        .contact-info h2::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 0;
+            width: 50px;
+            height: 3px;
+            background-color: var(--white);
+        }
+        
+        .contact-info p {
+            margin-bottom: 1.5rem;
+        }
+        
+        .contact-details {
+            margin-top: 2rem;
+        }
+        
+        .contact-details div {
+            display: flex;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+        
+        .contact-details i {
+            margin-right: 1rem;
+            font-size: 1.2rem;
+        }
+        
+        .contact-form {
+            background-color: var(--contact-form-bg);
+            padding: 2rem;
+            border-radius: 8px;
+            backdrop-filter: blur(5px);
+        }
+        
+        .form-group {
+            margin-bottom: 1rem;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+        }
+        
+        .contact-form input,
+        .contact-form textarea {
+            width: 100%;
+            padding: 1rem;
+            border: none;
+            border-radius: 5px;
+            background-color: var(--input-bg);
+            color: var(--text-color);
+            transition: background-color 0.3s ease;
+        }
+        
+        .contact-form input:focus,
+        .contact-form textarea:focus {
+            outline: none;
+            background-color: var(--card-bg);
+        }
+        
+        .contact-form textarea {
+            height: 150px;
+            resize: none;
+        }
+        
+        .contact-form .btn {
+            border: none;
+            cursor: pointer;
+            font-size: 1rem;
+            margin-top: 1rem;
+            background-color: var(--white);
+            color: var(--primary);
+        }
+        
+        .contact-form .btn:hover {
+            background-color: var(--light-gray);
+        }
+        
+        .map-container {
+            margin-top: 4rem;
+            border-radius: 8px;
+            overflow: hidden;
+            height: 400px;
+        }
+        
+        footer {
+            background-color: var(--footer-bg);
+            color: var(--white);
+            padding: 4rem 0 2rem;
+        }
+        
+        .footer-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+        
+        .footer-col h3 {
+            margin-bottom: 1.5rem;
+            position: relative;
+            display: inline-block;
+        }
+        
+        .footer-col h3::after {
+            content: '';
+            position: absolute;
+            bottom: -8px;
+            left: 0;
+            width: 30px;
+            height: 2px;
+            background-color: var(--accent);
+        }
+        
+        .footer-col ul {
+            list-style: none;
+        }
+        
+        .footer-col ul li {
+            margin-bottom: 0.8rem;
+        }
+        
+        .footer-col ul li a {
+            color: #ccc;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+        
+        .footer-col ul li a:hover {
+            color: var(--white);
+            padding-left: 5px;
+        }
+        
+        .footer-col p {
+            margin-bottom: 1rem;
+            color: #ccc;
+        }
+        
+        .footer-newsletter input {
+            padding: 0.8rem;
+            border-radius: 5px;
+            width: 100%;
+            border: none;
+            margin-bottom: 1rem;
+            background-color: rgba(255, 255, 255, 0.1);
+            color: var(--white);
+        }
+        
+        .footer-newsletter input::placeholder {
+            color: rgba(255, 255, 255, 0.7);
+        }
+        
+        .footer-newsletter .btn {
+            width: 100%;
+            text-align: center;
+            margin-left: 0;
+        }
+        
+        .footer-bottom {
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            padding-top: 1.5rem;
+            text-align: center;
+        }
+        
+        .social-icons {
+            display: flex;
+            justify-content: center;
+            margin: 1.5rem 0;
+        }
+        
+        .social-icons a {
+            color: var(--white);
+            margin: 0 0.5rem;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: rgba(255, 255, 255, 0.1);
+            transition: all 0.3s ease;
+        }
+        
+        .social-icons a:hover {
+            background-color: var(--accent);
+            transform: translateY(-3px);
+        }
+        
+        /* Back to top button */
+        .back-to-top {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background-color: var(--primary);
+            color: var(--white);
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            z-index: 99;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+        }
+        
+        .back-to-top.show {
+            opacity: 1;
+            visibility: visible;
+        }
+        
+        .back-to-top:hover {
+            background-color: var(--primary-dark);
+        }
+        
+        /* Mobile menu */
+        @media (max-width: 768px) {
+            .nav-menu {
+                position: absolute;
+                top: 70px;
+                right: -100%;
+                flex-direction: column;
+                background-color: var(--header-bg);
+                width: 100%;
+                text-align: center;
+                transition: 0.3s;
+                box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1);
+                padding: 20px 0;
+                z-index: 99;
+            }
+            
+            .nav-menu.active {
+                right: 0;
+            }
+            
+            .nav-menu li {
+                margin: 1.5rem 0;
+            }
+            
+            .hamburger {
+                display: block;
+            }
+            
+            .hamburger.active .line1 {
+                transform: rotate(-45deg) translate(-5px, 6px);
+            }
+            
+            .hamburger.active .line2 {
+                opacity: 0;
+            }
+            
+            .hamburger.active .line3 {
+                transform: rotate(45deg) translate(-5px, -6px);
+            }
+            
+            .about-grid,
+            .contact-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+            
+            .section-header h2 {
+                font-size: 2rem;
+            }
+            
+            .hero {
+                padding: 7rem 0 4rem;
+            }
+            
+            .main-content {
+                margin-top: 70px;
+            }
+            
+            .theme-toggle {
+                margin-left: 1rem;
+                font-size: 1rem;
+            }
+        }
+        
+        /* Animation classes */
+        .fade-up {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s ease;
+        }
+        
+        .fade-in {
+            opacity: 0;
+            transition: opacity 0.8s ease;
+        }
+        
+        .slide-in-left {
+            opacity: 0;
+            transform: translateX(-50px);
+            transition: all 0.8s ease;
+        }
+        
+        .slide-in-right {
+            opacity: 0;
+            transform: translateX(50px);
+            transition: all 0.8s ease;
+        }
+        
+        .animated {
+            opacity: 1;
+            transform: translate(0, 0);
+        }
+        .service {
+            text-decoration: none;
+
+        }
+    </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <!-- Header -->
+    <header id="header">
+        <div class="container nav-container">
+            <a href="#" class="logo">LNC <span>TECHNOLOGIE</span></a>
+            <div class="hamburger">
+                <div class="line1"></div>
+                <div class="line2"></div>
+                <div class="line3"></div>
+            </div>
+            <ul class="nav-menu">
+                <li><a href="#home">Home</a></li>
+                <li><a href="#services">Services</a></li>
+                <li><a href="#about">About</a></li>
+                <li><a href="#team">Team</a></li>
+                <li><a href="#portfolio">Portfolio</a></li>
+                <li><a href="#testimonials">Testimonials</a></li>
+                <li><a href="#contact">Contact</a></li>
+                <li>
+                    <button class="theme-toggle" id="themeToggle" aria-label="Toggle dark mode">
+                        <i class="fas fa-moon"></i>
+                    </button>
+                </li>
+            </ul>
+            
+        </div>
+    </header>
+    
+    <div class="main-content">
+        <!-- Hero Section -->
+        <section class="hero" id="home">
+            <div class="floating-shapes" id="floating-shapes"></div>
+            <div class="container hero-content">
+                <h1>Innovative Web & Application Solutions</h1>
+                <p>We create powerful digital experiences that transform businesses. Our custom websites and applications are designed to elevate your brand and drive results.</p>
+                <div class="hero-buttons">
+                    <a href="#services" class="btn">Our Services</a>
+                    <a href="#contact" class="btn btn-outline">Get in Touch</a>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Services Section -->
+        <section class="services" id="services">
+            <div class="container">
+                <div class="section-header fade-up">
+                    <h2>Our Services</h2>
+                    <p>We offer comprehensive digital solutions to help your business thrive in the digital landscape.</p>
+                </div>
+                <div class="services-grid">
+                    
+                    <a class="service" href="LNCT aboutus.html">
+                        <div class="service-card fade-up">
+                            <i class="fas fa-laptop-code"></i>
+                            <h3>Website Development</h3>
+                            <p>From responsive websites to complex web applications, we build solutions that work flawlessly across all devices.</p>
+                        </div>
+                    </a>
+                    <div class="service-card fade-up">
+                        <i class="fas fa-laptop-code"></i>
+                        <h3>Website Development</h3>
+                        <p>From responsive websites to complex web applications, we build solutions that work flawlessly across all devices.</p>
+                    </div>
+                    
+                   
+                </div>
+            </div>
+        </section>
+        
+        <!-- Counter Section -->
+        <section class="counter-section">
+            <div class="container">
+                <div class="counter-grid">
+                    <div class="counter-item">
+                        <h3 class="counter" data-target="75000">0</h3>
+                        <p>Projects Completed</p>
+                    </div>
+                    <div class="counter-item">
+                        <h3 class="counter" data-target="32000">0</h3>
+                        <p>Happy Clients</p>
+                    </div>
+                    <div class="counter-item">
+                        <h3 class="counter" data-target="3">0</h3>
+                        <p>Team Members</p>
+                    </div>
+                    <div class="counter-item">
+                        <h3 class="counter" data-target="1">0</h3>
+                        <p>Years Experience</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- About Section -->
+        <section class="about" id="about">
+            <div class="container">
+                <div class="about-grid">
+                    <div class="about-content slide-in-left">
+                        <h2>About LNC TECHNOLOGIE</h2>
+                        <p>Founded in 4/6/2025, LNC TECHNOLOGIE has grown to become a leading provider of web and application development services. Our team of experienced developers, designers, and digital strategists work together to create innovative solutions that help businesses succeed in the digital age.</p>
+                        <p>We believe in building long-term relationships with our clients, understanding their unique challenges, and delivering solutions that exceed expectations. Our commitment to quality, innovation, and customer satisfaction has earned us the trust of businesses across various industries.</p>
+                        <p>Our mission is to empower organizations through technology, helping them reach their full potential in an increasingly digital world.</p>
+                        <a href="#contact" class="btn btn-primary">Contact Us</a>
+                    </div>
+                    <div class="about-image slide-in-right">
+                        <img src="/api/placeholder/600/450" alt="Team at work">
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Team Section -->
+        <section class="team-section" id="team">
+            <div class="container">
+                <div class="section-header fade-up">
+                    <h2>Our Expert Team</h2>
+                    <p>Meet the talented professionals behind our successful projects.</p>
+                </div>
+                <div class="team-grid">
+                    <div class="team-member fade-up">
+                        <div class="team-image">
+                            <img src="/api/placeholder/400/400" alt="Team Member 1">
+                        </div>
+                        <div class="team-info">
+                            <h3>YOUB LOUAI</h3>
+                            <p>FRONTEND Developer</p>
+                            <div class="social-links">
+                                <a href="#"><i class="fab fa-github"></i></a>
+                                <a href="#"><i class="fab fa-twitter"></i></a>
+                                <a href="#"><i class="fab fa-instagram"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="team-member fade-up">
+                        <div class="team-image">
+                            <img src="/api/placeholder/400/400" alt="Team Member 2">
+                        </div>
+                        <div class="team-info">
+                            <h3>ABD LATIFE YOUB</h3>
+                            <p>BACKAND Developer</p>
+                            <div class="social-links">
+                                <a href="#"><i class="fab fa-instagram"></i></a>
+                                <a href="#"><i class="fab fa-twitter"></i></a>
+                                <a href="#"><i class="fab fa-github"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="team-member fade-up">
+                        <div class="team-image">
+                            <img src="/api/placeholder/400/400" alt="Team Member 4">
+                        </div>
+                        <div class="team-info">
+                            <h3>NEDIM BENBOU3ZIZ</h3>
+                            <p>Project Manager</p>
+                            <div class="social-links">
+                                <a href="#"><i class="fab fa-github"></i></a>
+                                <a href="#"><i class="fab fa-twitter"></i></a>
+                                <a href="#"><i class="fab fa-instagram"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Portfolio Section -->
+        <section class="portfolio" id="portfolio">
+            <div class="container">
+                <div class="section-header fade-up">
+                    <h2>Our Portfolio</h2>
+                    <p>Explore some of our recent projects and see how we've helped businesses transform their digital presence.</p>
+                </div>
+                <div class="portfolio-filter fade-up">
+                    <button class="filter-btn active" data-filter="all">All</button>
+                    <button class="filter-btn" data-filter="web">Web Development</button>
+                </div>
+                <div class="portfolio-grid">
+                    <div class="portfolio-item fade-up" data-category="web">
+                        <img src="/api/placeholder/400/300" alt="Project 1">
+                        <div class="portfolio-overlay">
+                            <h3>Corporate Website</h3>
+                            <p>Modern responsive website for a financial consulting firm</p>
+                        </div>
+                    </div>
+                    <div class="portfolio-item fade-up" data-category="web">
+                        <img src="/api/placeholder/400/300" alt="Project 2">
+                        <div class="portfolio-overlay">
+                        <h3>E-commerce Platform</h3>
+                        <p>Full-featured e-commerce site with payment integration</p>
+                    </div>
+
+                    <div class="portfolio-item fade-up" data-category="app ecommerce">
+                        <img src="/api/placeholder/400/300" alt="Project 6">
+                        <div class="portfolio-overlay">
+                            <h3>Restaurant Ordering System</h3>
+                            <p>Integrated online ordering platform with kitchen management features</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Portfolio Modal -->
+        <div id="portfolioModal" class="modal">
+            <span class="close-modal"><i class="fas fa-times"></i></span>
+            <div class="modal-content">
+                <img class="modal-img" src="" alt="Project">
+                <div class="modal-text">
+                    <h3>Project Title</h3>
+                    <p>Project description will appear here with more details about the project, technologies used, challenges, and solutions.</p>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Testimonials Section -->
+        <section class="testimonials" id="testimonials">
+            <div class="container">
+                <div class="section-header fade-up">
+                    <h2>Client Testimonials</h2>
+                    <p>What our clients say about our services and solutions.</p>
+                </div>
+                <div class="testimonial-slider fade-up">
+                    <div class="testimonial-container">
+                        <div class="testimonial">
+                            <img src="/api/placeholder/200/200" alt="Client 1">
+                            <p>"LNC TECHNOLOGIE transformed our outdated website into a modern, user-friendly platform that has significantly increased our online conversions. Their team was professional, responsive, and delivered beyond our expectations."</p>
+                            <h4>Sarah Thompson</h4>
+                            <small>Marketing Director, Global Innovations</small>
+                        </div>
+                        <div class="testimonial">
+                            <img src="/api/placeholder/200/200" alt="Client 2">
+                            <p>"Working with LNC TECHNOLOGIE on our web sete was a game-changer for our business. Their technical expertise and attention to detail resulted in an app that our customers love using. We continue to partner with them for all our digital needs."</p>
+                            <h4>Michael Rodriguez</h4>
+                            <small>CEO, TechSolutions Inc.</small>
+                        </div>
+                        <div class="testimonial">
+                            <img src="/api/placeholder/200/200" alt="Client 3">
+                            <p>"The web site developed by LNC TECHNOLOGIE has revolutionized our online business. Sales have increased by 80% since launch, and the system is incredibly easy to manage. Their ongoing support has been exceptional."</p>
+                            <h4>Olivia Chen</h4>
+                            <small>E-Commerce Manager, StyleHub</small>
+                        </div>
+                    </div>
+                    <div class="testimonial-nav">
+                        <button id="prevTestimonial"><i class="fas fa-chevron-left"></i></button>
+                        <button id="nextTestimonial"><i class="fas fa-chevron-right"></i></button>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Contact Section -->
+        <section class="contact" id="contact">
+            <div class="container">
+                <div class="contact-grid">
+                    <div class="contact-info slide-in-left">
+                        <h2>Get In Touch</h2>
+                        <p>Ready to start your project or have questions about our services? Contact us today and let's discuss how we can help your business grow.</p>
+                        <div class="contact-details">
+                            <div>
+                                <i class="fas fa-map-marker-alt"></i>
+                                <span>123 Business Avenue, Tech City, 75001</span>
+                            </div>
+                            <div>
+                                <i class="fas fa-phone"></i>
+                                <span>+213 552 56 70 96</span>
+                            </div>
+                            <div>
+                                <i class="fas fa-envelope"></i>
+                                <span>info@lnctechnologie.com</span>
+                            </div>
+                            <div>
+                                <i class="fas fa-clock"></i>
+                                <span>Sunday - thursday: 9:00 AM - 6:00 PM</span>
+                            </div>
+                        </div>
+                    </div>
+                    <form class="contact-form slide-in-right" id="contactForm">
+                        <div class="form-group">
+                            <label for="name">Name</label>
+                            <input type="text" id="name" placeholder="Your Name" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="email">Email</label>
+                            <input type="email" id="email" placeholder="Your Email" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="subject">Subject</label>
+                            <input type="text" id="subject" placeholder="Subject">
+                        </div>
+                        <div class="form-group">
+                            <label for="message">Message</label>
+                            <textarea id="message" placeholder="Your Message" required></textarea>
+                        </div>
+                        <button type="submit" class="btn">Send Message</button>
+                        <div id="formStatus" style="margin-top: 15px; display: none;"></div>
+                    </form>
+                </div>
+                <div class="map-container fade-up">
+                    <div style="width:100%; height:100%; background-color:#eee; display:flex; justify-content:center; align-items:center;">
+                        <!-- Map placeholder -->
+                        <img src="/api/placeholder/1200/400" alt="Map" style="width:100%; height:100%; object-fit:cover;">
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Footer -->
+        <footer>
+            <div class="container">
+                <div class="footer-grid">
+                    <div class="footer-col">
+                        <h3>LNC TECHNOLOGIE</h3>
+                        <p>We design and develop custom websites and applications that help businesses grow and succeed in the digital landscape.</p>
+                        <div class="social-icons">
+                            <a href="#"><i class="fab fa-facebook-f"></i></a>
+                            <a href="#"><i class="fab fa-twitter"></i></a>
+                            <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                            <a href="#"><i class="fab fa-instagram"></i></a>
+                        </div>
+                    </div>
+                    <div class="footer-col">
+                        <h3>Our Services</h3>
+                        <ul>
+                            <li><a href="#">Website Development</a></li>
+                        </ul>
+                    </div>
+                    <div class="footer-col">
+                        <h3>Quick Links</h3>
+                        <ul>
+                            <li><a href="#home">Home</a></li>
+                            <li><a href="#about">About Us</a></li>
+                            <li><a href="#portfolio">Portfolio</a></li>
+                            <li><a href="#testimonials">Testimonials</a></li>
+                            <li><a href="#contact">Contact Us</a></li>
+                        </ul>
+                    </div>
+                    <div class="footer-col">
+                        <h3>Newsletter</h3>
+                        <p>Subscribe to our newsletter to receive updates and industry insights.</p>
+                        <div class="footer-newsletter">
+                            <input type="email" placeholder="Your Email">
+                            <button type="submit" class="btn btn-primary">Subscribe</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="footer-bottom">
+                    <p>&copy; 2025 LNC TECHNOLOGIE. All Rights Reserved.</p>
+                </div>
+            </div>
+        </footer>
+        
+        <!-- Back to top button -->
+        <div class="back-to-top" id="backToTop">
+            <i class="fas fa-arrow-up"></i>
+        </div>
+    </div>
+    
+    <!-- JavaScript -->
+    <script>
+        // DOM Elements
+        const header = document.getElementById('header');
+        const hamburger = document.querySelector('.hamburger');
+        const navMenu = document.querySelector('.nav-menu');
+        const navLinks = document.querySelectorAll('.nav-menu a');
+        const backToTopBtn = document.getElementById('backToTop');
+        const portfolioItems = document.querySelectorAll('.portfolio-item');
+        const modal = document.getElementById('portfolioModal');
+        const closeModal = document.querySelector('.close-modal');
+        const modalImg = document.querySelector('.modal-img');
+        const modalTitle = document.querySelector('.modal-text h3');
+        const modalDesc = document.querySelector('.modal-text p');
+        const filterBtns = document.querySelectorAll('.filter-btn');
+        const testimonialContainer = document.querySelector('.testimonial-container');
+        const prevTestimonialBtn = document.getElementById('prevTestimonial');
+        const nextTestimonialBtn = document.getElementById('nextTestimonial');
+        const contactForm = document.getElementById('contactForm');
+        const formStatus = document.getElementById('formStatus');
+        const themeToggle = document.getElementById('themeToggle');
+        const mobileThemeToggle = document.getElementById('mobileThemeToggle');
+        
+        // Check for saved theme preference or use preferred color scheme
+        const currentTheme = localStorage.getItem('theme') || 
+                            (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+        
+        // Set the theme on initial load
+        if (currentTheme === 'dark') {
+            document.body.classList.add('dark-mode');
+            themeToggle.innerHTML = '<i class="fas fa-sun"></i>';
+            mobileThemeToggle.innerHTML = '<i class="fas fa-sun"></i>';
+        }
+        
+        // Theme toggle functionality
+        function toggleTheme() {
+            document.body.classList.toggle('dark-mode');
+            
+            if (document.body.classList.contains('dark-mode')) {
+                localStorage.setItem('theme', 'dark');
+                themeToggle.innerHTML = '<i class="fas fa-sun"></i>';
+                mobileThemeToggle.innerHTML = '<i class="fas fa-sun"></i>';
+            } else {
+                localStorage.setItem('theme', 'light');
+                themeToggle.innerHTML = '<i class="fas fa-moon"></i>';
+                mobileThemeToggle.innerHTML = '<i class="fas fa-moon"></i>';
+            }
+        }
+        
+        // Floating shapes in hero section
+        function createFloatingShapes() {
+            const shapes = document.getElementById('floating-shapes');
+            const shapeCount = 15;
+            
+            for (let i = 0; i < shapeCount; i++) {
+                const shape = document.createElement('div');
+                shape.classList.add('shape');
+                
+                // Random properties
+                const size = Math.random() * 100 + 20;
+                const posX = Math.random() * 100;
+                const delay = Math.random() * 5;
+                const duration = Math.random() * 10 + 10;
+                
+                shape.style.width = `${size}px`;
+                shape.style.height = `${size}px`;
+                shape.style.left = `${posX}%`;
+                shape.style.bottom = `-${size}px`;
+                shape.style.animationDelay = `${delay}s`;
+                shape.style.animationDuration = `${duration}s`;
+                
+                shapes.appendChild(shape);
+            }
+        }
+        
+        // Toggle mobile menu
+        function toggleMobileMenu() {
+            hamburger.classList.toggle('active');
+            navMenu.classList.toggle('active');
+        }
+        
+        // Close mobile menu when clicking a nav link
+        function closeMobileMenu() {
+            hamburger.classList.remove('active');
+            navMenu.classList.remove('active');
+        }
+        
+        // Scroll effects
+        function handleScroll() {
+            // Header scroll effect
+            if (window.scrollY > 50) {
+                header.classList.add('scrolled');
+                backToTopBtn.classList.add('show');
+            } else {
+                header.classList.remove('scrolled');
+                backToTopBtn.classList.remove('show');
+            }
+            
+            // Animation on scroll
+            const animElements = document.querySelectorAll('.fade-up, .fade-in, .slide-in-left, .slide-in-right');
+            
+            animElements.forEach(element => {
+                const elementPosition = element.getBoundingClientRect().top;
+                const triggerPosition = window.innerHeight - 100;
+                
+                if (elementPosition < triggerPosition) {
+                    element.classList.add('animated');
+                }
+            });
+        }
+        
+        // Counter animation
+        function startCounters() {
+            const counters = document.querySelectorAll('.counter');
+            const speed = 200;
+            
+            counters.forEach(counter => {
+                const counterObserver = new IntersectionObserver((entries) => {
+                    if (entries[0].isIntersecting) {
+                        const updateCount = () => {
+                            const target = +counter.getAttribute('data-target');
+                            const count = +counter.innerText;
+                            const increment = target / speed;
+                            
+                            if (count < target) {
+                                counter.innerText = Math.ceil(count + increment);
+                                setTimeout(updateCount, 1);
+                            } else {
+                                counter.innerText = target;
+                            }
+                        };
+                        
+                        updateCount();
+                        counterObserver.unobserve(counter);
+                    }
+                }, { threshold: 0.5 });
+                
+                counterObserver.observe(counter);
+            });
+        }
+        
+        // Portfolio filter
+        function filterPortfolio(category) {
+            portfolioItems.forEach(item => {
+                const itemCategories = item.getAttribute('data-category');
+                
+                if (category === 'all' || itemCategories.includes(category)) {
+                    item.style.display = 'block';
+                } else {
+                    item.style.display = 'none';
+                }
+            });
+        }
+        
+        // Modal functions
+        function openModal(img, title, desc) {
+            modalImg.src = img.src;
+            modalTitle.textContent = title;
+            modalDesc.textContent = desc;
+            modal.style.display = 'flex';
+            document.body.style.overflow = 'hidden';
+        }
+        
+        function closeModalFunc() {
+            modal.style.display = 'none';
+            document.body.style.overflow = 'auto';
+        }
+        
+        // Testimonial slider
+        let currentSlide = 0;
+        const testimonials = document.querySelectorAll('.testimonial');
+        
+        function showTestimonial(n) {
+            currentSlide = (n + testimonials.length) % testimonials.length;
+            const translateValue = -currentSlide * 100 + '%';
+            testimonialContainer.style.transform = `translateX(${translateValue})`;
+        }
+        
+        // Form submission handler
+        function handleFormSubmit(e) {
+            e.preventDefault();
+            
+            // Simulate form submission
+            formStatus.textContent = 'Sending message...';
+            formStatus.style.color = 'white';
+            formStatus.style.display = 'block';
+            
+            setTimeout(() => {
+                formStatus.textContent = 'Message sent successfully! We will contact you soon.';
+                formStatus.style.color = '#4CAF50';
+                contactForm.reset();
+                
+                setTimeout(() => {
+                    formStatus.style.display = 'none';
+                }, 5000);
+            }, 1500);
+        }
+        
+        // Event Listeners
+        window.addEventListener('DOMContentLoaded', () => {
+            createFloatingShapes();
+            handleScroll(); // Call once to initialize
+            startCounters();
+        });
+        
+        window.addEventListener('scroll', handleScroll);
+        
+        hamburger.addEventListener('click', toggleMobileMenu);
+        
+        navLinks.forEach(link => {
+            link.addEventListener('click', closeMobileMenu);
+        });
+        
+        backToTopBtn.addEventListener('click', () => {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+        
+        filterBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                filterBtns.forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                filterPortfolio(btn.getAttribute('data-filter'));
+            });
+        });
+        
+        portfolioItems.forEach(item => {
+            item.addEventListener('click', () => {
+                const img = item.querySelector('img');
+                const title = item.querySelector('h3').textContent;
+                const desc = item.querySelector('p').textContent;
+                openModal(img, title, desc);
+            });
+        });
+        
+        closeModal.addEventListener('click', closeModalFunc);
+        
+        window.addEventListener('click', (e) => {
+            if (e.target === modal) {
+                closeModalFunc();
+            }
+        });
+        
+        prevTestimonialBtn.addEventListener('click', () => {
+            showTestimonial(currentSlide - 1);
+        });
+        
+        nextTestimonialBtn.addEventListener('click', () => {
+            showTestimonial(currentSlide + 1);
+        });
+        
+        contactForm.addEventListener('submit', handleFormSubmit);
+        
+        themeToggle.addEventListener('click', toggleTheme);
+        mobileThemeToggle.addEventListener('click', toggleTheme);
+        
+        // Automatic testimonial rotation
+        setInterval(() => {
+            showTestimonial(currentSlide + 1);
+        }, 8000);
+        
+        // Smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                
+                const targetId = this.getAttribute('href');
+                if (targetId === '#') return;
+                
+                const targetElement = document.querySelector(targetId);
+                const headerHeight = document.querySelector('header').offsetHeight;
+                
+                window.scrollTo({
+                    top: targetElement.offsetTop - headerHeight,
+                    behavior: 'smooth'
+                });
+            });
+        });
+    </script>
+</body>
+</html>
