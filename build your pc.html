@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Custom PC Builder</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', system-ui, sans-serif;
+        }
+
+        body {
+            background: #f0f2f5;
+            padding: 20px;
+        }
+
+        .builder-container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #1a73e8, #185abc);
+            padding: 20px;
+            border-radius: 12px;
+            color: white;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .component-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+
+        .component-card {
+            background: white;
+            border-radius: 12px;
+            padding: 20px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            transition: transform 0.2s;
+        }
+
+        .component-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+        }
+
+        .card-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid #eee;
+        }
+
+        .component-select {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            margin-bottom: 10px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .component-select:hover {
+            border-color: #1a73e8;
+        }
+
+        .component-select:focus {
+            outline: none;
+            border-color: #1a73e8;
+            box-shadow: 0 0 0 3px rgba(26,115,232,0.2);
+        }
+
+        .specs {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 8px;
+            margin-top: 15px;
+            display: none;
+        }
+
+        .specs.active {
+            display: block;
+        }
+
+        .price {
+            background: #e8f0fe;
+            color: #1a73e8;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-weight: 600;
+        }
+
+        .summary {
+            background: white;
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+
+        .total {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px;
+            background: #e8f0fe;
+            border-radius: 8px;
+            margin-top: 15px;
+        }
+
+        .compatibility {
+            margin-top: 15px;
+            padding: 15px;
+            border-radius: 8px;
+            display: none;
+        }
+
+        .compatibility.warning {
+            display: block;
+            background: #fff3e0;
+            border-left: 4px solid #ff9800;
+        }
+
+        .compatibility.error {
+            display: block;
+            background: #fde8e8;
+            border-left: 4px solid #dc2626;
+        }
+
+        .power-estimate {
+            margin-top: 15px;
+            padding: 15px;
+            background: #f8f9fa;
+            border-radius: 8px;
+        }
+
+        button {
+            background: #1a73e8;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: background 0.2s;
+        }
+
+        button:hover {
+            background: #185abc;
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: 10px;
+            margin-top: 20px;
+        }
+
+        @media (max-width: 768px) {
+            .component-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="builder-container">
+        <div class="header">
+            <h1>Custom PC Builder</h1>
+            <p>Select your components below to build your perfect PC</p>
+        </div>
+
+        <div class="component-grid">
+            <!-- CPU -->
+            <div class="component-card">
+                <div class="card-header">
+                    <h2>CPU</h2>
+                    <span class="price" id="cpu-price">$0</span>
+                </div>
+                <select class="component-select" id="cpu" onchange="updateComponent('cpu')">
+                    <option value="">Select CPU...</option>
+                    <option value="299.99" data-specs='{"Cores": "6", "Threads": "12", "Base Clock": "3.7 GHz", "Boost Clock": "4.7 GHz", "TDP": "65W"}'>AMD Ryzen 5 7600X - $299.99</option>
+                    <option value="449.99" data-specs='{"Cores": "8", "Threads": "16", "Base Clock": "4.2 GHz", "Boost Clock": "5.0 GHz", "TDP": "105W"}'>AMD Ryzen 7 7700X - $449.99</option>
+                    <option value="699.99" data-specs='{"Cores": "16", "Threads": "32", "Base Clock": "4.2 GHz", "Boost Clock": "5.7 GHz", "TDP": "170W"}'>AMD Ryzen 9 7950X - $699.99</option>
+                </select>
+                <div class="specs" id="cpu-specs"></div>
+            </div>
+
+            <!-- GPU -->
+            <div class="component-card">
+                <div class="card-header">
+                    <h2>Graphics Card</h2>
+                    <span class="price" id="gpu-price">$0</span>
+                </div>
+                <select class="component-select" id="gpu" onchange="updateComponent('gpu')">
+                    <option value="">Select GPU...</option>
+                    <option value="599.99" data-specs='{"Memory": "12GB GDDR6X", "Boost Clock": "2.6 GHz", "TDP": "285W", "RT Cores": "60"}'>NVIDIA RTX 4070 - $599.99</option>
+                    <option value="799.99" data-specs='{"Memory": "16GB GDDR6X", "Boost Clock": "2.7 GHz", "TDP": "320W", "RT Cores": "76"}'>NVIDIA RTX 4070 Ti - $799.99</option>
+                    <option value="1199.99" data-specs='{"Memory": "16GB GDDR6X", "Boost Clock": "2.5 GHz", "TDP": "450W", "RT Cores": "128"}'>NVIDIA RTX 4090 - $1199.99</option>
+                </select>
+                <div class="specs" id="gpu-specs"></div>
+            </div>
+
+            <!-- Motherboard -->
+            <div class="component-card">
+                <div class="card-header">
+                    <h2>Motherboard</h2>
+                    <span class="price" id="motherboard-price">$0</span>
+                </div>
+                <select class="component-select" id="motherboard" onchange="updateComponent('motherboard')">
+                    <option value="">Select Motherboard...</option>
+                    <option value="199.99" data-specs='{"Socket": "AM5", "Form Factor": "ATX", "Memory": "DDR5", "PCIe": "5.0"}'>ASUS ROG STRIX B650-A - $199.99</option>
+                    <option value="299.99" data-specs='{"Socket": "AM5", "Form Factor": "ATX", "Memory": "DDR5", "PCIe": "5.0"}'>MSI MPG X670E - $299.99</option>
+                    <option value="449.99" data-specs='{"Socket": "AM5", "Form Factor": "ATX", "Memory": "DDR5", "PCIe": "5.0"}'>ASUS ROG Crosshair X670E - $449.99</option>
+                </select>
+                <div class="specs" id="motherboard-specs"></div>
+            </div>
+
+            <!-- RAM -->
+            <div class="component-card">
+                <div class="card-header">
+                    <h2>Memory (RAM)</h2>
+                    <span class="price" id="ram-price">$0</span>
+                </div>
+                <select class="component-select" id="ram" onchange="updateComponent('ram')">
+                    <option value="">Select RAM...</option>
+                    <option value="89.99" data-specs='{"Capacity": "16GB", "Speed": "6000MHz", "Type": "DDR5", "CAS Latency": "36"}'>Corsair 16GB DDR5-6000 - $89.99</option>
+                    <option value="159.99" data-specs='{"Capacity": "32GB", "Speed": "6000MHz", "Type": "DDR5", "CAS Latency": "36"}'>G.Skill 32GB DDR5-6000 - $159.99</option>
+                    <option value="299.99" data-specs='{"Capacity": "64GB", "Speed": "6400MHz", "Type": "DDR5", "CAS Latency": "32"}'>Corsair 64GB DDR5-6400 - $299.99</option>
+                </select>
+                <div class="specs" id="ram-specs"></div>
+            </div>
+        </div>
+
+        <div class="summary">
+            <h2>Build Summary</h2>
+            <div class="total">
+                <h3>Total Cost:</h3>
+                <span id="total-cost">$0</span>
+            </div>
+            <div class="power-estimate">
+                <h3>Estimated Power Usage:</h3>
+                <p id="power-usage">0W</p>
+            </div>
+            <div class="compatibility" id="compatibility-check"></div>
+            <div class="action-buttons">
+                <button onclick="saveBuild()">Save Build</button>
+                <button onclick="resetBuild()">Reset</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let buildState = {
+            cpu: null,
+            gpu: null,
+            motherboard: null,
+            ram: null
+        };
+
+        function updateComponent(type) {
+            const select = document.getElementById(type);
+            const priceElement = document.getElementById(`${type}-price`);
+            const specsElement = document.getElementById(`${type}-specs`);
+            
+            if (select.value) {
+                const price = parseFloat(select.value);
+                const specs = JSON.parse(select.selectedOptions[0].dataset.specs);
+                
+                buildState[type] = {
+                    name: select.selectedOptions[0].text,
+                    price: price,
+                    specs: specs
+                };
+
+                // Update price
+                priceElement.textContent = `$${price}`;
+
+                // Update specs display
+                let specsHtml = '<ul style="list-style: none;">';
+                for (const [key, value] of Object.entries(specs)) {
+                    specsHtml += `<li><strong>${key}:</strong> ${value}</li>`;
+                }
+                specsHtml += '</ul>';
+                specsElement.innerHTML = specsHtml;
+                specsElement.classList.add('active');
+            } else {
+                buildState[type] = null;
+                priceElement.textContent = '$0';
+                specsElement.classList.remove('active');
+            }
+
+            updateTotalCost();
+            updatePowerUsage();
+            checkCompatibility();
+        }
+
+        function updateTotalCost() {
+            const total = Object.values(buildState)
+                .filter(item => item !== null)
+                .reduce((sum, item) => sum + item.price, 0);
+            
+            document.getElementById('total-cost').textContent = `$${total.toFixed(2)}`;
+        }
+
+        function updatePowerUsage() {
+            // Simplified power calculation
+            let totalPower = 0;
+            if (buildState.cpu?.specs?.TDP) {
+                totalPower += parseInt(buildState.cpu.specs.TDP);
+            }
+            if (buildState.gpu?.specs?.TDP) {
+                totalPower += parseInt(buildState.gpu.specs.TDP);
+            }
+            
+            document.getElementById('power-usage').textContent = `${totalPower}W`;
+        }
+
+        function checkCompatibility() {
+            const warnings = [];
+            const compatibilityElement = document.getElementById('compatibility-check');
+
+            // Check RAM and Motherboard compatibility
+            if (buildState.ram && buildState.motherboard) {
+                if (buildState.ram.specs.Type !== buildState.motherboard.specs.Memory) {
+                    warnings.push(`RAM type ${buildState.ram.specs.Type} is not compatible with motherboard memory type ${buildState.motherboard.specs.Memory}`);
+                }
+            }
+
+            if (warnings.length > 0) {
+                compatibilityElement.innerHTML = warnings.join('<br>');
+                compatibilityElement.className = 'compatibility warning';
+            } else {
+                compatibilityElement.className = 'compatibility';
+            }
+        }
+
+        function saveBuild() {
+            const buildData = JSON.stringify(buildState, null, 2);
+            const blob = new Blob([buildData], { type: 'application/json' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'pc-build.json';
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+        }
+
+        function resetBuild() {
+            const selects = document.querySelectorAll('select');
+            selects.forEach(select => {
+                select.value = '';
+                updateComponent(select.id);
+            });
+        }
+    </script>
+</body>
+</html>

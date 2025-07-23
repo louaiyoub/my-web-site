@@ -1,0 +1,882 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Learn about TechHub's journey, our expert team, and our commitment to technological excellence since 2010">
+    <title>TechHub - Our Story | Leading Tech Solutions Provider</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <style>
+        :root {
+            --primary: #2563eb;
+            --secondary: #1d4ed8;
+            --accent: #06b6d4;
+            --success: #10b981;
+            --text: #1e293b;
+            --text-light: #64748b;
+            --background: #f8fafc;
+            --card-bg: rgba(255, 255, 255, 0.95);
+            --gradient: linear-gradient(135deg, var(--primary), var(--accent));
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: system-ui, -apple-system, sans-serif;
+            line-height: 1.6;
+            color: var(--text);
+            background: var(--background);
+            overflow-x: hidden;
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 4rem;
+            position: relative;
+        }
+
+        .section-title h2 {
+            font-size: 2.5rem;
+            color: var(--text);
+            margin-bottom: 1rem;
+        }
+
+        .section-title::after {
+            content: '';
+            display: block;
+            width: 60px;
+            height: 4px;
+            background: var(--gradient);
+            margin: 1rem auto;
+            border-radius: 2px;
+        }
+
+        /* Enhanced Hero Section */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            background: linear-gradient(135deg, rgba(37,99,235,0.05) 0%, rgba(6,182,212,0.05) 100%);
+            overflow: hidden;
+        }
+
+        .hero-content {
+            text-align: center;
+            z-index: 1;
+            padding: 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .hero-content h1 {
+            font-size: 4.5rem;
+            font-weight: 800;
+            margin-bottom: 1.5rem;
+            background: var(--gradient);
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            line-height: 1.2;
+            opacity: 0;
+            transform: translateY(30px);
+            animation: fadeUp 1s forwards;
+        }
+
+        .hero-content p {
+            font-size: 1.5rem;
+            color: var(--text-light);
+            max-width: 700px;
+            margin: 0 auto;
+            opacity: 0;
+            transform: translateY(30px);
+            animation: fadeUp 1s 0.3s forwards;
+        }
+
+        @keyframes fadeUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Enhanced Stats Section */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 2rem;
+            padding: 6rem 2rem;
+            max-width: 1400px;
+            margin: 0 auto;
+            position: relative;
+        }
+
+        .stat-card {
+            background: var(--card-bg);
+            padding: 2.5rem;
+            border-radius: 1.5rem;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+            text-align: center;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .stat-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: var(--gradient);
+            transform: scaleX(0);
+            transform-origin: left;
+            transition: transform 0.4s ease;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.12);
+        }
+
+        .stat-card:hover::before {
+            transform: scaleX(1);
+        }
+
+        .stat-number {
+            font-size: 3.5rem;
+            font-weight: 700;
+            background: var(--gradient);
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 1rem;
+            display: inline-block;
+        }
+
+        .stat-card p {
+            color: var(--text-light);
+            font-size: 1.2rem;
+            font-weight: 500;
+        }
+
+        /* Enhanced Timeline */
+        .timeline {
+            max-width: 1200px;
+            margin: 6rem auto;
+            padding: 2rem;
+            position: relative;
+        }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: calc(50% - 2px);
+            top: 0;
+            width: 4px;
+            height: 100%;
+            background: var(--gradient);
+            border-radius: 2px;
+        }
+
+        .timeline-item {
+            display: flex;
+            margin-bottom: 4rem;
+            opacity: 0;
+            transform: translateX(-50px);
+            transition: all 0.6s ease;
+            position: relative;
+            width: calc(50% - 30px);
+        }
+
+        .timeline-item:nth-child(even) {
+            margin-left: auto;
+            transform: translateX(50px);
+        }
+
+        .timeline-content {
+            background: var(--card-bg);
+            padding: 2.5rem;
+            border-radius: 1.5rem;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+            position: relative;
+            transition: all 0.3s ease;
+        }
+
+        .timeline-content:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.12);
+        }
+
+        .timeline-year {
+            position: absolute;
+            background: var(--gradient);
+            color: white;
+            padding: 1rem 2rem;
+            border-radius: 25px;
+            font-weight: 700;
+            top: 0;
+            transform: translateY(-50%);
+            z-index: 1;
+        }
+
+        .timeline-item:nth-child(odd) .timeline-year {
+            right: -100px;
+        }
+
+        .timeline-item:nth-child(even) .timeline-year {
+            left: -100px;
+        }
+
+        /* Enhanced Team Section */
+        .team-section {
+            padding: 6rem 2rem;
+            background: linear-gradient(135deg, rgba(37,99,235,0.05) 0%, rgba(6,182,212,0.05) 100%);
+        }
+
+        .team-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 3rem;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .team-card {
+            background: var(--card-bg);
+            border-radius: 1.5rem;
+            overflow: hidden;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+        }
+
+        .team-card:hover {
+            transform: translateY(-10px) scale(1.02);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.12);
+        }
+
+        .team-image {
+            width: 100%;
+            height: 350px;
+            object-fit: cover;
+            transition: transform 0.4s ease;
+        }
+
+        .team-card:hover .team-image {
+            transform: scale(1.1);
+        }
+
+        .team-info {
+            padding: 2rem;
+            text-align: center;
+            position: relative;
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(10px);
+        }
+
+        .team-info h3 {
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+            color: var(--text);
+        }
+
+        .team-info p {
+            color: var(--text-light);
+            font-weight: 500;
+        }
+
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .social-link {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: var(--gradient);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .social-link:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(37,99,235,0.3);
+        }
+
+        /* Enhanced Responsive Design */
+        @media (max-width: 1024px) {
+            .stats-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .hero-content h1 {
+                font-size: 3.5rem;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .timeline::before {
+                left: 20px;
+            }
+
+            .timeline-item {
+                width: calc(100% - 50px);
+                margin-left: 50px;
+            }
+
+            .timeline-item:nth-child(even) {
+                margin-left: 50px;
+            }
+
+            .timeline-year {
+                left: -50px !important;
+                right: auto !important;
+            }
+
+            .hero-content h1 {
+                font-size: 2.5rem;
+            }
+
+            .hero-content p {
+                font-size: 1.2rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .stat-number {
+                font-size: 2.5rem;
+            }
+        }
+
+
+
+
+
+        .cursor {
+            width: 20px;
+            height: 20px;
+            border: 2px solid var(--primary);
+            border-radius: 50%;
+            position: fixed;
+            pointer-events: none;
+            z-index: 9999;
+            transition: transform 0.2s ease;
+            mix-blend-mode: difference;
+        }
+
+        .cursor-dot {
+            width: 4px;
+            height: 4px;
+            background: var(--accent);
+            border-radius: 50%;
+            position: fixed;
+            pointer-events: none;
+            z-index: 9999;
+        }
+
+        .team-card {
+            position: relative;
+            perspective: 1000px;
+        }
+
+        .team-card-inner {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            transition: transform 0.8s;
+            transform-style: preserve-3d;
+        }
+
+        .team-card:hover .team-card-inner {
+            transform: rotateY(180deg);
+        }
+
+        .team-front, .team-back {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            backface-visibility: hidden;
+            border-radius: 1.5rem;
+            background: var(--card-bg);
+        }
+
+        .team-back {
+            transform: rotateY(180deg);
+            padding: 2rem;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            background: var(--gradient);
+            color: white;
+        }
+
+        .skill-tag {
+            background: rgba(255, 255, 255, 0.2);
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            margin: 0.25rem;
+            font-size: 0.9rem;
+        }
+
+        .achievements {
+            margin-top: 1rem;
+            font-size: 0.9rem;
+        }
+
+        /* Progress bar for skills */
+        .skill-bar {
+            width: 100%;
+            height: 6px;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 3px;
+            margin: 0.5rem 0;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .skill-progress {
+            position: absolute;
+            top: 0;
+            left: 0;
+            height: 100%;
+            background: white;
+            border-radius: 3px;
+            transition: width 1s ease;
+        }
+
+        /* Floating shapes background */
+        .shapes {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            z-index: 0;
+        }
+
+        .shape {
+            position: absolute;
+            background: var(--gradient);
+            opacity: 0.1;
+            animation: float 20s infinite linear;
+        }
+
+        .shape:nth-child(1) {
+            width: 100px;
+            height: 100px;
+            border-radius: 28% 72% 79% 21% / 30% 45% 55% 70%;
+            top: 10%;
+            left: 10%;
+            animation-duration: 15s;
+        }
+
+        .shape:nth-child(2) {
+            width: 150px;
+            height: 150px;
+            border-radius: 72% 28% 21% 79% / 45% 30% 70% 55%;
+            top: 20%;
+            right: 15%;
+            animation-duration: 25s;
+        }
+
+        .shape:nth-child(3) {
+            width: 80px;
+            height: 80px;
+            border-radius: 45% 55% 70% 30% / 72% 28% 79% 21%;
+            bottom: 15%;
+            left: 15%;
+            animation-duration: 20s;
+        }
+
+        @keyframes float {
+            0% {
+                transform: translate(0, 0) rotate(0deg);
+            }
+            50% {
+                transform: translate(100px, 100px) rotate(180deg);
+            }
+            100% {
+                transform: translate(0, 0) rotate(360deg);
+            }
+        }
+
+        /* Dark mode support */
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --background: #0f172a;
+                --text: #e2e8f0;
+                --text-light: #94a3b8;
+                --card-bg: rgba(30, 41, 59, 0.95);
+            }
+        }
+
+        /* Loading animation */
+        .loading-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--background);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            transition: opacity 0.5s ease;
+        }
+
+        .loading-logo {
+            width: 100px;
+            height: 100px;
+            position: relative;
+        }
+
+        .loading-circle {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            border: 4px solid transparent;
+            border-top-color: var(--primary);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* Scroll progress indicator */
+        .scroll-progress {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: transparent;
+            z-index: 9998;
+        }
+
+        .progress-bar {
+            height: 100%;
+            background: var(--gradient);
+            width: 0%;
+            transition: width 0.1s ease;
+        }
+    </style>
+    </style>
+</head>
+<body>
+    <div class="canvas-container" id="hero-canvas"></div>
+
+    <section class="hero">
+        <div class="hero-content">
+            <h1>Shaping Tomorrow's Technology</h1>
+            <p>From humble beginnings to technological excellence, our journey of innovation continues to define the future of computing</p>
+        </div>
+    </section>
+
+    <div class="stats-grid">
+        <div class="stat-card">
+            <div class="stat-number" data-value="15">0</div>
+            <p>Years of Innovation</p>
+        </div>
+        <div class="stat-card">
+            <div class="stat-number" data-value="50000">0</div>
+            <p>Satisfied Customers</p>
+        </div>
+        <div class="stat-card">
+            <div class="stat-number" data-value="100">0</div>
+            <p>Expert Team Members</p>
+        </div>
+        <div class="stat-card">
+            <div class="stat-number" data-value="95">0</div>
+            <p>Customer Satisfaction</p>
+        </div>
+    </div>
+
+    <div class="timeline">
+        <div class="section-title">
+            <h2>Our Journey</h2>
+            <p>Milestones that shaped our success</p>
+        </div>
+        <div class="timeline-item">
+            <div class="timeline-year">2010</div>
+            <div class="timeline-content">
+                <h3>The Beginning</h3>
+                <p>Founded with a vision to revolutionize tech support and custom PC building, starting with a small team of passionate experts.</p>
+            </div>
+        </div>
+        <div class="timeline-item">
+            <div class="timeline-year">2015</div>
+            <div class="timeline-content">
+                <h3>National Expansion</h3>
+                <p>Expanded our services nationwide, introducing enterprise solutions and establishing our first flagship store.</p>
+            </div>
+        </div>
+        <div class="timeline-item">
+            <div class="timeline-year">2020</div>
+            <div class="timeline-content">
+                <h3>Digital Revolution</h3>
+                <p>Launched our e-commerce platform and remote support services, adapting to the changing technological landscape.</p>
+            </div>
+        </div>
+        <div class="timeline-item">
+            <div class="timeline-year">2024</div>
+            <div class="timeline-content">
+                <h3>Innovation Hub</h3>
+                <p>Integrated AI-powered diagnostics and launched our tech innovation center, focusing on next-gen computing solutions.</p>
+            </div>
+        </div>
+    </div>
+
+    <section class="team-section">
+        <div class="section-title">
+            <h2>Meet Our Leadership</h2>
+            <p>The experts behind our success</p>
+        </div>
+        <div class="team-grid">
+            <div class="team-card">
+                <img src="imajes/shop/DALL·E 2025-02-11 18.51.05 - A realistic image of a woman with glasses, black hair, and a focused expression assembling computer components by hand while looking at a screen. She .webp" alt="Sarah Chen" class="team-image">
+                <div class="team-info">
+                    <h3>Sarah Chen</h3>
+                    <p>Chief Technology Officer</p>
+                    <div class="social-links">
+                        <a href="#" class="social-link">in</a>
+                        <a href="#" class="social-link">tw</a>
+                    </div>
+                </div>
+            </div>
+            <div class="team-card">
+                <img src="imajes/shop/DALL·E 2025-02-11 18.43.08 - A realistic image of a man assembling computer components by hand while looking at a screen. He is carefully placing a graphics card onto a motherboar.webp" alt="Mark Thompson" class="team-image">
+                <div class="team-info">
+                    <h3>Mark Thompson</h3>
+                    <p>Head of Customer Experience</p>
+                    <div class="social-links">
+                        <a href="#" class="social-link">in</a>
+                        <a href="#" class="social-link">tw</a>
+                    </div>
+                </div>
+            </div>
+            <div class="team-card">
+                <img src="imajes/shop/DALL·E 2025-02-11 18.46.55 - A realistic image of a man with a beard, glasses, and black hair assembling computer components by hand while looking at a screen. He is carefully pla.webp" alt="David Rodriguez" class="team-image">
+                <div class="team-info">
+                    <h3>David Rodriguez</h3>
+                    <p>Head of Innovation</p>
+                    <div class="social-links">
+                        <a href="#" class="social-link">in</a>
+                        <a href="#" class="social-link">tw</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+
+
+    <div class="loading-screen">
+        <div class="loading-logo">
+            <div class="loading-circle"></div>
+        </div>
+    </div>
+
+    <!-- Custom Cursor -->
+    <div class="cursor"></div>
+    <div class="cursor-dot"></div>
+
+    <!-- Scroll Progress -->
+    <div class="scroll-progress">
+        <div class="progress-bar"></div>
+    </div>
+
+    <!-- Floating Shapes -->
+    <div class="shapes">
+        <div class="shape"></div>
+        <div class="shape"></div>
+        <div class="shape"></div>
+    </div>
+
+    <!-- Previous content remains the same until team section -->
+
+    <section class="team-section">
+        <div class="section-title">
+            <h2>Meet Our Leadership</h2>
+            <p>The experts behind our success</p>
+        </div>
+        <div class="team-grid">
+            <div class="team-card">
+                <div class="team-card-inner">
+                    <div class="team-front">
+                        <img src="/api/placeholder/400/400" alt="Sarah Chen" class="team-image">
+                        <div class="team-info">
+                            <h3>Sarah Chen</h3>
+                            <p>Chief Technology Officer</p>
+                            <div class="social-links">
+                                <a href="#" class="social-link">in</a>
+                                <a href="#" class="social-link">tw</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="team-back">
+                        <h3>Expertise</h3>
+                        <div class="skill-tags">
+                            <span class="skill-tag">AI/ML</span>
+                            <span class="skill-tag">Cloud Architecture</span>
+                            <span class="skill-tag">Innovation Strategy</span>
+                        </div>
+                        <div class="achievements">
+                            <p>15+ years in tech leadership</p>
+                            <p>3 technology patents</p>
+                            <p>Forbes 40 Under 40</p>
+                        </div>
+                        <div class="skill-bar">
+                            <div class="skill-progress" style="width: 95%"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+    <script>
+        // Animate stats numbers
+        const stats = document.querySelectorAll('.stat-number');
+        stats.forEach(stat => {
+            const value = parseInt(stat.dataset.value);
+            let current = 0;
+            const increment = value / 50;
+            const updateCount = () => {
+                if (current < value) {
+                    current += increment;
+                    stat.textContent = Math.round(current);
+                    requestAnimationFrame(updateCount);
+                } else {
+                    stat.textContent = value;
+                }
+            };
+            updateCount();
+        });
+
+        // Initialize GSAP ScrollTrigger
+        gsap.registerPlugin(ScrollTrigger);
+
+        // Animate timeline items
+        gsap.utils.toArray('.timeline-item').forEach(item => {
+            gsap.from(item, {
+                opacity: 0,
+                x: item.classList.contains('right') ? 50 : -50,
+                duration: 1,
+                scrollTrigger: {
+                    trigger: item,
+                    start: 'top 80%',
+                    end: 'top 50%',
+                    toggleActions: 'play none none reverse'
+                }
+            });
+        });
+
+        // Initialize Three.js background
+        const scene = new THREE.Scene();
+        const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+        const renderer = new THREE.WebGLRenderer({ alpha: true });
+        renderer.setSize(window.innerWidth, window.innerHeight);
+        document.getElementById('hero-canvas').appendChild(renderer.domElement);
+
+        // Add animated background particles
+        const particles = new THREE.Points(
+            new THREE.BufferGeometry(),
+            new THREE.PointsMaterial({ color: 0x2563eb, size: 0.02 })
+        );
+        const particlesCount = 2000;
+        const positions = new Float32Array(particlesCount * 3);
+
+        for (let i = 0; i < particlesCount * 3; i++) {
+            positions[i] = (Math.random() - 0.5) * 10;
+        }
+
+        particles.geometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+        scene.add(particles);
+        camera.position.z = 5;
+
+        // Animation loop
+        const animate = () => {
+            requestAnimationFrame(animate);
+            particles.rotation.x += 0.0001;
+            particles.rotation.y += 0.0001;
+            renderer.render(scene, camera);
+        };
+        animate();
+
+        // Handle window resize
+        window.addEventListener('resize', () => {
+            camera.aspect = window.innerWidth / window.innerHeight;
+            camera.updateProjectionMatrix();
+            renderer.setSize(window.innerWidth, window.innerHeight);
+        });
+        const cursor = document.querySelector('.cursor');
+        const cursorDot = document.querySelector('.cursor-dot');
+
+        document.addEventListener('mousemove', (e) => {
+            cursor.style.transform = `translate(${e.clientX - 10}px, ${e.clientY - 10}px)`;
+            cursorDot.style.transform = `translate(${e.clientX - 2}px, ${e.clientY - 2}px)`;
+        });
+
+        document.addEventListener('mousedown', () => {
+            cursor.style.transform += ' scale(0.8)';
+        });
+
+        document.addEventListener('mouseup', () => {
+            cursor.style.transform = cursor.style.transform.replace(' scale(0.8)', '');
+        });
+
+        // Loading screen
+        window.addEventListener('load', () => {
+            const loadingScreen = document.querySelector('.loading-screen');
+            loadingScreen.style.opacity = '0';
+            setTimeout(() => {
+                loadingScreen.style.display = 'none';
+            }, 500);
+        });
+
+        // Scroll progress
+        window.addEventListener('scroll', () => {
+            const scrollProgress = document.querySelector('.progress-bar');
+            const scrollPercent = (window.scrollY / (document.documentElement.scrollHeight - window.innerHeight)) * 100;
+            scrollProgress.style.width = `${scrollPercent}%`;
+        });
+
+        // Intersection Observer for skill bars
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.width = entry.target.getAttribute('data-progress') + '%';
+                }
+            });
+        }, { threshold: 0.5 });
+
+        document.querySelectorAll('.skill-progress').forEach(bar => {
+            observer.observe(bar);
+        });
+    </script>
+</body>
+</html>

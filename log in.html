@@ -1,0 +1,72 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <link rel="stylesheet" href="log in.css">
+</head>
+<body>
+    <div class="login-container">
+        <div class="logo">
+            <img src="imajes/DALL·E 2024-10-11 21.14.21 - A modern logo design for a computer and gaming console store. The logo should incorporate sleek lines, a combination of technology symbols like a comp.webp" alt="TechHub Logo">
+        </div>
+        <h2 class="login-title">Login to batna informatic</h2>
+
+        <div class="login-method">
+            <form id="emailLoginForm">
+                <input type="email" id="email" placeholder="Email Address" required>
+                <input type="password" id="password" placeholder="Password" required>
+                <button type="submit" class="login-btn">Login</button>
+            </form>
+        </div>
+
+        <div class="or-divider">OR</div>
+
+        <div class="social-login">
+            <button class="social-btn" id="googleLogin">
+                <img src="imajes/google-A7roaL.jpg" alt="Google Icon">
+                Google
+            </button>
+            <button class="social-btn" id="appleLogin">
+                <img src="imajes/download.png" alt="Apple Icon">
+                Apple
+            </button>
+            <button class="social-btn" id="facebookLogin">
+                <img src="imajes/images.jpg" alt="Facebook Icon">
+                Facebook
+            </button>
+            <button class="social-btn" id="emailLogin">
+                <img src="imajes/download (1).png" alt="Email Icon">
+                Email
+            </button>
+        </div>
+
+        <div class="signup-link">
+            Don't have an account? <a href="signup.html">Sign Up</a>
+        </div>
+    </div>
+
+    <script>
+        // Simulated login handlers (would be replaced with actual authentication in a real app)
+        document.getElementById('emailLoginForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+            
+            // Basic validation
+            if (email && password) {
+                alert('Email Login Attempt: ' + email);
+                // In a real app, this would call an authentication service
+            }
+        });
+
+        // Social login event listeners
+        const socialButtons = ['googleLogin', 'appleLogin', 'facebookLogin', 'emailLogin'];
+        socialButtons.forEach(buttonId => {
+            document.getElementById(buttonId).addEventListener('click', function() {
+                let loginMethod = this.textContent.trim();
+                alert(`Attempting ${loginMethod} Login`);
+                // In a real app, this would trigger the specific OAuth flow or authentication method
+            });
+        });
+    </script>
+    
