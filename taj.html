@@ -1,0 +1,1010 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tech Haven - Premium Electronics Store</title>
+    <!-- Add Material Icons for better UI elements -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/material-design-icons/3.0.1/iconfont/material-icons.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #2563eb;
+            --primary-dark: #1d4ed8;
+            --secondary-color: #64748b;
+            --background-light: #f1f5f9;
+            --text-dark: #1e293b;
+            --success-color: #22c55e;
+            --error-color: #ef4444;
+            --card-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1);
+            --transition-speed: 0.3s;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+            line-height: 1.6;
+            color: var(--text-dark);
+            background-color: var(--background-light);
+        }
+
+        .navbar {
+            background-color: var(--primary-color);
+            color: white;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 5%;
+            box-shadow: var(--card-shadow);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            transition: all var(--transition-speed) ease;
+        }
+
+        .navbar .logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            text-decoration: none;
+            color: white;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .logo i {
+            font-size: 2rem;
+        }
+
+        .navbar-links {
+            display: flex;
+            gap: 1.5rem;
+            align-items: center;
+        }
+
+        .navbar-links a {
+            color: white;
+            text-decoration: none;
+            padding: 0.5rem 1rem;
+            border-radius: 0.5rem;
+            transition: all var(--transition-speed) ease;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .navbar-links a:hover {
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+
+        .navbar-links a i {
+            font-size: 1.25rem;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 2rem auto;
+            padding: 0 2rem;
+        }
+
+        .search-container {
+            position: relative;
+            max-width: 800px;
+            margin: 0 auto 2rem;
+        }
+
+        .search-wrapper {
+            position: relative;
+            display: flex;
+            align-items: center;
+        }
+
+        #search-input {
+            width: 100%;
+            padding: 1rem 3rem;
+            font-size: 1rem;
+            border: 2px solid #e2e8f0;
+            border-radius: 9999px;
+            outline: none;
+            transition: all var(--transition-speed) ease;
+            background-color: white;
+        }
+
+        #search-input:focus {
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+        }
+
+        .search-icon {
+            position: absolute;
+            left: 1rem;
+            color: var(--secondary-color);
+        }
+
+        .clear-search {
+            position: absolute;
+            right: 1rem;
+            background: none;
+            border: none;
+            color: var(--secondary-color);
+            cursor: pointer;
+            display: none;
+            padding: 0.25rem;
+            border-radius: 50%;
+        }
+
+        .clear-search:hover {
+            background-color: #f1f5f9;
+        }
+
+        .filters-container {
+            background-color: white;
+            padding: 1.5rem;
+            border-radius: 1rem;
+            box-shadow: var(--card-shadow);
+            margin-bottom: 2rem;
+        }
+
+        .filters-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .filters-header h2 {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: var(--text-dark);
+        }
+
+        .reset-filters {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.5rem 1rem;
+            border: none;
+            background-color: #f1f5f9;
+            color: var(--secondary-color);
+            border-radius: 0.5rem;
+            cursor: pointer;
+            transition: all var(--transition-speed) ease;
+        }
+
+        .reset-filters:hover {
+            background-color: #e2e8f0;
+        }
+
+        .filter-section {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.75rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .filter-btn {
+            background-color: white;
+            border: 2px solid #e2e8f0;
+            color: var(--text-dark);
+            padding: 0.5rem 1.25rem;
+            border-radius: 9999px;
+            cursor: pointer;
+            transition: all var(--transition-speed) ease;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .filter-btn:hover {
+            border-color: var(--primary-color);
+            color: var(--primary-color);
+        }
+
+        .filter-btn.active {
+            background-color: var(--primary-color);
+            border-color: var(--primary-color);
+            color: white;
+        }
+
+        .filter-btn i {
+            font-size: 1.25rem;
+        }
+
+        .price-filter {
+            margin-top: 1.5rem;
+            padding-top: 1.5rem;
+            border-top: 1px solid #e2e8f0;
+        }
+
+        .price-filter h3 {
+            margin-bottom: 1rem;
+            font-size: 1rem;
+            font-weight: 600;
+        }
+
+        .price-inputs {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .price-input-group {
+            flex: 1;
+        }
+
+        .price-input-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-size: 0.875rem;
+            color: var(--secondary-color);
+        }
+
+        .price-input-group input {
+            width: 100%;
+            padding: 0.75rem;
+            border: 1px solid #e2e8f0;
+            border-radius: 0.5rem;
+            font-size: 0.875rem;
+        }
+
+        .range-slider {
+            position: relative;
+            width: 100%;
+            height: 5px;
+            background: #e2e8f0;
+            border-radius: 5px;
+            margin: 2rem 0 1rem;
+        }
+
+        .range-slider .progress {
+            position: absolute;
+            height: 100%;
+            background-color: var(--primary-color);
+            border-radius: 5px;
+            pointer-events: none;
+        }
+
+        .range-slider input[type="range"] {
+            position: absolute;
+            width: 100%;
+            height: 5px;
+            background: none;
+            top: 0;
+            pointer-events: none;
+            
+        }
+
+        .range-slider input[type="range"]::-webkit-slider-thumb {
+            height: 1.25rem;
+            width: 1.25rem;
+            border-radius: 50%;
+            background: var(--primary-color);
+            pointer-events: auto;
+            -webkit-appearance: none;
+            cursor: pointer;
+            border: 3px solid white;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.2);
+        }
+
+        .product-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .product-card {
+            background-color: white;
+            border-radius: 1rem;
+            box-shadow: var(--card-shadow);
+            overflow: hidden;
+            transition: all var(--transition-speed) ease;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+        }
+
+        .product-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+        }
+
+        .product-image {
+            position: relative;
+            padding-top: 75%;
+            background-color: #f8fafc;
+        }
+
+        .product-image img {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            padding: 1rem;
+            transition: transform var(--transition-speed) ease;
+        }
+
+        .product-card:hover .product-image img {
+            transform: scale(1.05);
+        }
+
+        .product-category {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            background-color: rgba(37, 99, 235, 0.9);
+            color: white;
+            padding: 0.25rem 0.75rem;
+            border-radius: 9999px;
+            font-size: 0.75rem;
+            font-weight: 500;
+            backdrop-filter: blur(4px);
+        }
+
+        .product-details {
+            padding: 1.5rem;
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+            flex: 1;
+        }
+
+        .product-name {
+            font-size: 1.125rem;
+            font-weight: 600;
+            color: var(--text-dark);
+            display: -webkit-box;
+            
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+
+        .product-price {
+            color: var(--primary-color);
+            font-size: 1.25rem;
+            font-weight: 700;
+        }
+
+        .product-description {
+            font-size: 0.875rem;
+            color: var(--secondary-color);
+            display: -webkit-box;
+            
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+
+        .product-actions {
+            display: flex;
+            gap: 1rem;
+            margin-top: auto;
+            padding-top: 1rem;
+        }
+
+        .btn-view {
+            flex: 1;
+            background-color: var(--primary-color);
+            color: white;
+            padding: 0.75rem;
+            border-radius: 0.5rem;
+            text-decoration: none;
+            text-align: center;
+            font-weight: 500;
+            transition: background-color var(--transition-speed) ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+        }
+
+        .btn-view:hover {
+            background-color: var(--primary-dark);
+        }
+
+        .btn-cart {
+            padding: 0.75rem;
+            border-radius: 0.5rem;
+            border: 1px solid #e2e8f0;
+            background-color: white;
+            color: var(--text-dark);
+            cursor: pointer;
+            transition: all var(--transition-speed) ease;
+        }
+
+        .btn-cart:hover {
+            background-color: #f8fafc;
+            border-color: var(--primary-color);
+            color: var(--primary-color);
+        }
+
+        .no-results {
+            text-align: center;
+            padding: 4rem 2rem;
+            background-color: white;
+            border-radius: 1rem;
+            box-shadow: var(--card-shadow);
+        }
+
+        .no-results i {
+            font-size: 4rem;
+            color: var(--secondary-color);
+            margin-bottom: 1rem;
+        }
+
+        .no-results h3 {
+            font-size: 1.5rem;
+            color: var(--text-dark);
+            margin-bottom: 0.5rem;
+        }
+
+        .no-results p {
+            color: var(--secondary-color);
+            max-width: 400px;
+            margin: 0 auto;
+        }
+
+        @media (max-width: 768px) {
+            .navbar {
+                padding: 1rem 1.5rem;
+            }
+
+            .container {
+                padding: 0 1rem;
+            }
+
+            .product-grid {
+                grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+                gap: 1rem;
+            }
+
+            .filters-container {
+                padding: 1rem;
+            }
+
+            .price-inputs {
+                flex-direction: column;
+            }
+        }
+
+        /* Toast Notification Styles */
+        .toast {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            background-color: white;
+            padding: 1rem 1.5rem;
+            border-radius: 0.5rem;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            transform: translateY(100px);
+            opacity: 0;
+            transition: all 0.3s ease;
+            z-index: 1000;
+        }
+
+        .toast.show {
+            transform: translateY(0);
+            opacity: 1;
+        }
+
+        .toast.success {
+            border-left: 4px solid var(--success-color);
+        }
+
+        .toast.error {
+            border-left: 4px solid var(--error-color);
+        }
+
+        .toast i {
+            font-size: 1.5rem;
+        }
+
+        .toast.success i {
+            color: var(--success-color);
+        }
+
+        .toast.error i {
+            color: var(--error-color);
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <a href="saf7a raaisia.htm" class="logo">
+            <i class="material-icons">store</i>
+            batna infirmatique
+        </a>
+        <div class="navbar-links">
+            <a href="saf7a raaisia.htm">
+                <i class="material-icons">home</i>
+                Home
+            </a>
+            <a href="signup.html">
+                <i class="material-icons">person_add</i>
+                Sign Up
+            </a>
+            <a href="build your pc.html">
+                <i class="material-icons">computer</i>
+                Build PC
+            </a>
+            <a href="cart.html">
+                <i class="material-icons">shopping_cart</i>
+                Cart
+            </a>
+        </div>
+    </nav>
+
+    <div class="container">
+        <div class="search-container">
+            <div class="search-wrapper">
+                <i class="material-icons search-icon">search</i>
+                <input type="text" id="search-input" placeholder="Search products by name, category, or tags...">
+                <button class="clear-search">
+                    <i class="material-icons">close</i>
+                </button>
+            </div>
+        </div>
+
+        <div class="filters-container">
+            <div class="filters-header">
+                <h2>Filters</h2>
+                <button class="reset-filters">
+                    <i class="material-icons">restart_alt</i>
+                    Reset All
+                </button>
+            </div>
+
+            <div class="filter-section">
+                <button class="filter-btn active" data-category="all">
+                    <i class="material-icons">apps</i>
+                    All Products
+                </button>
+                <button class="filter-btn" data-category="Computer">
+                    <i class="material-icons">computer</i>
+                    Computers
+                </button>
+                <button class="filter-btn" data-category="Console">
+                    <i class="material-icons"></i>
+                    Console
+                </button>
+                <button class="filter-btn" data-category="asus">
+                    <i class="material-icons">laptop</i>
+                    ASUS
+                </button>
+                <button class="filter-btn" data-category="MSI">
+                    <i class="material-icons">laptop_mac</i>
+                    MSI
+                </button>
+            </div>
+
+            <div class="price-filter">
+                <h3>Price Range</h3>
+                <div class="price-inputs">
+                    <div class="price-input-group">
+                        <label for="min-price">Min Price ($)</label>
+                        <input type="number" id="min-price" placeholder="0" min="0">
+                    </div>
+                    <div class="price-input-group">
+                        <label for="max-price">Max Price ($)</label>
+                        <input type="number" id="max-price" placeholder="220000" min="0">
+                    </div>
+                </div>
+                <div class="range-slider">
+                    <div class="progress"></div>
+                    <input type="range" id="price-min" min="0" max="220000" value="0">
+                    <input type="range" id="price-max" min="0" max="220000" value="220000">
+                </div>
+            </div>
+        </div>
+
+        <div id="product-container" class="product-grid">
+            <!-- Products will be dynamically added here -->
+        </div>
+
+        <div id="no-results" class="no-results" style="display: none;">
+            <i class="material-icons">search_off</i>
+            <h3>No Products Found</h3>
+            <p>Try adjusting your search or filter criteria to find what you're looking for.</p>
+        </div>
+    </div>
+
+    <div id="toast" class="toast">
+        <i class="material-icons">check_circle</i>
+        <span id="toast-message"></span>
+    </div>
+
+    <script>
+        // Enhanced product data
+        const products = [
+        {
+                id: 1,
+                name: 'Gaming PC Pro white',
+                price: 220000.00,
+                image: 'imajes/shop/wite pc.jpg',
+                description: 'High-end gaming PC with latest Intel Core i9 processor, NVIDIA RTX 4080 GPU, 32GB RAM, 1TB SSD.',
+                category: 'Computer',
+                tags: ['gaming', 'pc', 'high-end']
+            },
+            {
+                id: 2,
+                name: 'PlayStation 5 pro',
+                price: 799.99,
+                image: './imajes/Sony-PlayStation-Pro-5.webp',
+                description: 'Latest Sony PlayStation 5 console with ultra-high speed SSD and integrated custom I/O.',
+                category: 'Console',
+                tags: ['sony', 'gaming', 'console']
+            },
+            {
+                id: 3,
+                name: 'Xbox Series X',
+                price: 538.99 ,
+                image: '/imajes/shop/xbox.jpg',
+                description: 'Microsoft Xbox Series X with powerful gaming performance and backward compatibility.Xbox Series X + Manette Xbox Noire Sans Fil - Carbon Black',
+                category: 'Console',
+                tags: ['microsoft', 'gaming', 'console']
+            },
+            {
+                id: 4,
+                name: 'Dell XPS 16',
+                price: 1299.99,
+                image: 'imajes/shop/dell.jpg',
+                description: 'Dell XPS 16 9640 Ordinateur Portable 16.3" OLED UHD+ Tactile, Édition Intel Evo - Processeur Intel Core Ultra 9, Graphique NVIDIA GeForce RTX 4070, RAM 32Go, SSD 1To, Windows 11 Home, Clavier Français.',
+                category: 'Computer',
+                tags: ['laptop', 'work', 'business']
+            },
+            {
+                id: 5,
+                name: 'Gaming Chair',
+                price: 129.99,
+                image:'imajes/71y9SgG-XaS._AC_SX679_.jpg',
+                description: 'Ergonomic gaming chair with adjustable armrests, reclining function,',
+                category: 'gaming chair',
+                tags: ['gaming', 'chair', 'ergonomic']
+            },
+            {
+                id: 6,
+                name: 'ASUS ROG Ally X',
+                price: 879.00,
+                image:'imajes/shop/rog ally.jpg',
+                description:'gaming pc portal',
+                category: 'asus',
+                tags: ['mini pc','gaming','rog','asus']
+            },
+            {
+                id: 7,
+                name: 'rtx 4090',
+                price: 1999.99,
+                image: './imajes/asus-rog-strix-geforce-rtx-4090-oc-edition-24gb.jpg',
+                description:'gaming pc portal',
+                category: 'asus',
+                tags: [' pc','gaming','rog','asus','nvidia']
+            },
+            {
+                id: 8,
+                name: 'Gaming PC Pro black',
+                price: 1499.99,
+                image: 'imajes/819cOVjBRRL.jpg',
+                description: 'High-end gaming PC with latest Intel Core i9 processor, NVIDIA RTX 4080 GPU, 32GB RAM, 1TB SSD.',
+                category: 'Computer',
+                tags: ['gaming', 'pc', 'high-end']
+            },
+            {
+                id: 9,
+                name: 'Manette pour PS5 et PC',
+                price: 219.99,
+                image: 'imajes/shop/mannete ps5.jpg',
+                description: 'Sony, Manette DualSense Edge Officielle pour PS5 et PC, Sans Fil, Commandes Ultra-Personnalisables + Profils Interchangeables + Confort Amélioré, Boîte de Transport Incluse, Couleur : Blanche et Noire',
+                category: 'Console',
+                tags: ['gaming', 'Console', 'playstation','controler']
+            },
+            {
+                id: 10,
+                name: 'manette pour xbox',
+                price: 50,
+                image: 'imajes/shop/xbox series x controller.jpg',
+                description: 'Manette pour Xbox, sans fil, avec boutons personnalisables, confort',
+                category: 'Console',
+                tags: ['gaming', 'Console', 'xbox','controler']
+            },
+            {
+                id:11,
+                name: 'astrobot',
+                price:53,
+                image: 'imajes/shop/astrobot.jpg',
+                description:'Sony, Astro Bot PS5, Jeu Plateforme-Aventure, Édition Standard, Version Physique avec CD, En Français, 1 joueur, PEGI 7, Pour PlayStation 5 Golden Joystick Winner',
+                category: 'Console',
+                tags: ['gaming', 'Console', 'playstation','astrobot']
+            },
+            {
+                id: 12,
+                name: 'ps5 pro 30 th',
+                price: 799.99,
+                image: 'imajes/shop/ps5 pro 30th.jpg',
+                description: 'PS5, Console de Jeu Vidéo, Édition Standard, Version Phys',
+                category: 'Console',
+                tags:['sony', 'gaming', 'console']
+            },
+            {
+                id:13,
+                name: 'reyzen 9',
+                price:623,
+                image: 'imajes/shop/r9.jpg',
+                description: '',
+                tags: ['gaming', 'pc', 'reyzen'],
+                category: 'Computer',
+            },
+            {
+                id:14,
+                name:'i9 14th',
+                price :400,
+                image: 'imajes/shop/intel-14th-Gen-Core-i9.webp',
+                description: '',
+                tags: ['gaming', 'pc', 'intel'],
+                category: 'Computer',                
+            },
+            {
+                id:15,
+                name:'asus laptop',
+                price :200000,
+                image: '/imajes/shop/asus lap.webp',
+                description: 'اسس لابتوب العاب روج ستريكس G16 (2024)، شاشة 16 انش 16:10 FHD 165Hz، انفيديا جيفورس RTX™ 4060، انتل كور i7-13650HX، 16GB DDR5، 1TB PCIe الجيل الرابع SSD، واي فاي 6E، ويندوز 11، G614JV-AS74',
+                tags: ['gaming', 'pc', 'asus'],
+                category: 'asus',
+            },
+            {
+                id:16,
+                name:'asus carte mere',
+                price :279,
+                image: '/imajes/shop/carte mere asus.jpg',
+                description: 'ROG Strix Z790-F WiFi II LGA 1700 (Intel 14th, 13th, 12th Gen) ATX Gaming Motherboard (DDR5, 2.5GB LAN, 5XM.2, PCIe 5.0×16, WiFi 7, Front Panel Connector with PD 3.0 up to 30W)',
+                tags: ['gaming', 'pc', 'asus'],
+                category: 'asus',
+            },
+            {
+                id:17,
+                name:'msi pc',
+                price :279,
+                image: '/imajes/shop/msi pc.jpg',
+                description: 'ROG Strix Z790-F WiFi II LGA 1700 (Intel 14th, 13th, 12th Gen) ATX Gaming Motherboard (DDR5, 2.5GB LAN, 5XM.2, PCIe 5.0×16, WiFi 7, Front Panel Connector with PD 3.0 up to 30W)',
+                tags: ['gaming', 'pc', 'asus'],
+                category: 'MSI',
+            },
+            {
+                id: 18,
+                name: 'Gaming PC Pro White Edition',
+                price: 220000.00,
+                image: '/api/placeholder/400/400',
+                description: 'High-end gaming PC featuring the latest Intel Core i9 processor, NVIDIA RTX 4080 GPU, 32GB DDR5 RAM, and 2TB NVMe SSD.',
+                category: 'Computer',
+                tags: ['gaming', 'pc', 'high-end', 'intel', 'nvidia'],
+                specs: {
+                    processor: 'Intel Core i9-13900K',
+                    gpu: 'NVIDIA RTX 4080 16GB',
+                    ram: '32GB DDR5',
+                    storage: '2TB NVMe SSD'
+                }
+            },
+            // Add more products here as needed
+        ];
+
+        // DOM Elements
+        const searchInput = document.getElementById('search-input');
+        const clearSearchBtn = document.querySelector('.clear-search');
+        const filterBtns = document.querySelectorAll('.filter-btn');
+        const resetFiltersBtn = document.querySelector('.reset-filters');
+        const priceMin = document.getElementById('price-min');
+        const priceMax = document.getElementById('price-max');
+        const inputMin = document.getElementById('min-price');
+        const inputMax = document.getElementById('max-price');
+        const progress = document.querySelector('.range-slider .progress');
+        const toast = document.getElementById('toast');
+        const toastMessage = document.getElementById('toast-message');
+
+        // Initialize price range slider
+        function initializePriceRange() {
+            const min = parseInt(priceMin.value);
+            const max = parseInt(priceMax.value);
+            const percent1 = (min / parseInt(priceMin.max)) * 100;
+            const percent2 = (max / parseInt(priceMax.max)) * 100;
+            progress.style.left = percent1 + '%';
+            progress.style.right = (100 - percent2) + '%';
+        }
+
+        // Update range slider progress
+        function updateRangeProgress() {
+            const min = parseInt(priceMin.value);
+            const max = parseInt(priceMax.value);
+            const percent1 = (min / parseInt(priceMin.max)) * 100;
+            const percent2 = (max / parseInt(priceMax.max)) * 100;
+            progress.style.left = percent1 + '%';
+            progress.style.right = (100 - percent2) + '%';
+        }
+
+        // Format price
+        function formatPrice(price) {
+            return new Intl.NumberFormat('en-US', {
+                style: 'currency',
+                currency: 'USD'
+            }).format(price);
+        }
+
+        // Create product cards
+        function createProductCards(productsToShow) {
+            const container = document.getElementById('product-container');
+            const noResultsDiv = document.getElementById('no-results');
+            
+            container.innerHTML = '';
+            
+            if (productsToShow.length === 0) {
+                noResultsDiv.style.display = 'block';
+                return;
+            }
+            
+            noResultsDiv.style.display = 'none';
+            
+            productsToShow.forEach(product => {
+                const card = document.createElement('div');
+                card.classList.add('product-card');
+                
+                card.innerHTML = `
+                    <div class="product-image">
+                        <img src="${product.image}" alt="${product.name}">
+                        <span class="product-category">${product.category}</span>
+                    </div>
+                    <div class="product-details">
+                        <h3 class="product-name">${product.name}</h3>
+                        <p class="product-price">${formatPrice(product.price)}</p>
+                        <p class="product-description">${product.description}</p>
+                        <div class="product-actions">
+                            <a href="/dials${product.id}.html" class="btn-view">
+                                <i class="material-icons">visibility</i>
+                                View Details
+                            </a>
+                            <button class="btn-cart" onclick="addToCart(${product.id})">
+                                <i class="material-icons">add_shopping_cart</i>
+                            </button>
+                        </div>
+                    </div>
+                `;
+                
+                container.appendChild(card);
+            });
+        }
+
+        // Filter products
+        function filterProducts() {
+            const searchText = searchInput.value.toLowerCase();
+            const activeCategory = document.querySelector('.filter-btn.active').dataset.category;
+            const minPrice = Number(priceMin.value);
+            const maxPrice = Number(priceMax.value);
+            
+            const filteredProducts = products.filter(product => {
+                const matchesSearch = 
+                    product.name.toLowerCase().includes(searchText) ||
+                    product.description.toLowerCase().includes(searchText) ||
+                    product.tags.some(tag => tag.toLowerCase().includes(searchText));
+                
+                const matchesCategory = 
+                    activeCategory === 'all' || 
+                    product.category.toLowerCase() === activeCategory.toLowerCase();
+                
+                const matchesPrice = 
+                    product.price >= minPrice && 
+                    product.price <= maxPrice;
+                
+                return matchesSearch && matchesCategory && matchesPrice;
+            });
+            
+            createProductCards(filteredProducts);
+        }
+
+        // Show toast notification
+        function showToast(message, type = 'success') {
+            toast.className = `toast ${type}`;
+            toastMessage.textContent = message;
+            toast.classList.add('show');
+            
+            setTimeout(() => {
+                toast.classList.remove('show');
+            }, 3000);
+        }
+
+        // Add to cart functionality
+        function addToCart(productId) {
+            // Add your cart logic here
+            showToast('Product added to cart successfully');
+        }
+
+        // Event Listeners
+        searchInput.addEventListener('input', () => {
+            clearSearchBtn.style.display = searchInput.value ? 'block' : 'none';
+            filterProducts();
+        });
+
+        clearSearchBtn.addEventListener('click', () => {
+            searchInput.value = '';
+            clearSearchBtn.style.display = 'none';
+            filterProducts();
+        });
+
+        filterBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                filterBtns.forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                filterProducts();
+            });
+        });
+
+        resetFiltersBtn.addEventListener('click', () => {
+            searchInput.value = '';
+            clearSearchBtn.style.display = 'none';
+            filterBtns.forEach(btn => {
+                btn.classList.remove('active');
+                if (btn.dataset.category === 'all') {
+                    btn.classList.add('active');
+                }
+            });
+            priceMin.value = 0;
+            priceMax.value = 220000;
+            inputMin.value = '';
+            inputMax.value = '';
+            updateRangeProgress();
+            filterProducts();
+            showToast('Filters have been reset');
+        });
+
+        // Price range event listeners
+        priceMin.addEventListener('input', () => {
+            const minVal = parseInt(priceMin.value);
+            const maxVal = parseInt(priceMax.value);
+            
+            if (minVal > maxVal) {
+                priceMin.value = maxVal;
+            }
+            
+            inputMin.value = priceMin.value;
+            updateRangeProgress();
+            filterProducts();
+        });
+
+        priceMax.addEventListener('input', () => {
+            const minVal = parseInt(priceMin.value);
+            const maxVal = parseInt(priceMax.value);
+            
+            if (maxVal < minVal) {
+                priceMax.value = minVal;
+            }
+            
+            inputMax.value = priceMax.value;
+            updateRangeProgress();
+            filterProducts();
+        });
+
+        inputMin.addEventListener('input', () => {
+            const value = Math.min(parseInt(inputMin.value) || 0, parseInt(priceMax.value));
+            priceMin.value = value;
+            updateRangeProgress();
+            filterProducts();
+        });
+
+        inputMax.addEventListener('input', () => {
+            const value = Math.max(parseInt(inputMax.value) || 0, parseInt(priceMin.value));
+            priceMax.value = value;
+            updateRangeProgress();
+            filterProducts();
+        });
+
+        // Initialize
+        initializePriceRange();
+        createProductCards(products);
+    </script>
+</body>
+</html>

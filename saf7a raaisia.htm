@@ -1,0 +1,964 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TechHub - Premium Computers & Gaming Consoles</title>
+    <style>
+        :root {
+            --primary-color: #2563eb;
+            --secondary-color: #1e40af;
+            --accent-color: #22c55e;
+            --dark-bg: #1f2937;
+            --light-bg: #f3f4f6;
+            --text-light: #f9fafb;
+            --text-dark: #111827;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Arial, sans-serif;
+        }
+
+        body {
+            background-color: var(--light-bg);
+        }
+
+        /* Announcement Bar */
+        .announcement {
+            background-color: var(--accent-color);
+            color: white;
+            text-align: center;
+            padding: 0.5rem;
+            font-weight: bold;
+        }
+
+        header {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: var(--text-light);
+            padding: 1.5rem;
+            text-align: center;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .header-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 2rem;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .search-bar {
+            flex-grow: 1;
+            max-width: 500px;
+            margin: 0 2rem;
+        }
+
+        .search-bar input {
+            width: 100%;
+            padding: 0.8rem;
+            border-radius: 25px;
+            border: none;
+            outline: none;
+        }
+
+        nav {
+            background-color: var(--dark-bg);
+            padding: 1rem;
+            position: sticky;
+            top: 80px;
+            z-index: 99;
+        }
+
+        nav ul {
+            list-style: none;
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        nav a {
+            color: var(--text-light);
+            text-decoration: none;
+            font-weight: bold;
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+            transition: all 0.3s;
+        }
+
+        nav a:hover {
+            background-color: var(--primary-color);
+            transform: translateY(-2px);
+        }
+
+        .hero {
+            background-image: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url('/api/placeholder/1200/400');
+            background-size: cover;
+            background-position: center;
+            height: 500px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-light);
+            text-align: center;
+            padding: 2rem;
+            position: relative;
+        }
+
+        .hero-content {
+            max-width: 800px;
+        }
+
+        .hero h2 {
+            font-size: 3.5rem;
+            margin-bottom: 1rem;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+        }
+
+        .categories {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            padding: 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .category-card {
+            background-color: white;
+            border-radius: 8px;
+            padding: 1.5rem;
+            text-align: center;
+            transition: all 0.3s;
+            cursor: pointer;
+        }
+
+        .category-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+        }
+
+        .featured {
+            padding: 4rem 2rem;
+            background-color: white;
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 3rem;
+            color: var(--text-dark);
+        }
+
+        .section-title h2 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .products {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .product-card {
+            background-color: white;
+            border-radius: 12px;
+            padding: 1.5rem;
+            text-align: center;
+            transition: all 0.3s;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+        }
+
+        .product-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.1);
+        }
+
+        .product-badge {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            background-color: var(--accent-color);
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-size: 0.9rem;
+        }
+
+        .product-image {
+            width: 100%;
+            height: 250px;
+            object-fit: cover;
+            border-radius: 8px;
+            margin-bottom: 1.5rem;
+        }
+
+        .product-title {
+            font-size: 1.3rem;
+            margin-bottom: 0.8rem;
+            color: var(--text-dark);
+        }
+
+        .product-price {
+            color: var(--accent-color);
+            font-weight: bold;
+            font-size: 1.4rem;
+            margin-bottom: 1rem;
+        }
+
+        .product-specs {
+            margin: 1rem 0;
+            text-align: left;
+            color: #666;
+        }
+
+        .cta-button {
+            display: inline-block;
+            background-color: var(--primary-color);
+            color: white;
+            padding: 1rem 2rem;
+            border-radius: 25px;
+            text-decoration: none;
+            font-weight: bold;
+            transition: all 0.3s;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .cta-button:hover {
+            background-color: var(--secondary-color);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+
+        .testimonials {
+            background-color: var(--dark-bg);
+            color: var(--text-light);
+            padding: 4rem 2rem;
+        }
+
+        .testimonial-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .testimonial-card {
+            background-color: rgba(255,255,255,0.1);
+            padding: 2rem;
+            border-radius: 8px;
+            backdrop-filter: blur(10px);
+        }
+
+        .newsletter {
+            background-color: var(--primary-color);
+            color: var(--text-light);
+            padding: 4rem 2rem;
+            text-align: center;
+        }
+
+        .newsletter-form {
+            max-width: 500px;
+            margin: 2rem auto;
+            display: flex;
+            gap: 1rem;
+        }
+
+        .newsletter-form input {
+            flex-grow: 1;
+            padding: 1rem;
+            border: none;
+            border-radius: 25px;
+            outline: none;
+        }
+
+        footer {
+            background-color: var(--dark-bg);
+            color: var(--text-light);
+            padding: 4rem 2rem 2rem;
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+            max-width: 1200px;
+            margin: 0 auto 2rem;
+        }
+
+        .footer-column h3 {
+            margin-bottom: 1rem;
+            font-size: 1.2rem;
+        }
+
+        .footer-column ul {
+            list-style: none;
+        }
+
+        .footer-column ul li {
+            margin-bottom: 0.5rem;
+        }
+
+        .footer-column a {
+            color: var(--text-light);
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .footer-column a:hover {
+            color: var(--accent-color);
+        }
+
+        .copyright {
+            text-align: center;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(255,255,255,0.1);
+        }
+
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            .search-bar {
+                width: 100%;
+                margin: 1rem 0;
+            }
+
+            nav ul {
+                flex-wrap: wrap;
+                gap: 1rem;
+            }
+
+            .hero h2 {
+                font-size: 2.5rem;
+            }
+
+            .newsletter-form {
+                flex-direction: column;
+            }
+        }
+
+
+
+        :root {
+            --primary-color: #2563eb;
+            --secondary-color: #1e40af;
+            --accent-color: #22c55e;
+            --dark-bg: #1f2937;
+            --light-bg: #f3f4f6;
+            --text-light: #f9fafb;
+            --text-dark: #111827;
+            --error-color: #ef4444;
+            --success-color: #10b981;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Arial, sans-serif;
+        }
+
+        body {
+            background-color: var(--light-bg);
+            line-height: 1.6;
+        }
+
+        /* Improved Announcement Bar */
+        .announcement {
+            background-color: var(--accent-color);
+            color: white;
+            text-align: center;
+            padding: 0.75rem;
+            font-weight: bold;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .announcement::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            animation: shine 3s infinite;
+        }
+
+        @keyframes shine {
+            to {
+                left: 100%;
+            }
+        }
+
+        /* Enhanced Header */
+        header {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: var(--text-light);
+            padding: 1.5rem;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+        }
+
+        .header-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 2rem;
+        }
+
+        .logo {
+            font-size: 2rem;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+            transition: transform 0.3s;
+        }
+
+        .logo:hover {
+            transform: scale(1.05);
+        }
+
+        /* Improved Search Bar */
+        .search-container {
+            flex-grow: 1;
+            max-width: 600px;
+            position: relative;
+        }
+
+        .search-bar {
+            width: 100%;
+            padding: 1rem 1.5rem;
+            border-radius: 30px;
+            border: 2px solid transparent;
+            outline: none;
+            font-size: 1rem;
+            transition: all 0.3s;
+            background-color: rgba(255,255,255,0.95);
+        }
+
+        .search-bar:focus {
+            border-color: var(--accent-color);
+            box-shadow: 0 0 0 4px rgba(34,197,94,0.2);
+        }
+
+        /* Enhanced Navigation */
+        nav {
+            background-color: var(--dark-bg);
+            padding: 1rem;
+            position: sticky;
+            top: 80px;
+            z-index: 99;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
+
+        nav ul {
+            list-style: none;
+            display: flex;
+            justify-content: center;
+            gap: 2.5rem;
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 1rem;
+        }
+
+        nav a {
+            color: var(--text-light);
+            text-decoration: none;
+            font-weight: 600;
+            padding: 0.75rem 1.5rem;
+            border-radius: 8px;
+            transition: all 0.3s;
+            position: relative;
+        }
+
+        nav a::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 50%;
+            width: 0;
+            height: 2px;
+            background-color: var(--accent-color);
+            transition: all 0.3s;
+            transform: translateX(-50%);
+        }
+
+        nav a:hover::after {
+            width: 80%;
+        }
+
+        nav a:hover {
+            background-color: rgba(37,99,235,0.2);
+            transform: translateY(-2px);
+        }
+
+        /* Improved Hero Section */
+        .hero {
+            background-image: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), url('/api/placeholder/1920/600');
+            background-size: cover;
+            background-position: center;
+            height: 600px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-light);
+            text-align: center;
+            padding: 2rem;
+            position: relative;
+        }
+
+        .hero-content {
+            max-width: 900px;
+            animation: fadeIn 1s ease-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .hero h2 {
+            font-size: 4rem;
+            margin-bottom: 1.5rem;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+            line-height: 1.2;
+        }
+
+        .hero p {
+            font-size: 1.4rem;
+            margin-bottom: 2.5rem;
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        /* Enhanced Product Cards */
+        .product-card {
+            background-color: white;
+            border-radius: 16px;
+            padding: 2rem;
+            text-align: center;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .product-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.12);
+        }
+
+        .product-image {
+            width: 100%;
+            height: 300px;
+            object-fit: cover;
+            border-radius: 12px;
+            margin-bottom: 1.5rem;
+            transition: transform 0.4s;
+        }
+
+        .product-card:hover .product-image {
+            transform: scale(1.05);
+        }
+
+        .product-badge {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            background-color: var(--accent-color);
+            color: white;
+            padding: 0.6rem 1.2rem;
+            border-radius: 25px;
+            font-size: 0.9rem;
+            font-weight: bold;
+            box-shadow: 0 4px 12px rgba(34,197,94,0.2);
+        }
+
+        /* Enhanced CTA Button */
+        .cta-button {
+            display: inline-block;
+            background-color: var(--primary-color);
+            color: white;
+            padding: 1rem 2.5rem;
+            border-radius: 30px;
+            text-decoration: none;
+            font-weight: bold;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            border: none;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .cta-button::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 300%;
+            height: 300%;
+            background: rgba(255,255,255,0.1);
+            transform: translate(-50%, -50%) scale(0);
+            border-radius: 50%;
+            transition: transform 0.6s;
+        }
+
+        .cta-button:hover::after {
+            transform: translate(-50%, -50%) scale(1);
+        }
+
+        .cta-button:hover {
+            background-color: var(--secondary-color);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(37,99,235,0.3);
+        }
+
+        /* Responsive Design Improvements */
+        @media (max-width: 1024px) {
+            .hero h2 {
+                font-size: 3rem;
+            }
+
+            .products {
+                grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            }
+        }
+
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                gap: 1.5rem;
+            }
+
+            .search-container {
+                width: 100%;
+            }
+
+            nav ul {
+                flex-direction: column;
+                align-items: center;
+                gap: 1rem;
+            }
+
+            .hero h2 {
+                font-size: 2.5rem;
+            }
+
+            .hero p {
+                font-size: 1.2rem;
+            }
+
+            .newsletter-form {
+                flex-direction: column;
+                gap: 1rem;
+            }
+        }
+
+        /* Loading State */
+        .loading {
+            position: relative;
+        }
+
+        .loading::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            animation: loading 1.5s infinite;
+        }
+
+        @keyframes loading {
+            0% { transform: translateX(-100%); }
+            100% { transform: translateX(100%); }
+        }
+
+        /* Cart Badge */
+        .cart-badge {
+            position: relative;
+            display: inline-block;
+        }
+
+        .cart-count {
+            position: absolute;
+            top: -8px;
+            right: -8px;
+            background-color: var(--accent-color);
+            color: white;
+            border-radius: 50%;
+            width: 20px;
+            height: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.8rem;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div class="announcement">
+        🚀 Special Launch Day Offer: Free Shipping on Orders Over $999! Limited Time Only
+    </div>
+
+    <header>
+        <div class="header-content">
+            <div class="logo">Batna informatic</div>
+            <div class="search-bar">
+                <input type="search" placeholder="Search for products...">
+            </div>
+            <div class="header-actions">
+                <a href="cart.html" class="cta-button">Cart (0)</a>
+            </div>
+        </div>
+    </header>
+
+    <nav>
+        <ul>
+            <li><a href="#home">Home</a></li>
+            <li><a href="taj.html">Shop</a></li>
+            <li><a href="signup.html">sign up</a></li>
+            <li><a href="build your pc.html">build your pc</a></li>
+            <li><a href="about us .html">Deals</a></li>
+        </ul>
+    </nav>
+
+    <section class="hero">
+        <div class="hero-content">
+            <h2>Level Up Your Gaming Experience</h2>
+            <p>Discover cutting-edge gaming PCs, laptops, and consoles built for performance</p>
+            <a href="#featured" class="cta-button">Explore Latest Deals</a>
+        </div>
+    </section>
+
+    <section class="categories">
+        <div class="category-card">
+            <h3>Gaming PCs</h3>
+            <p>Custom-built for victory</p>
+        </div>
+        <div class="category-card">
+            <h3>Gaming Laptops</h3>
+            <p>Power on the go</p>
+        </div>
+        <div class="category-card">
+            <h3>Consoles</h3>
+            <p>Next-gen gaming</p>
+        </div>
+        <div class="category-card">
+            <h3>Accessories</h3>
+            <p>Complete your setup</p>
+        </div>
+    </section>
+
+    <section class="featured">
+        <div class="section-title">
+            <h2>Featured Products</h2>
+            <p>Hand-picked premium gaming gear</p>
+        </div>
+        <div class="products">
+            <div class="product-card">
+                <span class="product-badge">Best Seller</span>
+                <img src="./imajes/81Lo+w55+6L.jpg" alt="Ultimate Gaming PC" class="product-image">
+                <h3 class="product-title">Ultimate Gaming PC</h3>
+                <div class="product-specs">
+                    <p>• RTX 4080 Graphics</p>
+                    <p>• Intel i9 Processor</p>
+                    <p>• 32GB DDR5 RAM</p>
+                </div>
+                <p class="product-price">$2,499.99</p>
+                <a href="#" class="cta-button">Add to Cart</a>
+            </div>
+            <div class="product-card">
+                <span class="product-badge">New</span>
+                <img src="imajes/shop/dell.jpg" alt="Pro Gaming Laptop" class="product-image">
+                <h3 class="product-title">Pro Gaming Laptop</h3>
+                <div class="product-specs">
+                    <p>• RTX 4070 Mobile</p>
+                    <p>• AMD Ryzen 9</p>
+                    <p>• 16GB DDR5 RAM</p>
+                </div>
+                <p class="product-price">$1,899.99</p>
+                <a href="#" class="cta-button">Add to Cart</a>
+            </div>
+            <div class="product-card">
+                <span class="product-badge">Popular</span>
+                <img src="imajes/shop/pc.jpg" alt="Next-Gen Console" class="product-image">
+                <h3 class="product-title">gaming pc</h3>
+                <div class="product-specs">
+                    <p>• i9 14900k</p>
+                    <p>• 1TB SSD</p>
+                    <p>• RTX 4090</p>
+                </div>
+                <p class="product-price">$</p>
+                <a href="#" class="cta-button">Add to Cart</a>
+            </div>
+        </div>
+    </section>
+
+    <section class="testimonials">
+        <div class="section-title">
+            <h2>What Gamers Say</h2>
+            <p>Real reviews from our community</p>
+        </div>
+        <div class="testimonial-grid">
+            <div class="testimonial-card">
+                <p>"Best gaming PC I've ever owned. The performance is incredible!"</p>
+                <h4>Alex M.</h4>
+                <p>Verified Buyer</p>
+            </div>
+            <div class="testimonial-card">
+                <p>"The customer service team went above and beyond to help me choose the perfect setup."</p>
+                <h4>Sarah K.</h4>
+                <p>Verified Buyer</p>
+            </div>
+            <div class="testimonial-card">
+                <p>"Fast shipping and the gaming laptop exceeds all my expectations."</p>
+                <h4>James R.</h4>
+                <p>Verified Buyer</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="newsletter">
+        <h2>Stay in the Game</h2>
+        <p>Subscribe for exclusive deals, latest tech news, and gaming updates</p>
+        <form class="newsletter-form">
+            <input type="email" placeholder="Enter your email address">
+            <button type="submit" class="cta-button">Subscribe</button>
+        </form>
+    </section>
+
+    <section class="featured">
+        <div class="section-title">
+            <h2>Latest Arrivals</h2>
+            <p>Fresh from the factory</p>
+        </div>
+        <div class="products">
+            <div class="product-card">
+                <span class="product-badge">New Arrival</span>
+                <img src="/imajes/shop/souris.jpg" alt="Premium Gaming Mouse" class="product-image">
+                <h3 class="product-title">Elite Gaming Mouse</h3>
+                <div class="product-specs">
+                    <p>• 26K DPI Sensor</p>
+                    <p>• Wireless Technology</p>
+                    <p>• 70hr Battery Life</p>
+                </div>
+                <p class="product-price">$129.99</p>
+                <a href="#" class="cta-button">Add to Cart</a>
+            </div>
+            <div class="product-card">
+                <span class="product-badge">New Arrival</span>
+                <img src="/imajes/shop/asus monior.jpg" alt="Gaming Monitor" class="product-image">
+                <h3 class="product-title">4K Gaming Monitor</h3>
+                <div class="product-specs">
+                    <p>• 32" 4K Display</p>
+                    <p>• 144Hz Refresh Rate</p>
+                    <p>• 1ms Response Time</p>
+                </div>
+                <p class="product-price">$699.99</p>
+                <a href="#" class="cta-button">Add to Cart</a>
+            </div>
+            <div class="product-card">
+                <span class="product-badge">New Arrival</span>
+                <img src="/imajes/shop/headset gaming.jpg" alt="Gaming Headset" class="product-image">
+                <h3 class="product-title">Pro Gaming Headset</h3>
+                <div class="product-specs">
+                    <p>• 7.1 Surround Sound</p>
+                    <p>• Noise Cancelling</p>
+                    <p>• Memory Foam Ears</p>
+                </div>
+                <p class="product-price">$199.99</p>
+                <a href="#" class="cta-button">Add to Cart</a>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="footer-grid">
+            <div class="footer-column">
+                <h3>About TechHub</h3>
+                <ul>
+                    <li><a href="#about">About Us</a></li>
+                    <li><a href="#careers">Careers</a></li>
+                    <li><a href="#press">Press</a></li>
+                    <li><a href="#blog">Blog</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>Support</h3>
+                <ul>
+                    <li><a href="#contact">Contact Us</a></li>
+                    <li><a href="#faq">FAQ</a></li>
+                    <li><a href="#shipping">Shipping Info</a></li>
+                    <li><a href="#returns">Returns</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>Services</h3>
+                <ul>
+                    <li><a href="er.html">Custom PC Build</a></li>
+                    <li><a href="#repair">Repair Services</a></li>
+                    <li><a href="#warranty">Extended Warranty</a></li>
+                    <li><a href="#trade">Trade-In Program</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>Connect</h3>
+                <ul>
+                    <li><a href="#facebook">Facebook</a></li>
+                    <li><a href="https://x.com/LouaiYoub1411">X</a></li>
+                    <li><a href="https://www.instagram.com/l_y_10_8/">Instagram</a></li>
+                    <li><a href="https://discord.com/channels/@me">Discord</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="copyright">
+            <p>&copy; 2025 TechHub. All rights reserved.</p>
+            <p>Terms & Conditions | Privacy Policy | Sitemap</p>
+        </div>
+    </footer>
+</body>
+</html>
