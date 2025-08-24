@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" dir="ltr">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -39,12 +39,58 @@
             --contact-form-bg: rgba(30, 30, 30, 0.3);
         }
         
+        /* RTL Support */
+        [dir="rtl"] {
+            text-align: right;
+        }
+        
+        [dir="rtl"] .nav-container {
+            direction: rtl;
+        }
+        
+        [dir="rtl"] .nav-menu li {
+            margin-left: 0;
+            margin-right: 2rem;
+        }
+        
+        [dir="rtl"] .theme-toggle {
+            margin-left: 0;
+            margin-right: 1.5rem;
+        }
+        
+        [dir="rtl"] .about-content h2::after,
+        [dir="rtl"] .contact-info h2::after,
+        [dir="rtl"] .footer-col h3::after {
+            left: auto;
+            right: 0;
+        }
+        
+        [dir="rtl"] .contact-details i {
+            margin-right: 0;
+            margin-left: 1rem;
+        }
+        
+        [dir="rtl"] .social-links a,
+        [dir="rtl"] .social-icons a {
+            margin: 0 0 0 0.5rem;
+        }
+        
+        [dir="rtl"] .footer-col ul li a:hover {
+            padding-left: 0;
+            padding-right: 5px;
+        }
+        
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             scroll-behavior: smooth;
+        }
+        
+        /* Arabic font support */
+        [lang="ar"], [lang="ar"] * {
+            font-family: 'Segoe UI', 'Arial Unicode MS', 'Tahoma', sans-serif;
         }
         
         body {
@@ -130,6 +176,78 @@
             width: 100%;
         }
         
+        /* Language Switcher Styles */
+        .language-switcher {
+            position: relative;
+            margin-left: 1rem;
+        }
+        
+        .lang-button {
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            color: var(--white);
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+        }
+        
+        .lang-button:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
+        
+        .lang-dropdown {
+            position: absolute;
+            top: 100%;
+            right: 0;
+            background: var(--white);
+            border-radius: 8px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            min-width: 120px;
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(-10px);
+            transition: all 0.3s ease;
+            z-index: 1000;
+        }
+        
+        .lang-dropdown.active {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+        
+        .lang-option {
+            padding: 0.7rem 1rem;
+            cursor: pointer;
+            transition: background 0.3s ease;
+            color: var(--text-color);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .lang-option:hover {
+            background: var(--light-gray);
+        }
+        
+        .lang-option.active {
+            background: var(--primary);
+            color: var(--white);
+        }
+        
+        .lang-option:first-child {
+            border-radius: 8px 8px 0 0;
+        }
+        
+        .lang-option:last-child {
+            border-radius: 0 0 8px 8px;
+        }
+        
         .theme-toggle {
             background: transparent;
             border: none;
@@ -177,7 +295,7 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: url('/api/placeholder/1400/800') center/cover;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1400 800"><rect width="1400" height="800" fill="%23004080"/><circle cx="200" cy="200" r="50" fill="rgba(255,255,255,0.1)"/><circle cx="800" cy="400" r="80" fill="rgba(255,255,255,0.05)"/><circle cx="1200" cy="600" r="60" fill="rgba(255,255,255,0.08)"/></svg>') center/cover;
             opacity: 0.1;
         }
         
@@ -265,12 +383,7 @@
             animation: float 15s linear infinite;
         }
         
-        @keyframes float {
-            0% { transform: translateY(0) rotate(0deg); opacity: 0; }
-            10% { opacity: 1; }
-            90% { opacity: 1; }
-            100% { transform: translateY(-1000px) rotate(720deg); opacity: 0; }
-        }
+        
         
         .services {
             padding: 6rem 0;
@@ -501,162 +614,9 @@
             transform: translateY(-3px);
         }
         
-        .portfolio {
-            padding: 6rem 0;
-            background-color: var(--section-alt-bg);
-        }
-        
-        .portfolio-filter {
-            display: flex;
-            justify-content: center;
-            flex-wrap: wrap;
-            margin-bottom: 3rem;
-        }
-        
-        .filter-btn {
-            background-color: transparent;
-            border: none;
-            color: var(--text-color);
-            padding: 0.5rem 1.5rem;
-            margin: 0.5rem;
-            cursor: pointer;
-            font-weight: 500;
-            transition: all 0.3s ease;
-            border-radius: 20px;
-        }
-        
-        .filter-btn:hover, .filter-btn.active {
-            background-color: var(--primary);
-            color: var(--white);
-        }
-        
-        .portfolio-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-            gap: 2rem;
-        }
-        
-        .portfolio-item {
-            border-radius: 8px;
-            overflow: hidden;
-            position: relative;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-            cursor: pointer;
-        }
-        
-        .portfolio-item img {
-            width: 100%;
-            display: block;
-            transition: transform 0.5s;
-        }
-        
-        .portfolio-overlay {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 71, 171, 0.8);
-            color: var(--white);
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            padding: 1rem;
-            opacity: 0;
-            transition: opacity 0.3s;
-            text-align: center;
-        }
-        
-        .portfolio-overlay h3 {
-            margin-bottom: 1rem;
-            transform: translateY(-20px);
-            transition: transform 0.3s ease;
-        }
-        
-        .portfolio-overlay p {
-            transform: translateY(20px);
-            transition: transform 0.3s ease;
-        }
-        
-        .portfolio-item:hover .portfolio-overlay {
-            opacity: 1;
-        }
-        
-        .portfolio-item:hover .portfolio-overlay h3,
-        .portfolio-item:hover .portfolio-overlay p {
-            transform: translateY(0);
-        }
-        
-        .portfolio-item:hover img {
-            transform: scale(1.1);
-        }
-        
-        /* Modal styles */
-        .modal {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0, 0, 0, 0.8);
-            z-index: 1000;
-            justify-content: center;
-            align-items: center;
-            padding: 20px;
-        }
-        
-        .modal-content {
-            background-color: var(--card-bg);
-            color: var(--text-color);
-            border-radius: 8px;
-            max-width: 900px;
-            width: 90%;
-            position: relative;
-            overflow: hidden;
-            animation: modalOpen 0.4s ease;
-        }
-        
-        @keyframes modalOpen {
-            from { opacity: 0; transform: translateY(-50px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-        
-        .close-modal {
-            position: absolute;
-            top: 15px;
-            right: 15px;
-            font-size: 24px;
-            color: var(--white);
-            cursor: pointer;
-            z-index: 10;
-            background-color: rgba(0, 0, 0, 0.5);
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-        
-        .modal-img {
-            width: 100%;
-        }
-        
-        .modal-text {
-            padding: 20px;
-        }
-        
-        .modal-text h3 {
-            color: var(--primary);
-            margin-bottom: 10px;
-            font-size: 1.8rem;
-        }
-        
         .testimonials {
             padding: 6rem 0;
-            background-color: var(--section-bg);
+            background-color: var(--section-alt-bg);
         }
         
         .testimonial-slider {
@@ -738,7 +698,7 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: url('/api/placeholder/1400/800') center/cover;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1400 800"><rect width="1400" height="800" fill="%23004080"/><circle cx="300" cy="300" r="40" fill="rgba(255,255,255,0.05)"/><circle cx="1100" cy="200" r="70" fill="rgba(255,255,255,0.03)"/><circle cx="600" cy="600" r="50" fill="rgba(255,255,255,0.04)"/></svg>') center/cover;
             opacity: 0.05;
         }
         
@@ -892,53 +852,26 @@
             padding-left: 5px;
         }
         
-        .footer-col p {
-            margin-bottom: 1rem;
-            color: #ccc;
-        }
-        
-        .footer-newsletter input {
-            padding: 0.8rem;
-            border-radius: 5px;
-            width: 100%;
-            border: none;
-            margin-bottom: 1rem;
-            background-color: rgba(255, 255, 255, 0.1);
-            color: var(--white);
-        }
-        
-        .footer-newsletter input::placeholder {
-            color: rgba(255, 255, 255, 0.7);
-        }
-        
-        .footer-newsletter .btn {
-            width: 100%;
-            text-align: center;
-            margin-left: 0;
-        }
-        
         .footer-bottom {
             border-top: 1px solid rgba(255, 255, 255, 0.1);
-            padding-top: 1.5rem;
+            padding-top: 2rem;
             text-align: center;
         }
         
         .social-icons {
-            display: flex;
-            justify-content: center;
-            margin: 1.5rem 0;
+            margin-top: 1rem;
         }
         
         .social-icons a {
-            color: var(--white);
-            margin: 0 0.5rem;
             width: 40px;
             height: 40px;
             border-radius: 50%;
-            display: flex;
+            background-color: rgba(255, 255, 255, 0.1);
+            color: var(--white);
+            display: inline-flex;
             justify-content: center;
             align-items: center;
-            background-color: rgba(255, 255, 255, 0.1);
+            margin: 0 0.5rem;
             transition: all 0.3s ease;
         }
         
@@ -947,400 +880,345 @@
             transform: translateY(-3px);
         }
         
-        /* Back to top button */
-        .back-to-top {
-            position: fixed;
-            bottom: 20px;
-            right: 20px;
-            background-color: var(--primary);
-            color: var(--white);
-            width: 50px;
-            height: 50px;
-            border-radius: 50%;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            cursor: pointer;
-            z-index: 99;
-            opacity: 0;
-            visibility: hidden;
-            transition: all 0.3s ease;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
-        }
-        
-        .back-to-top.show {
-            opacity: 1;
-            visibility: visible;
-        }
-        
-        .back-to-top:hover {
-            background-color: var(--primary-dark);
-        }
-        
-        /* Mobile menu */
+        /* Responsive Design */
         @media (max-width: 768px) {
+            .hamburger {
+                display: block;
+            }
+            
             .nav-menu {
-                position: absolute;
+                position: fixed;
+                left: -100%;
                 top: 70px;
-                right: -100%;
                 flex-direction: column;
                 background-color: var(--header-bg);
                 width: 100%;
                 text-align: center;
                 transition: 0.3s;
-                box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1);
-                padding: 20px 0;
-                z-index: 99;
+                box-shadow: 0 10px 27px rgba(0, 0, 0, 0.05);
+                padding: 2rem 0;
             }
             
             .nav-menu.active {
-                right: 0;
+                left: 0;
             }
             
             .nav-menu li {
-                margin: 1.5rem 0;
-            }
-            
-            .hamburger {
-                display: block;
-            }
-            
-            .hamburger.active .line1 {
-                transform: rotate(-45deg) translate(-5px, 6px);
-            }
-            
-            .hamburger.active .line2 {
-                opacity: 0;
-            }
-            
-            .hamburger.active .line3 {
-                transform: rotate(45deg) translate(-5px, -6px);
-            }
-            
-            .about-grid,
-            .contact-grid {
-                grid-template-columns: 1fr;
+                margin: 1rem 0;
             }
             
             .hero h1 {
                 font-size: 2.5rem;
             }
             
-            .section-header h2 {
-                font-size: 2rem;
+            .hero p {
+                font-size: 1.1rem;
             }
             
-            .hero {
-                padding: 7rem 0 4rem;
+            .about-grid,
+            .contact-grid {
+                grid-template-columns: 1fr;
+                gap: 2rem;
             }
             
-            .main-content {
-                margin-top: 70px;
+            .services-grid,
+            .team-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .counter-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .language-switcher {
+                margin-left: 0.5rem;
             }
             
             .theme-toggle {
                 margin-left: 1rem;
-                font-size: 1rem;
             }
         }
         
-        /* Animation classes */
-        .fade-up {
-            opacity: 0;
-            transform: translateY(30px);
-            transition: all 0.8s ease;
-        }
-        
-        .fade-in {
-            opacity: 0;
-            transition: opacity 0.8s ease;
-        }
-        
-        .slide-in-left {
-            opacity: 0;
-            transform: translateX(-50px);
-            transition: all 0.8s ease;
-        }
-        
-        .slide-in-right {
-            opacity: 0;
-            transform: translateX(50px);
-            transition: all 0.8s ease;
-        }
-        
-        .animated {
-            opacity: 1;
-            transform: translate(0, 0);
-        }
-        .service {
-            text-decoration: none;
-
+        @media (max-width: 480px) {
+            .container {
+                width: 95%;
+            }
+            
+            .hero {
+                padding: 6rem 0 3rem;
+            }
+            
+            .hero h1 {
+                font-size: 2rem;
+            }
+            
+            .hero p {
+                font-size: 1rem;
+            }
+            
+            .btn {
+                padding: 0.6rem 1.5rem;
+                font-size: 0.9rem;
+            }
+            
+            .counter-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .testimonial {
+                padding: 1.5rem;
+            }
+            
+            .contact-form {
+                padding: 1.5rem;
+            }
         }
     </style>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
 <body>
     <!-- Header -->
     <header id="header">
-        <div class="container nav-container">
-            <a href="#" class="logo">LNC <span>TECHNOLOGIE</span></a>
-            <div class="hamburger">
-                <div class="line1"></div>
-                <div class="line2"></div>
-                <div class="line3"></div>
+        <div class="container">
+            <div class="nav-container">
+                <a href="#" class="logo">LNC<span>TECH</span></a>
+                <nav>
+                    <ul class="nav-menu" id="nav-menu">
+                        <li><a data-translate="home" href="#home">Home</a></li>
+                        <li><a data-translate="services" href="#services">Services</a></li>
+                        <li><a data-translate="about" href="#about">About</a></li>
+                        <li><a data-translate="exempels" href="">Exemples</a></li>
+                        <li><a data-translate="Team" href="#team">Team</a></li>
+                        <li><a data-translate="Testimonials" href="#testimonials">Testimonials</a></li>
+                        <li><a data-translate="Contact" href="#contact">Contact</a></li>
+                    </ul>
+                </nav>
+                <div class="language-switcher">
+                    <div class="lang-button" onclick="toggleLanguageDropdown()">
+                        <span id="current-lang">🇺🇸 EN</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="lang-dropdown" id="lang-dropdown">
+                        <div class="lang-option" onclick="changeLanguage('en')">
+                            <span>🇺🇸</span> English
+                        </div>
+                        <div class="lang-option" onclick="changeLanguage('fr')">
+                            <span>🇫🇷</span> Français
+                        </div>
+                        <div class="lang-option" onclick="changeLanguage('ar')">
+                            <span>🇩🇿</span> العربية
+                        </div>
+                    </div>
+                </div>
+                <button class="theme-toggle" onclick="toggleTheme()">
+                    <i class="fas fa-moon" id="theme-icon"></i>
+                </button>
+                <div class="hamburger" onclick="toggleMenu()">
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                </div>
             </div>
-            <ul class="nav-menu">
-                <li><a href="#home">Home</a></li>
-                <li><a href="#services">Services</a></li>
-                <li><a href="#about">About</a></li>
-                <li><a href="#team">Team</a></li>
-                <li><a href="#portfolio">Portfolio</a></li>
-                <li><a href="#testimonials">Testimonials</a></li>
-                <li><a href="#contact">Contact</a></li>
-                <li>
-                    <button class="theme-toggle" id="themeToggle" aria-label="Toggle dark mode">
-                        <i class="fas fa-moon"></i>
-                    </button>
-                </li>
-            </ul>
-            
         </div>
     </header>
-    
-    <div class="main-content">
+
+    <!-- Main Content -->
+    <main class="main-content">
         <!-- Hero Section -->
-        <section class="hero" id="home">
-            <div class="floating-shapes" id="floating-shapes"></div>
-            <div class="container hero-content">
-                <h1>Innovative Web & Application Solutions</h1>
-                <p>We create powerful digital experiences that transform businesses. Our custom websites and applications are designed to elevate your brand and drive results.</p>
-                <div class="hero-buttons">
-                    <a href="#services" class="btn">Our Services</a>
-                    <a href="#contact" class="btn btn-outline">Get in Touch</a>
+        <section id="home" class="hero">
+            
+            <div class="container">
+                <div class="hero-content">
+                    <h1 data-translate="hero_title">Innovative Web & App Solutions</h1>
+                    <p data-translate="hero_subtitle">We create cutting-edge digital experiences that drive your business forward with modern technology and creative design.</p>
+                    <div class="hero-buttons">
+                        <a href="#services" class="btn" data-translate="get_started">Get Started</a>
+                        <a href="#about" class="btn btn-outline" data-translate="learn_more">Learn More</a>
+                    </div>
                 </div>
             </div>
         </section>
-        
+
         <!-- Services Section -->
-        <section class="services" id="services">
+        <section id="services" class="services">
             <div class="container">
-                <div class="section-header fade-up">
-                    <h2>Our Services</h2>
-                    <p>We offer comprehensive digital solutions to help your business thrive in the digital landscape.</p>
+                <div class="section-header">
+                    <h2 data-translate="our_services">Our Services</h2>
+                    <p data-translate="services_description">We offer comprehensive digital solutions to help your business thrive in the modern digital landscape.</p>
                 </div>
                 <div class="services-grid">
-                    
-                    <a class="service" href="LNCT aboutus.html">
-                        <div class="service-card fade-up">
-                            <i class="fas fa-laptop-code"></i>
-                            <h3>Website Development</h3>
-                            <p>From responsive websites to complex web applications, we build solutions that work flawlessly across all devices.</p>
-                        </div>
-                    </a>
-                    <div class="service-card fade-up">
-                        <i class="fas fa-laptop-code"></i>
-                        <h3>Website Development</h3>
-                        <p>From responsive websites to complex web applications, we build solutions that work flawlessly across all devices.</p>
+                    <div class="service-card">
+                        <i class="fas fa-code"></i>
+                        <h3 data-translate="web_development">Web Development</h3>
+                        <p data-translate="web_dev_description">Custom websites and web applications built with the latest technologies and best practices.</p>
                     </div>
-                    
-                   
+                    <div class="service-card">
+                        <i class="fas fa-palette"></i>
+                        <h3 data-translate="ui_ux_design">UI/UX Design</h3>
+                        <p data-translate="design_description">Beautiful and intuitive user interfaces that provide exceptional user experiences.</p>
+                    </div>
+                    <div class="service-card">
+                        <i class="fas fa-shopping-cart"></i>
+                        <h3 data-translate="ecommerce">E-Commerce</h3>
+                        <p data-translate="ecommerce_description">Complete e-commerce solutions to help you sell online and grow your business.</p>
+                    </div>
+                    <div class="service-card">
+                        <i class="fas fa-cloud"></i>
+                        <h3 data-translate="cloud_solutions">Cloud Solutions</h3>
+                        <p data-translate="cloud_description">Scalable cloud infrastructure and deployment solutions for your applications.</p>
+                    </div>
+                    <div class="service-card">
+                        <i class="fas fa-cogs"></i>
+                        <h3 data-translate="maintenance">Maintenance & Support</h3>
+                        <p data-translate="maintenance_description">Ongoing support and maintenance to keep your digital assets running smoothly.</p>
+                    </div>
                 </div>
             </div>
         </section>
-        
+
         <!-- Counter Section -->
         <section class="counter-section">
             <div class="container">
                 <div class="counter-grid">
                     <div class="counter-item">
-                        <h3 class="counter" data-target="75000">0</h3>
-                        <p>Projects Completed</p>
+                        <h3 data-count="150">0</h3>
+                        <p data-translate="projects_completed">Projects Completed</p>
                     </div>
                     <div class="counter-item">
-                        <h3 class="counter" data-target="32000">0</h3>
-                        <p>Happy Clients</p>
+                        <h3 data-count="100">0</h3>
+                        <p data-translate="happy_clients">Happy Clients</p>
                     </div>
                     <div class="counter-item">
-                        <h3 class="counter" data-target="3">0</h3>
-                        <p>Team Members</p>
+                        <h3 data-count="5">0</h3>
+                        <p data-translate="years_experience">Years Experience</p>
                     </div>
                     <div class="counter-item">
-                        <h3 class="counter" data-target="1">0</h3>
-                        <p>Years Experience</p>
+                        <h3 data-count="24">0</h3>
+                        <p data-translate="support">24/7 Support</p>
                     </div>
                 </div>
             </div>
         </section>
-        
+
         <!-- About Section -->
-        <section class="about" id="about">
+        <section id="about" class="about">
             <div class="container">
                 <div class="about-grid">
-                    <div class="about-content slide-in-left">
-                        <h2>About LNC TECHNOLOGIE</h2>
-                        <p>Founded in 4/6/2025, LNC TECHNOLOGIE has grown to become a leading provider of web and application development services. Our team of experienced developers, designers, and digital strategists work together to create innovative solutions that help businesses succeed in the digital age.</p>
-                        <p>We believe in building long-term relationships with our clients, understanding their unique challenges, and delivering solutions that exceed expectations. Our commitment to quality, innovation, and customer satisfaction has earned us the trust of businesses across various industries.</p>
-                        <p>Our mission is to empower organizations through technology, helping them reach their full potential in an increasingly digital world.</p>
-                        <a href="#contact" class="btn btn-primary">Contact Us</a>
+                    <div class="about-content">
+                        <h2 data-translate="about_us">About LNC TECHNOLOGIE</h2>
+                        <p data-translate="about_paragraph1">We are a passionate team of developers and designers dedicated to creating exceptional digital experiences. With years of experience in web and mobile development, we understand the challenges businesses face in the digital world.</p>
+                        <p data-translate="about_paragraph2">Our mission is to help businesses leverage technology to achieve their goals. We combine creativity with technical expertise to deliver solutions that not only look great but also perform exceptionally.</p>
+                        <p data-translate="about_paragraph3">From small startups to large enterprises, we've helped numerous clients transform their digital presence and achieve remarkable results.</p>
+                        <a href="#contact" class="btn btn-primary" data-translate="learn_more">Learn more ...</a>
                     </div>
-                    <div class="about-image slide-in-right">
-                        <img src="/api/placeholder/600/450" alt="Team at work">
+                    <div class="about-image">
+                        <img src="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 800 600'><rect width='800' height='600' fill='%23f0f8ff'/><rect x='50' y='50' width='700' height='500' fill='%23ffffff' stroke='%23e0e0e0' stroke-width='2'/><circle cx='150' cy='150' r='30' fill='%230047AB'/><circle cx='300' cy='150' r='30' fill='%233F75D5'/><circle cx='450' cy='150' r='30' fill='%2300A3E0'/><rect x='100' y='250' width='600' height='20' fill='%23f0f0f0'/><rect x='100' y='290' width='400' height='20' fill='%23f0f0f0'/><rect x='100' y='330' width='500' height='20' fill='%23f0f0f0'/><rect x='100' y='370' width='350' height='20' fill='%23f0f0f0'/><rect x='550' y='250' width='150' height='140' fill='%230047AB' opacity='0.1'/><text x='400' y='520' font-family='Arial' font-size='24' fill='%230047AB' text-anchor='middle'>Digital Innovation</text></svg>" alt="About Us" />
                     </div>
                 </div>
             </div>
         </section>
-        
+
         <!-- Team Section -->
-        <section class="team-section" id="team">
+        <section id="team" class="team-section">
             <div class="container">
-                <div class="section-header fade-up">
-                    <h2>Our Expert Team</h2>
-                    <p>Meet the talented professionals behind our successful projects.</p>
+                <div class="section-header">
+                    <h2 data-translate="our_team">Our Team</h2>
+                    <p data-translate="team_description">Meet the talented individuals who make our success possible.</p>
                 </div>
                 <div class="team-grid">
-                    <div class="team-member fade-up">
+                    <div class="team-member">
                         <div class="team-image">
-                            <img src="/api/placeholder/400/400" alt="Team Member 1">
+                            <img src="" alt="Team Member" />
                         </div>
                         <div class="team-info">
-                            <h3>YOUB LOUAI</h3>
-                            <p>FRONTEND Developer</p>
+                            <h3 data-translate="ceo_name">NADEM BENBOU3ZIZE</h3>
+                            <p data-translate="ceo_title">Digital Marketer</p>
                             <div class="social-links">
-                                <a href="#"><i class="fab fa-github"></i></a>
-                                <a href="#"><i class="fab fa-twitter"></i></a>
-                                <a href="#"><i class="fab fa-instagram"></i></a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="team-member fade-up">
-                        <div class="team-image">
-                            <img src="/api/placeholder/400/400" alt="Team Member 2">
-                        </div>
-                        <div class="team-info">
-                            <h3>ABD LATIFE YOUB</h3>
-                            <p>BACKAND Developer</p>
-                            <div class="social-links">
-                                <a href="#"><i class="fab fa-instagram"></i></a>
+                                <a href="#"><i class="fab fa-linkedin-in"></i></a>
                                 <a href="#"><i class="fab fa-twitter"></i></a>
                                 <a href="#"><i class="fab fa-github"></i></a>
                             </div>
                         </div>
                     </div>
-                    
-                    <div class="team-member fade-up">
+                    <div class="team-member">
                         <div class="team-image">
-                            <img src="/api/placeholder/400/400" alt="Team Member 4">
+                            <img src="" alt="Team Member" />
                         </div>
                         <div class="team-info">
-                            <h3>NEDIM BENBOU3ZIZ</h3>
-                            <p>Project Manager</p>
+                            <h3 data-translate="cto_name">YOUB LOUAI</h3>
+                            <p data-translate="cto_title">FRONTEND Developer</p>
                             <div class="social-links">
-                                <a href="#"><i class="fab fa-github"></i></a>
+                                <a href="https://www.linkedin.com/in/louai-youb-a77885371/"><i class="fab fa-linkedin-in"></i></a>
+                                <a href="https://x.com/LouaiYoub1411"><i class="fab fa-twitter"></i></a>
+                                <a href="https://github.com/louaiyoub"><i class="fab fa-github"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="team-member">
+                        <div class="team-image">
+                            <img src="" alt="Team Member" />
+                        </div>
+                        <div class="team-info">
+                            <h3 data-translate="designer_name">ABDELATIF YOUB</h3>
+                            <p data-translate="designer_title">BACKEND Developer</p>
+                            <div class="social-links">
+                                <a href="#"><i class="fab fa-linkedin-in"></i></a>
                                 <a href="#"><i class="fab fa-twitter"></i></a>
-                                <a href="#"><i class="fab fa-instagram"></i></a>
+                                <a href="#"><i class="fab fa-github"></i></a>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
         </section>
-        
-        <!-- Portfolio Section -->
-        <section class="portfolio" id="portfolio">
-            <div class="container">
-                <div class="section-header fade-up">
-                    <h2>Our Portfolio</h2>
-                    <p>Explore some of our recent projects and see how we've helped businesses transform their digital presence.</p>
-                </div>
-                <div class="portfolio-filter fade-up">
-                    <button class="filter-btn active" data-filter="all">All</button>
-                    <button class="filter-btn" data-filter="web">Web Development</button>
-                </div>
-                <div class="portfolio-grid">
-                    <div class="portfolio-item fade-up" data-category="web">
-                        <img src="/api/placeholder/400/300" alt="Project 1">
-                        <div class="portfolio-overlay">
-                            <h3>Corporate Website</h3>
-                            <p>Modern responsive website for a financial consulting firm</p>
-                        </div>
-                    </div>
-                    <div class="portfolio-item fade-up" data-category="web">
-                        <img src="/api/placeholder/400/300" alt="Project 2">
-                        <div class="portfolio-overlay">
-                        <h3>E-commerce Platform</h3>
-                        <p>Full-featured e-commerce site with payment integration</p>
-                    </div>
 
-                    <div class="portfolio-item fade-up" data-category="app ecommerce">
-                        <img src="/api/placeholder/400/300" alt="Project 6">
-                        <div class="portfolio-overlay">
-                            <h3>Restaurant Ordering System</h3>
-                            <p>Integrated online ordering platform with kitchen management features</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-        
-        <!-- Portfolio Modal -->
-        <div id="portfolioModal" class="modal">
-            <span class="close-modal"><i class="fas fa-times"></i></span>
-            <div class="modal-content">
-                <img class="modal-img" src="" alt="Project">
-                <div class="modal-text">
-                    <h3>Project Title</h3>
-                    <p>Project description will appear here with more details about the project, technologies used, challenges, and solutions.</p>
-                </div>
-            </div>
-        </div>
-        
         <!-- Testimonials Section -->
-        <section class="testimonials" id="testimonials">
+        <section id="testimonials" class="testimonials">
             <div class="container">
-                <div class="section-header fade-up">
-                    <h2>Client Testimonials</h2>
-                    <p>What our clients say about our services and solutions.</p>
+                <div class="section-header">
+                    <h2 data-translate="testimonials">What Our Clients Say</h2>
+                    <p data-translate="testimonials_description">Don't just take our word for it - hear from our satisfied clients.</p>
                 </div>
-                <div class="testimonial-slider fade-up">
-                    <div class="testimonial-container">
+                <div class="testimonial-slider">
+                    <div class="testimonial-container" id="testimonialContainer">
                         <div class="testimonial">
-                            <img src="/api/placeholder/200/200" alt="Client 1">
-                            <p>"LNC TECHNOLOGIE transformed our outdated website into a modern, user-friendly platform that has significantly increased our online conversions. Their team was professional, responsive, and delivered beyond our expectations."</p>
-                            <h4>Sarah Thompson</h4>
-                            <small>Marketing Director, Global Innovations</small>
+                            <img src="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><circle cx='50' cy='50' r='50' fill='%230047AB'/><circle cx='35' cy='40' r='8' fill='white'/><circle cx='65' cy='40' r='8' fill='white'/><path d='M30 70 Q50 85 70 70' stroke='white' stroke-width='4' fill='none'/></svg>" alt="Client" />
+                            <p data-translate="testimonial1">"LNC TECHNOLOGIE delivered an outstanding website that exceeded our expectations. Their attention to detail and professionalism is remarkable."</p>
+                            <h4 data-translate="client1_name">Mohamed</h4>
+                            <small data-translate="client1_title">CEO, Digital Solutions</small>
                         </div>
                         <div class="testimonial">
-                            <img src="/api/placeholder/200/200" alt="Client 2">
-                            <p>"Working with LNC TECHNOLOGIE on our web sete was a game-changer for our business. Their technical expertise and attention to detail resulted in an app that our customers love using. We continue to partner with them for all our digital needs."</p>
-                            <h4>Michael Rodriguez</h4>
-                            <small>CEO, TechSolutions Inc.</small>
+                            <img src="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><circle cx='50' cy='50' r='50' fill='%2300A3E0'/><circle cx='35' cy='40' r='8' fill='white'/><circle cx='65' cy='40' r='8' fill='white'/><path d='M30 70 Q50 85 70 70' stroke='white' stroke-width='4' fill='none'/></svg>" alt="Client" />
+                            <p data-translate="testimonial2">"Working with LNC TECHNOLOGIE was a game-changer for our business. The mobile app they developed helped us reach new customers."</p>
+                            <h4 data-translate="client2_name">MAX</h4>
+                            <small data-translate="client2_title">Founder, TechStart</small>
                         </div>
                         <div class="testimonial">
-                            <img src="/api/placeholder/200/200" alt="Client 3">
-                            <p>"The web site developed by LNC TECHNOLOGIE has revolutionized our online business. Sales have increased by 80% since launch, and the system is incredibly easy to manage. Their ongoing support has been exceptional."</p>
-                            <h4>Olivia Chen</h4>
-                            <small>E-Commerce Manager, StyleHub</small>
+                            <img src="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><circle cx='50' cy='50' r='50' fill='%23FF6B6B'/><circle cx='35' cy='40' r='8' fill='white'/><circle cx='65' cy='40' r='8' fill='white'/><path d='M30 70 Q50 85 70 70' stroke='white' stroke-width='4' fill='none'/></svg>" alt="Client" />
+                            <p data-translate="testimonial3">"Professional, reliable, and innovative. LNC TECHNOLOGIE transformed our online presence and boosted our sales significantly."</p>
+                            <h4 data-translate="client3_name">JONEY</h4>
+                            <small data-translate="client3_title">Director, E-commerce Plus</small>
                         </div>
                     </div>
                     <div class="testimonial-nav">
-                        <button id="prevTestimonial"><i class="fas fa-chevron-left"></i></button>
-                        <button id="nextTestimonial"><i class="fas fa-chevron-right"></i></button>
+                        <button onclick="changeTestimonial(-1)"><i class="fas fa-chevron-left"></i></button>
+                        <button onclick="changeTestimonial(1)"><i class="fas fa-chevron-right"></i></button>
                     </div>
                 </div>
             </div>
         </section>
-        
+
         <!-- Contact Section -->
-        <section class="contact" id="contact">
+        <section id="contact" class="contact">
             <div class="container">
                 <div class="contact-grid">
-                    <div class="contact-info slide-in-left">
-                        <h2>Get In Touch</h2>
-                        <p>Ready to start your project or have questions about our services? Contact us today and let's discuss how we can help your business grow.</p>
+                    <div class="contact-info">
+                        <h2 data-translate="get_in_touch">Get In Touch</h2>
+                        <p data-translate="contact_description">Ready to start your next project? Contact us today and let's discuss how we can help bring your ideas to life.</p>
                         <div class="contact-details">
                             <div>
                                 <i class="fas fa-map-marker-alt"></i>
-                                <span>123 Business Avenue, Tech City, 75001</span>
+                                <span data-translate="address">Algiers, Algeria</span>
                             </div>
                             <div>
                                 <i class="fas fa-phone"></i>
@@ -1348,371 +1226,605 @@
                             </div>
                             <div>
                                 <i class="fas fa-envelope"></i>
-                                <span>info@lnctechnologie.com</span>
+                                <span>contact@lnctechnologie.com</span>
                             </div>
                             <div>
                                 <i class="fas fa-clock"></i>
-                                <span>Sunday - thursday: 9:00 AM - 6:00 PM</span>
+                                <span data-translate="hours">Mon - Fri: 9:00 AM - 6:00 PM</span>
                             </div>
                         </div>
                     </div>
-                    <form class="contact-form slide-in-right" id="contactForm">
-                        <div class="form-group">
-                            <label for="name">Name</label>
-                            <input type="text" id="name" placeholder="Your Name" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="email">Email</label>
-                            <input type="email" id="email" placeholder="Your Email" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="subject">Subject</label>
-                            <input type="text" id="subject" placeholder="Subject">
-                        </div>
-                        <div class="form-group">
-                            <label for="message">Message</label>
-                            <textarea id="message" placeholder="Your Message" required></textarea>
-                        </div>
-                        <button type="submit" class="btn">Send Message</button>
-                        <div id="formStatus" style="margin-top: 15px; display: none;"></div>
-                    </form>
-                </div>
-                <div class="map-container fade-up">
-                    <div style="width:100%; height:100%; background-color:#eee; display:flex; justify-content:center; align-items:center;">
-                        <!-- Map placeholder -->
-                        <img src="/api/placeholder/1200/400" alt="Map" style="width:100%; height:100%; object-fit:cover;">
+                    <div class="contact-form">
+                        <form id="contactForm">
+                            <div class="form-group">
+                                <label for="name" data-translate="name">Name</label>
+                                <input type="text" id="name" name="name" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="email" data-translate="email">Email</label>
+                                <input type="email" id="email" name="email" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="subject" data-translate="subject">Subject</label>
+                                <input type="text" id="subject" name="subject" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="message" data-translate="message">Message</label>
+                                <textarea id="message" name="message" required></textarea>
+                            </div>
+                            <button type="submit" class="btn" data-translate="send_message">Send Message</button>
+                        </form>
                     </div>
+                </div>
+                <div class="map-container">
+                    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d5776.750857251411!2d55.273139875220124!3d25.194930161745898!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3e5f43348a67e24b%3A0xff45e502e1ceb7e2!2sBurj%20Khalifa!5e1!3m2!1sen!2sdz!4v1756067269225!5m2!1sen!2sdz" width="100%" height="400" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
                 </div>
             </div>
         </section>
-        
-        <!-- Footer -->
-        <footer>
-            <div class="container">
-                <div class="footer-grid">
-                    <div class="footer-col">
-                        <h3>LNC TECHNOLOGIE</h3>
-                        <p>We design and develop custom websites and applications that help businesses grow and succeed in the digital landscape.</p>
-                        <div class="social-icons">
-                            <a href="#"><i class="fab fa-facebook-f"></i></a>
-                            <a href="#"><i class="fab fa-twitter"></i></a>
-                            <a href="#"><i class="fab fa-linkedin-in"></i></a>
-                            <a href="#"><i class="fab fa-instagram"></i></a>
-                        </div>
-                    </div>
-                    <div class="footer-col">
-                        <h3>Our Services</h3>
-                        <ul>
-                            <li><a href="#">Website Development</a></li>
-                        </ul>
-                    </div>
-                    <div class="footer-col">
-                        <h3>Quick Links</h3>
-                        <ul>
-                            <li><a href="#home">Home</a></li>
-                            <li><a href="#about">About Us</a></li>
-                            <li><a href="#portfolio">Portfolio</a></li>
-                            <li><a href="#testimonials">Testimonials</a></li>
-                            <li><a href="#contact">Contact Us</a></li>
-                        </ul>
-                    </div>
-                    <div class="footer-col">
-                        <h3>Newsletter</h3>
-                        <p>Subscribe to our newsletter to receive updates and industry insights.</p>
-                        <div class="footer-newsletter">
-                            <input type="email" placeholder="Your Email">
-                            <button type="submit" class="btn btn-primary">Subscribe</button>
-                        </div>
-                    </div>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-col">
+                    <h3 data-translate="company">Company</h3>
+                    <ul>
+                        <li><a href="#about" data-translate="about">About Us</a></li>
+                        <li><a href="#services" data-translate="services">Services</a></li>
+                        <li><a href="#team" data-translate="team">Team</a></li>
+                        <li><a href="#contact" data-translate="contact">Contact</a></li>
+                    </ul>
                 </div>
-                <div class="footer-bottom">
-                    <p>&copy; 2025 LNC TECHNOLOGIE. All Rights Reserved.</p>
+                <div class="footer-col">
+                    <h3 data-translate="services">Services</h3>
+                    <ul>
+                        <li><a href="#" data-translate="web_development">Web Development</a></li>
+                        <li><a href="#" data-translate="mobile_apps">Mobile Apps</a></li>
+                        <li><a href="#" data-translate="ui_ux_design">UI/UX Design</a></li>
+                        <li><a href="#" data-translate="ecommerce">E-Commerce</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h3 data-translate="support">Support</h3>
+                    <ul>
+                        <li><a href="#" data-translate="help_center">Help Center</a></li>
+                        <li><a href="#" data-translate="documentation">Documentation</a></li>
+                        <li><a href="#" data-translate="privacy_policy">Privacy Policy</a></li>
+                        <li><a href="#" data-translate="terms_service">Terms of Service</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h3 data-translate="connect">Connect</h3>
+                    <ul>
+                        <li><a href="#">Facebook</a></li>
+                        <li><a href="#">Twitter</a></li>
+                        <li><a href="#">LinkedIn</a></li>
+                        <li><a href="#">Instagram</a></li>
+                    </ul>
                 </div>
             </div>
-        </footer>
-        
-        <!-- Back to top button -->
-        <div class="back-to-top" id="backToTop">
-            <i class="fas fa-arrow-up"></i>
+            <div class="footer-bottom">
+                <p>&copy; 2024 LNC TECHNOLOGIE. <span data-translate="all_rights_reserved">All rights reserved.</span></p>
+                <div class="social-icons">
+                    <a href="#"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                    <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                </div>
+            </div>
         </div>
-    </div>
-    
-    <!-- JavaScript -->
+    </footer>
+
     <script>
-        // DOM Elements
-        const header = document.getElementById('header');
-        const hamburger = document.querySelector('.hamburger');
-        const navMenu = document.querySelector('.nav-menu');
-        const navLinks = document.querySelectorAll('.nav-menu a');
-        const backToTopBtn = document.getElementById('backToTop');
-        const portfolioItems = document.querySelectorAll('.portfolio-item');
-        const modal = document.getElementById('portfolioModal');
-        const closeModal = document.querySelector('.close-modal');
-        const modalImg = document.querySelector('.modal-img');
-        const modalTitle = document.querySelector('.modal-text h3');
-        const modalDesc = document.querySelector('.modal-text p');
-        const filterBtns = document.querySelectorAll('.filter-btn');
-        const testimonialContainer = document.querySelector('.testimonial-container');
-        const prevTestimonialBtn = document.getElementById('prevTestimonial');
-        const nextTestimonialBtn = document.getElementById('nextTestimonial');
-        const contactForm = document.getElementById('contactForm');
-        const formStatus = document.getElementById('formStatus');
-        const themeToggle = document.getElementById('themeToggle');
-        const mobileThemeToggle = document.getElementById('mobileThemeToggle');
-        
-        // Check for saved theme preference or use preferred color scheme
-        const currentTheme = localStorage.getItem('theme') || 
-                            (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
-        
-        // Set the theme on initial load
-        if (currentTheme === 'dark') {
-            document.body.classList.add('dark-mode');
-            themeToggle.innerHTML = '<i class="fas fa-sun"></i>';
-            mobileThemeToggle.innerHTML = '<i class="fas fa-sun"></i>';
+        // Translations
+        const translations = {
+            en: {
+                home : "Home",
+                services : "Services",
+                about : "About Us",
+                Team : "Team",
+                Testimonials : "Testimonials",
+                Contact : "Contact",
+                exempels : "Exemples",
+                hero_title: "Innovative Web & App Solutions",
+                hero_subtitle: "We create cutting-edge digital experiences that drive your business forward with modern technology and creative design.",
+                get_started: "Get Started",
+                learn_more: "Learn More ...",
+                our_services: "Our Services",
+                services_description: "We offer comprehensive digital solutions to help your business thrive in the modern digital landscape.",
+                web_development: "Web Development",
+                web_dev_description: "Custom websites and web applications built with the latest technologies and best practices.",
+                mobile_apps: "Mobile Apps",
+                mobile_description: "Native and cross-platform mobile applications for iOS and Android devices.",
+                ui_ux_design: "UI/UX Design",
+                design_description: "Beautiful and intuitive user interfaces that provide exceptional user experiences.",
+                ecommerce: "E-Commerce",
+                ecommerce_description: "Complete e-commerce solutions to help you sell online and grow your business.",
+                cloud_solutions: "Cloud Solutions",
+                cloud_description: "Scalable cloud infrastructure and deployment solutions for your applications.",
+                maintenance: "Maintenance & Support",
+                maintenance_description: "Ongoing support and maintenance to keep your digital assets running smoothly.",
+                projects_completed: "Projects Completed",
+                happy_clients: "Happy Clients",
+                years_experience: "Years Experience",
+                support: "24/7 Support",
+                about_us: "About LNC TECHNOLOGIE",
+                about_paragraph1: "We are a passionate team of developers and designers dedicated to creating exceptional digital experiences. With years of experience in web and mobile development, we understand the challenges businesses face in the digital world.",
+                about_paragraph2: "Our mission is to help businesses leverage technology to achieve their goals. We combine creativity with technical expertise to deliver solutions that not only look great but also perform exceptionally.",
+                about_paragraph3: "From small startups to large enterprises, we've helped numerous clients transform their digital presence and achieve remarkable results.",
+                learn_more: "Learn more...",
+                our_team: "Our Team",
+                team_description: "Meet the talented individuals who make our success possible.",
+                ceo_name: "NADEM BENBOU3ZIZE",
+                ceo_title: "Digital Marketer",
+                cto_name: "YOUB LOUAI",
+                cto_title: "FRONTEND Developer",
+                designer_name: "ABDELATIF YOUB",
+                designer_title: "BACKEND Developer",
+                testimonials: "What Our Clients Say",
+                testimonials_description: "Don't just take our word for it - hear from our satisfied clients.",
+                testimonial1: "LNC TECHNOLOGIE delivered an outstanding website that exceeded our expectations. Their attention to detail and professionalism is remarkable.",
+                client1_name: "Fatima Zahra",
+                client1_title: "CEO, Digital Solutions",
+                testimonial2: "Working with LNC TECHNOLOGIE was a game-changer for our business. The mobile app they developed helped us reach new customers.",
+                client2_name: "Mohamed Larbi",
+                client2_title: "Founder, TechStart",
+                testimonial3: "Professional, reliable, and innovative. LNC TECHNOLOGIE transformed our online presence and boosted our sales significantly.",
+                client3_name: "Amina Khedira",
+                client3_title: "Director, E-commerce Plus",
+                get_in_touch: "Get In Touch",
+                contact_description: "Ready to start your next project? Contact us today and let's discuss how we can help bring your ideas to life.",
+                address: "Algiers, Algeria",
+                hours: "Mon - Fri: 9:00 AM - 6:00 PM",
+                name: "Name",
+                email: "Email",
+                subject: "Subject",
+                message: "Message",
+                send_message: "Send Message",
+                company: "Company",
+                about: "About Us",
+                services: "Services",
+                team: "Team",
+                contact: "Contact",
+                help_center: "Help Center",
+                documentation: "Documentation",
+                privacy_policy: "Privacy Policy",
+                terms_service: "Terms of Service",
+                connect: "Connect",
+                all_rights_reserved: "All rights reserved."
+            },
+            fr: {
+                home : "Accueil",
+                services : "Services",
+                about : "À propos ",
+                Team : "Équipe",
+                Testimonials : "Témoignages",
+                Contact : "Contact",
+                exempels : "Exemples",
+                hero_title: "Solutions Web & Apps Innovantes",
+                hero_subtitle: "Nous créons des expériences numériques de pointe qui font avancer votre entreprise avec des technologies modernes et un design créatif.",
+                get_started: "Commencer",
+                learn_more: "En savoir plus ...",
+                our_services: "Nos Services",
+                services_description: "Nous offrons des solutions numériques complètes pour aider votre entreprise à prospérer dans le paysage numérique moderne.",
+                web_development: "Développement Web",
+                web_dev_description: "Sites web et applications web personnalisés construits avec les dernières technologies et meilleures pratiques.",                ui_ux_design: "Design UI/UX",
+                design_description: "Interfaces utilisateur belles et intuitives qui offrent des expériences utilisateur exceptionnelles.",
+                ecommerce: "E-Commerce",
+                ecommerce_description: "Solutions e-commerce complètes pour vous aider à vendre en ligne et développer votre entreprise.",
+                cloud_solutions: "Solutions Cloud",
+                cloud_description: "Infrastructure cloud évolutive et solutions de déploiement pour vos applications.",
+                maintenance: "Maintenance & Support",
+                maintenance_description: "Support continu et maintenance pour maintenir vos actifs numériques en bon état de fonctionnement.",
+                projects_completed: "Projets Terminés",
+                happy_clients: "Clients Satisfaits",
+                years_experience: "Années d'Expérience",
+                support: "Support 24/7",
+                about_us: "À propos de LNC TECHNOLOGIE",
+                about_paragraph1: "Nous sommes une équipe passionnée de développeurs et designers dédiés à créer des expériences numériques exceptionnelles. Avec des années d'expérience en développement web et mobile, nous comprenons les défis auxquels font face les entreprises dans le monde numérique.",
+                about_paragraph2: "Notre mission est d'aider les entreprises à tirer parti de la technologie pour atteindre leurs objectifs. Nous combinons créativité et expertise technique pour livrer des solutions qui non seulement ont fière allure mais performent exceptionnellement.",
+                about_paragraph3: "Des petites startups aux grandes entreprises, nous avons aidé de nombreux clients à transformer leur présence numérique et obtenir des résultats remarquables.",
+                learn_more: "En savoir plus...",
+                our_team: "Notre Équipe",
+                team_description: "Rencontrez les individus talentueux qui rendent notre succès possible.",
+                ceo_name: "nadem benbou3zize",
+                ceo_title: "Digital Marketer",
+                cto_name: "youb louai",
+                cto_title: "FRONTEND Developer",
+                designer_name: "abdelatif youb",
+                designer_title: "BACKEND Developer",
+                testimonials: "Ce que disent nos clients",
+                testimonials_description: "Ne nous croyez pas sur parole - écoutez nos clients satisfaits.",
+                testimonial1: "LNC TECHNOLOGIE a livré un site web exceptionnel qui a dépassé nos attentes. Leur attention aux détails et leur professionnalisme sont remarquables.",
+                client1_name: "Fatima Zahra",
+                client1_title: "PDG, Solutions Numériques",
+                testimonial2: "Travailler avec LNC TECHNOLOGIE a été un tournant pour notre entreprise. L'application mobile qu'ils ont développée nous a aidés à atteindre de nouveaux clients.",
+                client2_name: "Mohamed Larbi",
+                client2_title: "Fondateur, TechStart",
+                testimonial3: "Professionnel, fiable et innovant. LNC TECHNOLOGIE a transformé notre présence en ligne et considérablement augmenté nos ventes.",
+                client3_name: "Amina Khedira",
+                client3_title: "Directrice, E-commerce Plus",
+                get_in_touch: "Prenez Contact",
+                contact_description: "Prêt à démarrer votre prochain projet ? Contactez-nous aujourd'hui et discutons de la façon dont nous pouvons aider à donner vie à vos idées.",
+                address: "Alger, Algérie",
+                hours: "Lun - Ven: 9h00 - 18h00",
+                name: "Nom",
+                email: "Email",
+                subject: "Sujet",
+                message: "Message",
+                send_message: "Envoyer le Message",
+                company: "Entreprise",
+                about: "À propos",
+                services: "Services",
+                team: "Équipe",
+                contact: "Contact",
+                help_center: "Centre d'Aide",
+                documentation: "Documentation",
+                privacy_policy: "Politique de Confidentialité",
+                terms_service: "Conditions d'Utilisation",
+                connect: "Se Connecter",
+                all_rights_reserved: "Tous droits réservés."
+            },
+            ar: {
+
+                home : "الرئيسية",
+                services : "الخدمات",
+                about : " من نحن",
+                Team : "الفريق",
+                Testimonials : "الشهادات",
+                Contact : " ",
+                exempels : "أمثلة",
+                hero_title: "حلول مواقع وتطبيقات مبتكرة",
+                hero_subtitle: "نحن ننشئ تجارب رقمية متطورة تقود أعمالك إلى الأمام بتكنولوجيا حديثة وتصميم إبداعي.",
+                get_started: "ابدأ الآن",
+                learn_more: " اعرف أكثر...",
+                our_services: "خدماتنا",
+                services_description: "نقدم حلولاً رقمية شاملة لمساعدة أعمالك على الازدهار في المشهد الرقمي الحديث.",
+                web_development: "تطوير المواقع",
+                web_dev_description: "مواقع وتطبيقات ويب مخصصة مبنية بأحدث التقنيات وأفضل الممارسات.",
+                ui_ux_design: "تصميم واجهة المستخدم",
+                design_description: "واجهات مستخدم جميلة وبديهية توفر تجارب مستخدم استثنائية.",
+                ecommerce: "التجارة الإلكترونية",
+                ecommerce_description: "حلول التجارة الإلكترونية الشاملة لمساعدتك على البيع عبر الإنترنت وتنمية أعمالك.",
+                cloud_solutions: "حلول السحابة",
+                cloud_description: "بنية تحتية سحابية قابلة للتطوير وحلول نشر لتطبيقاتك.",
+                maintenance: "الصيانة والدعم",
+                maintenance_description: "دعم وصيانة مستمرة للحفاظ على أصولك الرقمية تعمل بسلاسة.",
+                projects_completed: "المشاريع المكتملة",
+                happy_clients: "عملاء سعداء",
+                years_experience: "سنوات الخبرة",
+                support: "دعم 24/7",
+                about_us: "حول LNC TECHNOLOGIE",
+                about_paragraph1: "نحن فريق شغوف من المطورين والمصممين المكرسين لإنشاء تجارب رقمية استثنائية. مع سنوات من الخبرة في تطوير الويب والهاتف المحمول، نحن نفهم التحديات التي تواجهها الشركات في العالم الرقمي.",
+                about_paragraph2: "مهمتنا هي مساعدة الشركات على الاستفادة من التكنولوجيا لتحقيق أهدافها. نحن نجمع بين الإبداع والخبرة التقنية لتقديم حلول لا تبدو رائعة فحسب، بل تؤدي بشكل استثنائي أيضاً.",
+                about_paragraph3: "من الشركات الناشئة الصغيرة إلى المؤسسات الكبيرة، لقد ساعدنا العديد من العملاء على تحويل حضورهم الرقمي وتحقيق نتائج رائعة.",
+                learn_more: "تعرف أكثر...",
+                our_team: "فريقنا",
+                team_description: "تعرف على الأفراد الموهوبين الذين يجعلون نجاحنا ممكناً.",
+                ceo_name: "نديم بن بوعزيز",
+                ceo_title: "مسوق رقمي",
+                cto_name: "يوب لؤي",
+                cto_title: "مطور الواجهة الأمامية",
+                designer_name: "عبد اللطيف يوب",
+                designer_title: " مطور الواجهة الخلفية",
+                testimonials: "ما يقوله عملاؤنا",
+                testimonials_description: "لا تأخذ كلامنا فقط - اسمع من عملائنا الراضين.",
+                testimonial1: "قدمت LNC TECHNOLOGIE موقعاً إلكترونياً رائعاً فاق توقعاتنا. اهتمامهم بالتفاصيل ومهنيتهم رائعة.",
+                client1_name: "فاطمة الزهراء",
+                client1_title: "الرئيس التنفيذي، الحلول الرقمية",
+                testimonial2: "العمل مع LNC TECHNOLOGIE كان نقطة تحول لأعمالنا. التطبيق المحمول الذي طوروه ساعدنا في الوصول إلى عملاء جدد.",
+                client2_name: "محمد العربي",
+                client2_title: "المؤسس، تيك ستارت",
+                testimonial3: "مهني وموثوق ومبتكر. LNC TECHNOLOGIE حولت حضورنا عبر الإنترنت وعززت مبيعاتنا بشكل كبير.",
+                client3_name: "أمينة خضيرة",
+                client3_title: "المديرة، إي كومرس بلس",
+                get_in_touch: "تواصل معنا",
+                contact_description: "مستعد لبدء مشروعك التالي؟ اتصل بنا اليوم ولنناقش كيف يمكننا مساعدتك في إحياء أفكارك.",
+                address: "الجزائر العاصمة، الجزائر",
+                hours: "الإثنين - الجمعة: 9:00 صباحاً - 6:00 مساءً",
+                name: "الاسم",
+                email: "البريد الإلكتروني",
+                subject: "الموضوع",
+                message: "الرسالة",
+                send_message: "إرسال الرسالة",
+                company: "الشركة",
+                about: "من نحن",
+                services: "الخدمات",
+                team: "الفريق",
+                contact: "اتصل",
+                help_center: "مركز المساعدة",
+                documentation: "التوثيق",
+                privacy_policy: "سياسة الخصوصية",
+                terms_service: "شروط الخدمة",
+                connect: "تواصل",
+                all_rights_reserved: "جميع الحقوق محفوظة."
+            }
+        };
+
+        let currentLang = 'en';
+        let currentTestimonial = 0;
+        let currentTheme = 'light';
+
+        // Language switching
+        function toggleLanguageDropdown() {
+            const dropdown = document.getElementById('lang-dropdown');
+            dropdown.classList.toggle('active');
         }
-        
-        // Theme toggle functionality
+
+        function changeLanguage(lang) {
+            currentLang = lang;
+            updateLanguageDisplay();
+            updateContent();
+            toggleLanguageDropdown();
+            
+            // Update direction for Arabic
+            const html = document.documentElement;
+            if (lang === 'ar') {
+                html.setAttribute('dir', 'rtl');
+                html.setAttribute('lang', 'ar');
+            } else {
+                html.setAttribute('dir', 'ltr');
+                html.setAttribute('lang', lang);
+            }
+        }
+
+        function updateLanguageDisplay() {
+            const langFlags = {
+                'en': '🇺🇸 EN',
+                'fr': '🇫🇷 FR',
+                'ar': '🇩🇿 AR'
+            };
+            document.getElementById('current-lang').textContent = langFlags[currentLang];
+            
+            // Update active state in dropdown
+            document.querySelectorAll('.lang-option').forEach(option => {
+                option.classList.remove('active');
+            });
+            document.querySelector(`[onclick="changeLanguage('${currentLang}')"]`).classList.add('active');
+        }
+
+        function updateContent() {
+            const elements = document.querySelectorAll('[data-translate]');
+            elements.forEach(element => {
+                const key = element.getAttribute('data-translate');
+                if (translations[currentLang] && translations[currentLang][key]) {
+                    if (element.tagName === 'INPUT' && element.type !== 'submit') {
+                        element.placeholder = translations[currentLang][key];
+                    } else {
+                        element.textContent = translations[currentLang][key];
+                    }
+                }
+            });
+        }
+
+        // Theme switching
         function toggleTheme() {
+            currentTheme = currentTheme === 'light' ? 'dark' : 'light';
             document.body.classList.toggle('dark-mode');
             
-            if (document.body.classList.contains('dark-mode')) {
-                localStorage.setItem('theme', 'dark');
-                themeToggle.innerHTML = '<i class="fas fa-sun"></i>';
-                mobileThemeToggle.innerHTML = '<i class="fas fa-sun"></i>';
+            const themeIcon = document.getElementById('theme-icon');
+            if (currentTheme === 'dark') {
+                themeIcon.classList.remove('fa-moon');
+                themeIcon.classList.add('fa-sun');
             } else {
-                localStorage.setItem('theme', 'light');
-                themeToggle.innerHTML = '<i class="fas fa-moon"></i>';
-                mobileThemeToggle.innerHTML = '<i class="fas fa-moon"></i>';
+                themeIcon.classList.remove('fa-sun');
+                themeIcon.classList.add('fa-moon');
             }
         }
-        
-        // Floating shapes in hero section
-        function createFloatingShapes() {
-            const shapes = document.getElementById('floating-shapes');
-            const shapeCount = 15;
-            
-            for (let i = 0; i < shapeCount; i++) {
-                const shape = document.createElement('div');
-                shape.classList.add('shape');
-                
-                // Random properties
-                const size = Math.random() * 100 + 20;
-                const posX = Math.random() * 100;
-                const delay = Math.random() * 5;
-                const duration = Math.random() * 10 + 10;
-                
-                shape.style.width = `${size}px`;
-                shape.style.height = `${size}px`;
-                shape.style.left = `${posX}%`;
-                shape.style.bottom = `-${size}px`;
-                shape.style.animationDelay = `${delay}s`;
-                shape.style.animationDuration = `${duration}s`;
-                
-                shapes.appendChild(shape);
-            }
-        }
-        
-        // Toggle mobile menu
-        function toggleMobileMenu() {
-            hamburger.classList.toggle('active');
+
+        // Mobile menu toggle
+        function toggleMenu() {
+            const navMenu = document.getElementById('nav-menu');
             navMenu.classList.toggle('active');
         }
-        
-        // Close mobile menu when clicking a nav link
-        function closeMobileMenu() {
-            hamburger.classList.remove('active');
-            navMenu.classList.remove('active');
+
+        // Testimonial slider
+        function changeTestimonial(direction) {
+            const testimonials = document.querySelectorAll('.testimonial');
+            const container = document.getElementById('testimonialContainer');
+            
+            currentTestimonial += direction;
+            
+            if (currentTestimonial >= testimonials.length) {
+                currentTestimonial = 0;
+            } else if (currentTestimonial < 0) {
+                currentTestimonial = testimonials.length - 1;
+            }
+            
+            container.style.transform = `translateX(-${currentTestimonial * 100}%)`;
         }
-        
-        // Scroll effects
+
+        // Auto-rotate testimonials
+        setInterval(() => {
+            changeTestimonial(1);
+        }, 5000);
+
+        // Counter animation
+        function animateCounters() {
+            const counters = document.querySelectorAll('[data-count]');
+            counters.forEach(counter => {
+                const target = parseInt(counter.getAttribute('data-count'));
+                const increment = target / 200;
+                let current = 0;
+                
+                const timer = setInterval(() => {
+                    current += increment;
+                    if (current >= target) {
+                        current = target;
+                        clearInterval(timer);
+                    }
+                    counter.textContent = Math.floor(current);
+                }, 10);
+            });
+        }
+
+        // Intersection Observer for animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    if (entry.target.classList.contains('counter-section')) {
+                        animateCounters();
+                        observer.unobserve(entry.target);
+                    }
+                }
+            });
+        }, observerOptions);
+
+        // Header scroll effect
         function handleScroll() {
-            // Header scroll effect
+            const header = document.getElementById('header');
             if (window.scrollY > 50) {
                 header.classList.add('scrolled');
-                backToTopBtn.classList.add('show');
             } else {
                 header.classList.remove('scrolled');
-                backToTopBtn.classList.remove('show');
             }
+        }
+
+        // Contact form submission
+        function handleContactForm(event) {
+            event.preventDefault();
             
-            // Animation on scroll
-            const animElements = document.querySelectorAll('.fade-up, .fade-in, .slide-in-left, .slide-in-right');
-            
-            animElements.forEach(element => {
-                const elementPosition = element.getBoundingClientRect().top;
-                const triggerPosition = window.innerHeight - 100;
-                
-                if (elementPosition < triggerPosition) {
-                    element.classList.add('animated');
-                }
-            });
-        }
-        
-        // Counter animation
-        function startCounters() {
-            const counters = document.querySelectorAll('.counter');
-            const speed = 200;
-            
-            counters.forEach(counter => {
-                const counterObserver = new IntersectionObserver((entries) => {
-                    if (entries[0].isIntersecting) {
-                        const updateCount = () => {
-                            const target = +counter.getAttribute('data-target');
-                            const count = +counter.innerText;
-                            const increment = target / speed;
-                            
-                            if (count < target) {
-                                counter.innerText = Math.ceil(count + increment);
-                                setTimeout(updateCount, 1);
-                            } else {
-                                counter.innerText = target;
-                            }
-                        };
-                        
-                        updateCount();
-                        counterObserver.unobserve(counter);
-                    }
-                }, { threshold: 0.5 });
-                
-                counterObserver.observe(counter);
-            });
-        }
-        
-        // Portfolio filter
-        function filterPortfolio(category) {
-            portfolioItems.forEach(item => {
-                const itemCategories = item.getAttribute('data-category');
-                
-                if (category === 'all' || itemCategories.includes(category)) {
-                    item.style.display = 'block';
-                } else {
-                    item.style.display = 'none';
-                }
-            });
-        }
-        
-        // Modal functions
-        function openModal(img, title, desc) {
-            modalImg.src = img.src;
-            modalTitle.textContent = title;
-            modalDesc.textContent = desc;
-            modal.style.display = 'flex';
-            document.body.style.overflow = 'hidden';
-        }
-        
-        function closeModalFunc() {
-            modal.style.display = 'none';
-            document.body.style.overflow = 'auto';
-        }
-        
-        // Testimonial slider
-        let currentSlide = 0;
-        const testimonials = document.querySelectorAll('.testimonial');
-        
-        function showTestimonial(n) {
-            currentSlide = (n + testimonials.length) % testimonials.length;
-            const translateValue = -currentSlide * 100 + '%';
-            testimonialContainer.style.transform = `translateX(${translateValue})`;
-        }
-        
-        // Form submission handler
-        function handleFormSubmit(e) {
-            e.preventDefault();
+            // Get form data
+            const formData = new FormData(event.target);
+            const data = Object.fromEntries(formData.entries());
             
             // Simulate form submission
-            formStatus.textContent = 'Sending message...';
-            formStatus.style.color = 'white';
-            formStatus.style.display = 'block';
+            alert(currentLang === 'ar' ? 'تم إرسال رسالتك بنجاح!' : 
+                  currentLang === 'fr' ? 'Votre message a été envoyé avec succès!' : 
+                  'Your message has been sent successfully!');
             
-            setTimeout(() => {
-                formStatus.textContent = 'Message sent successfully! We will contact you soon.';
-                formStatus.style.color = '#4CAF50';
-                contactForm.reset();
-                
-                setTimeout(() => {
-                    formStatus.style.display = 'none';
-                }, 5000);
-            }, 1500);
+            // Reset form
+            event.target.reset();
         }
-        
-        // Event Listeners
-        window.addEventListener('DOMContentLoaded', () => {
-            createFloatingShapes();
-            handleScroll(); // Call once to initialize
-            startCounters();
-        });
-        
-        window.addEventListener('scroll', handleScroll);
-        
-        hamburger.addEventListener('click', toggleMobileMenu);
-        
-        navLinks.forEach(link => {
-            link.addEventListener('click', closeMobileMenu);
-        });
-        
-        backToTopBtn.addEventListener('click', () => {
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-        });
-        
-        filterBtns.forEach(btn => {
-            btn.addEventListener('click', () => {
-                filterBtns.forEach(b => b.classList.remove('active'));
-                btn.classList.add('active');
-                filterPortfolio(btn.getAttribute('data-filter'));
-            });
-        });
-        
-        portfolioItems.forEach(item => {
-            item.addEventListener('click', () => {
-                const img = item.querySelector('img');
-                const title = item.querySelector('h3').textContent;
-                const desc = item.querySelector('p').textContent;
-                openModal(img, title, desc);
-            });
-        });
-        
-        closeModal.addEventListener('click', closeModalFunc);
-        
-        window.addEventListener('click', (e) => {
-            if (e.target === modal) {
-                closeModalFunc();
-            }
-        });
-        
-        prevTestimonialBtn.addEventListener('click', () => {
-            showTestimonial(currentSlide - 1);
-        });
-        
-        nextTestimonialBtn.addEventListener('click', () => {
-            showTestimonial(currentSlide + 1);
-        });
-        
-        contactForm.addEventListener('submit', handleFormSubmit);
-        
-        themeToggle.addEventListener('click', toggleTheme);
-        mobileThemeToggle.addEventListener('click', toggleTheme);
-        
-        // Automatic testimonial rotation
-        setInterval(() => {
-            showTestimonial(currentSlide + 1);
-        }, 8000);
-        
-        // Smooth scrolling for anchor links
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function(e) {
-                e.preventDefault();
-                
-                const targetId = this.getAttribute('href');
-                if (targetId === '#') return;
-                
-                const targetElement = document.querySelector(targetId);
-                const headerHeight = document.querySelector('header').offsetHeight;
-                
-                window.scrollTo({
-                    top: targetElement.offsetTop - headerHeight,
-                    behavior: 'smooth'
+
+        // Smooth scrolling for navigation links
+        function setupSmoothScrolling() {
+            const links = document.querySelectorAll('a[href^="#"]');
+            links.forEach(link => {
+                link.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const targetId = this.getAttribute('href').substring(1);
+                    const targetElement = document.getElementById(targetId);
+                    
+                    if (targetElement) {
+                        targetElement.scrollIntoView({
+                            behavior: 'smooth',
+                            block: 'start'
+                        });
+                        
+                        // Close mobile menu if open
+                        const navMenu = document.getElementById('nav-menu');
+                        navMenu.classList.remove('active');
+                    }
                 });
             });
+        }
+
+        // Initialize everything when DOM is loaded
+        document.addEventListener('DOMContentLoaded', function() {
+            // Setup event listeners
+            window.addEventListener('scroll', handleScroll);
+            document.getElementById('contactForm').addEventListener('submit', handleContactForm);
+            
+            // Setup observers
+            const counterSection = document.querySelector('.counter-section');
+            if (counterSection) {
+                observer.observe(counterSection);
+            }
+            
+            // Setup smooth scrolling
+            setupSmoothScrolling();
+            
+            // Close language dropdown when clicking outside
+            document.addEventListener('click', function(event) {
+                const languageSwitcher = document.querySelector('.language-switcher');
+                const dropdown = document.getElementById('lang-dropdown');
+                
+                if (!languageSwitcher.contains(event.target)) {
+                    dropdown.classList.remove('active');
+                }
+            });
+            
+            // Initialize language display
+            updateLanguageDisplay();
+            
+            // Add floating animation to shapes
+            createFloatingShapes();
+        });
+
+        // Create floating shapes animation
+        function createFloatingShapes() {
+            const shapes = document.querySelectorAll('.shape');
+            shapes.forEach((shape, index) => {
+                // Randomize animation delay and duration
+                const delay = Math.random() * 15;
+                const duration = 15 + Math.random() * 10;
+                
+                shape.style.animationDelay = delay + 's';
+                shape.style.animationDuration = duration + 's';
+                
+                // Randomize size
+                const size = 40 + Math.random() * 40;
+                shape.style.width = size + 'px';
+                shape.style.height = size + 'px';
+                
+                // Randomize horizontal position
+                const left = Math.random() * 90;
+                shape.style.left = left + '%';
+            });
+        }
+
+        // Add typing effect to hero title
+        function addTypingEffect() {
+            const heroTitle = document.querySelector('.hero h1');
+            if (heroTitle) {
+                const text = heroTitle.textContent;
+                heroTitle.textContent = '';
+                let i = 0;
+                
+                function typeWriter() {
+                    if (i < text.length) {
+                        heroTitle.textContent += text.charAt(i);
+                        i++;
+                        setTimeout(typeWriter, 100);
+                    }
+                }
+                
+                setTimeout(typeWriter, 1000);
+            }
+        }
+
+        // Enhanced scroll animations
+        function setupScrollAnimations() {
+            const animationObserver = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.style.opacity = '1';
+                        entry.target.style.transform = 'translateY(0)';
+                    }
+                });
+            }, { threshold: 0.1 });
+
+            // Animate service cards, team members, etc.
+            const animatedElements = document.querySelectorAll('.service-card, .team-member, .testimonial');
+            animatedElements.forEach((el, index) => {
+                el.style.opacity = '0';
+                el.style.transform = 'translateY(30px)';
+                el.style.transition = `opacity 0.6s ease ${index * 0.1}s, transform 0.6s ease ${index * 0.1}s`;
+                animationObserver.observe(el);
+            });
+        }
+
+        // Call additional setup functions
+        document.addEventListener('DOMContentLoaded', function() {
+            setupScrollAnimations();
+            // addTypingEffect(); // Uncomment if you want the typing effect
         });
     </script>
 </body>
