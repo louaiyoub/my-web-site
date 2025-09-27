@@ -1,9 +1,10 @@
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
 <head>
-    <meta charset="UTF-8">
+    <meta charset="utf-8">    
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>LNC TECHNOLOGIE - Web & Application Development</title>
+    <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
     <style>
         :root {
             --primary: #0047AB;
@@ -796,6 +797,47 @@
         .contact-form .btn:hover {
             background-color: var(--light-gray);
         }
+
+        .contact-form .btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+
+        .status-message {
+            padding: 1rem;
+            border-radius: 5px;
+            margin: 1rem 0;
+            text-align: center;
+            display: none;
+        }
+
+        .status-message.success {
+            background-color: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+
+        .status-message.error {
+            background-color: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+
+        .loading-spinner {
+            border: 2px solid #f3f3f3;
+            border-top: 2px solid var(--primary);
+            border-radius: 50%;
+            width: 20px;
+            height: 20px;
+            animation: spin 1s linear infinite;
+            display: inline-block;
+            margin-right: 10px;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
         
         .map-container {
             margin-top: 4rem;
@@ -987,7 +1029,7 @@
                         <li><a data-translate="home" href="#home">Home</a></li>
                         <li><a data-translate="services" href="#services">Services</a></li>
                         <li><a data-translate="about" href="#about">About</a></li>
-                        <li><a data-translate="exempels" href="https://louaiyoub.github.io/exempel/">Exemples</a></li>
+                        <li><a data-translate="exempels" href="k7alich.htm">Exemples</a></li>
                         <li><a data-translate="Team" href="#team">Team</a></li>
                         <li><a data-translate="Testimonials" href="#testimonials">Testimonials</a></li>
                         <li><a data-translate="Contact" href="#contact">Contact</a></li>
@@ -1109,7 +1151,7 @@
                         <p data-translate="about_paragraph1">We are a passionate team of developers and designers dedicated to creating exceptional digital experiences. With years of experience in web and mobile development, we understand the challenges businesses face in the digital world.</p>
                         <p data-translate="about_paragraph2">Our mission is to help businesses leverage technology to achieve their goals. We combine creativity with technical expertise to deliver solutions that not only look great but also perform exceptionally.</p>
                         <p data-translate="about_paragraph3">From small startups to large enterprises, we've helped numerous clients transform their digital presence and achieve remarkable results.</p>
-                        <a href="https://louaiyoub.github.io/about/" class="btn btn-primary" data-translate="learn_more">Learn more ...</a>
+                        <a href="./LNCT aboutus.html" class="btn btn-primary" data-translate="learn_more">Learn more ...</a>
                     </div>
                     <div class="about-image">
                         <img src="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 800 600'><rect width='800' height='600' fill='%23f0f8ff'/><rect x='50' y='50' width='700' height='500' fill='%23ffffff' stroke='%23e0e0e0' stroke-width='2'/><circle cx='150' cy='150' r='30' fill='%230047AB'/><circle cx='300' cy='150' r='30' fill='%233F75D5'/><circle cx='450' cy='150' r='30' fill='%2300A3E0'/><rect x='100' y='250' width='600' height='20' fill='%23f0f0f0'/><rect x='100' y='290' width='400' height='20' fill='%23f0f0f0'/><rect x='100' y='330' width='500' height='20' fill='%23f0f0f0'/><rect x='100' y='370' width='350' height='20' fill='%23f0f0f0'/><rect x='550' y='250' width='150' height='140' fill='%230047AB' opacity='0.1'/><text x='400' y='520' font-family='Arial' font-size='24' fill='%230047AB' text-anchor='middle'>Digital Innovation</text></svg>" alt="About Us" />
@@ -1134,7 +1176,7 @@
                             <h3 data-translate="ceo_name">NADEM BENBOU3ZIZE</h3>
                             <p data-translate="ceo_title">Digital Marketer</p>
                             <div class="social-links">
-                                <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                                <a href="#"><i class="fab fa-instagram"></i></a>
                                 <a href="#"><i class="fab fa-twitter"></i></a>
                                 <a href="#"><i class="fab fa-github"></i></a>
                             </div>
@@ -1235,6 +1277,7 @@
                         </div>
                     </div>
                     <div class="contact-form">
+                        <div class="status-message" id="statusMessage"></div>
                         <form id="contactForm">
                             <div class="form-group">
                                 <label for="name" data-translate="name">Name</label>
@@ -1252,12 +1295,12 @@
                                 <label for="message" data-translate="message">Message</label>
                                 <textarea id="message" name="message" required></textarea>
                             </div>
-                            <button type="submit" class="btn" data-translate="send_message">Send Message</button>
+                            <button type="submit" class="btn" id="submitBtn" data-translate="send_message">Send Message</button>
                         </form>
                     </div>
                 </div>
                 <div class="map-container">
-                    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d5776.750857251411!2d55.273139875220124!3d25.194930161745898!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3e5f43348a67e24b%3A0xff45e502e1ceb7e2!2sBurj%20Khalifa!5e1!3m2!1sen!2sdz!4v1756067269225!5m2!1sen!2sdz" width="100%" height="400" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
+                    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d207019.27355734607!2d2.9975607926165655!3d36.7531563815676!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x128fad05f8bd3961%3A0xa5b2c1b3238f7b0!2sAlgiers%2C%20Algeria!5e0!3m2!1sen!2s!4v1735138856172!5m2!1sen!2s" width="100%" height="400" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
                 </div>
             </div>
         </section>
@@ -1280,7 +1323,6 @@
                     <h3 data-translate="services">Services</h3>
                     <ul>
                         <li><a href="#" data-translate="web_development">Web Development</a></li>
-                        <li><a href="#" data-translate="mobile_apps">Mobile Apps</a></li>
                         <li><a href="#" data-translate="ui_ux_design">UI/UX Design</a></li>
                         <li><a href="#" data-translate="ecommerce">E-Commerce</a></li>
                     </ul>
@@ -1317,6 +1359,9 @@
     </footer>
 
     <script>
+        // Initialize EmailJS with your public key
+        emailjs.init('YOUR_PUBLIC_KEY'); // Replace with your actual public key
+
         // Translations
         const translations = {
             en: {
@@ -1362,88 +1407,16 @@
                 cto_title: "FRONTEND Developer",
                 designer_name: "ABDELATIF YOUB",
                 designer_title: "BACKEND Developer",
-                testimonials: "What Our Clients Say",
-                testimonials_description: "Don't just take our word for it - hear from our satisfied clients.",
-                testimonial1: "LNC TECHNOLOGIE delivered an outstanding website that exceeded our expectations. Their attention to detail and professionalism is remarkable.",
-                client1_name: "MAX",
-                client1_title: "CEO, Digital Solutions",
-                testimonial2: "Working with LNC TECHNOLOGIE was a game-changer for our business. The mobile app they developed helped us reach new customers.",
-                client2_name: "Mohamed",
-                client2_title: "Founder, TechStart",
-                testimonial3: "Professional, reliable, and innovative. LNC TECHNOLOGIE transformed our online presence and boosted our sales significantly.",
-                client3_name: "AMINE",
-                client3_title: "Director, E-commerce Plus",
-                get_in_touch: "Get In Touch",
-                contact_description: "Ready to start your next project? Contact us today and let's discuss how we can help bring your ideas to life.",
-                address: "Algiers, Algeria",
-                hours: "Mon - Fri: 9:00 AM - 6:00 PM",
-                name: "Name",
-                email: "Email",
-                subject: "Subject",
-                message: "Message",
-                send_message: "Send Message",
-                company: "Company",
-                about: "About Us",
-                services: "Services",
-                team: "Team",
-                contact: "Contact",
-                help_center: "Help Center",
-                documentation: "Documentation",
-                privacy_policy: "Privacy Policy",
-                terms_service: "Terms of Service",
-                connect: "Connect",
-                all_rights_reserved: "All rights reserved."
-            },
-            fr: {
-                home : "Accueil",
-                services : "Services",
-                about : "À propos ",
-                Team : "Équipe",
-                Testimonials : "Témoignages",
-                Contact : "Contact",
-                exempels : "Exemples",
-                hero_title: "Solutions Web & Apps Innovantes",
-                hero_subtitle: "Nous créons des expériences numériques de pointe qui font avancer votre entreprise avec des technologies modernes et un design créatif.",
-                get_started: "Commencer",
-                learn_more: "En savoir plus ...",
-                our_services: "Nos Services",
-                services_description: "Nous offrons des solutions numériques complètes pour aider votre entreprise à prospérer dans le paysage numérique moderne.",
-                web_development: "Développement Web",
-                web_dev_description: "Sites web et applications web personnalisés construits avec les dernières technologies et meilleures pratiques.",                ui_ux_design: "Design UI/UX",
-                design_description: "Interfaces utilisateur belles et intuitives qui offrent des expériences utilisateur exceptionnelles.",
-                ecommerce: "E-Commerce",
-                ecommerce_description: "Solutions e-commerce complètes pour vous aider à vendre en ligne et développer votre entreprise.",
-                cloud_solutions: "Solutions Cloud",
-                cloud_description: "Infrastructure cloud évolutive et solutions de déploiement pour vos applications.",
-                maintenance: "Maintenance & Support",
-                maintenance_description: "Support continu et maintenance pour maintenir vos actifs numériques en bon état de fonctionnement.",
-                projects_completed: "Projets Terminés",
-                happy_clients: "Clients Satisfaits",
-                years_experience: "Années d'Expérience",
-                support: "Support 24/7",
-                about_us: "À propos de LNC TECHNOLOGIE",
-                about_paragraph1: "Nous sommes une équipe passionnée de développeurs et designers dédiés à créer des expériences numériques exceptionnelles. Avec des années d'expérience en développement web et mobile, nous comprenons les défis auxquels font face les entreprises dans le monde numérique.",
-                about_paragraph2: "Notre mission est d'aider les entreprises à tirer parti de la technologie pour atteindre leurs objectifs. Nous combinons créativité et expertise technique pour livrer des solutions qui non seulement ont fière allure mais performent exceptionnellement.",
-                about_paragraph3: "Des petites startups aux grandes entreprises, nous avons aidé de nombreux clients à transformer leur présence numérique et obtenir des résultats remarquables.",
-                learn_more: "En savoir plus...",
-                our_team: "Notre Équipe",
-                team_description: "Rencontrez les individus talentueux qui rendent notre succès possible.",
-                ceo_name: "nadem benbou3zize",
-                ceo_title: "Digital Marketer",
-                cto_name: "youb louai",
-                cto_title: "FRONTEND Developer",
-                designer_name: "abdelatif youb",
-                designer_title: "BACKEND Developer",
                 testimonials: "Ce que disent nos clients",
                 testimonials_description: "Ne nous croyez pas sur parole - écoutez nos clients satisfaits.",
                 testimonial1: "LNC TECHNOLOGIE a livré un site web exceptionnel qui a dépassé nos attentes. Leur attention aux détails et leur professionnalisme sont remarquables.",
-                client1_name: "MAX",
+                client1_name: "Fatima Zahra",
                 client1_title: "PDG, Solutions Numériques",
                 testimonial2: "Travailler avec LNC TECHNOLOGIE a été un tournant pour notre entreprise. L'application mobile qu'ils ont développée nous a aidés à atteindre de nouveaux clients.",
-                client2_name: "Mohamed",
+                client2_name: "Mohamed Larbi",
                 client2_title: "Fondateur, TechStart",
                 testimonial3: "Professionnel, fiable et innovant. LNC TECHNOLOGIE a transformé notre présence en ligne et considérablement augmenté nos ventes.",
-                client3_name: "Amine",
+                client3_name: "Amina Khedira",
                 client3_title: "Directrice, E-commerce Plus",
                 get_in_touch: "Prenez Contact",
                 contact_description: "Prêt à démarrer votre prochain projet ? Contactez-nous aujourd'hui et discutons de la façon dont nous pouvons aider à donner vie à vos idées.",
@@ -1454,6 +1427,9 @@
                 subject: "Sujet",
                 message: "Message",
                 send_message: "Envoyer le Message",
+                sending: "Envoi en cours...",
+                message_sent: "Message envoyé avec succès !",
+                message_error: "Échec de l'envoi du message. Veuillez réessayer.",
                 company: "Entreprise",
                 about: "À propos",
                 services: "Services",
@@ -1467,13 +1443,12 @@
                 all_rights_reserved: "Tous droits réservés."
             },
             ar: {
-
                 home : "الرئيسية",
                 services : "الخدمات",
                 about : " من نحن",
                 Team : "الفريق",
                 Testimonials : "الشهادات",
-                Contact : " ",
+                Contact : "اتصل",
                 exempels : "أمثلة",
                 hero_title: "حلول مواقع وتطبيقات مبتكرة",
                 hero_subtitle: "نحن ننشئ تجارب رقمية متطورة تقود أعمالك إلى الأمام بتكنولوجيا حديثة وتصميم إبداعي.",
@@ -1511,14 +1486,14 @@
                 testimonials: "ما يقوله عملاؤنا",
                 testimonials_description: "لا تأخذ كلامنا فقط - اسمع من عملائنا الراضين.",
                 testimonial1: "قدمت LNC TECHNOLOGIE موقعاً إلكترونياً رائعاً فاق توقعاتنا. اهتمامهم بالتفاصيل ومهنيتهم رائعة.",
-                client1_name: "ماكس",
+                client1_name: "فاطمة الزهراء",
                 client1_title: "الرئيس التنفيذي، الحلول الرقمية",
                 testimonial2: "العمل مع LNC TECHNOLOGIE كان نقطة تحول لأعمالنا. التطبيق المحمول الذي طوروه ساعدنا في الوصول إلى عملاء جدد.",
-                client2_name: "محمد",
+                client2_name: "محمد العربي",
                 client2_title: "المؤسس، تيك ستارت",
                 testimonial3: "مهني وموثوق ومبتكر. LNC TECHNOLOGIE حولت حضورنا عبر الإنترنت وعززت مبيعاتنا بشكل كبير.",
-                client3_name: "أمين",
-                client3_title: "المدير، إي كومرس بلس",
+                client3_name: "أمينة خضيرة",
+                client3_title: "المديرة، إي كومرس بلس",
                 get_in_touch: "تواصل معنا",
                 contact_description: "مستعد لبدء مشروعك التالي؟ اتصل بنا اليوم ولنناقش كيف يمكننا مساعدتك في إحياء أفكارك.",
                 address: "الجزائر العاصمة، الجزائر",
@@ -1528,6 +1503,9 @@
                 subject: "الموضوع",
                 message: "الرسالة",
                 send_message: "إرسال الرسالة",
+                sending: "جاري الإرسال...",
+                message_sent: "تم إرسال الرسالة بنجاح!",
+                message_error: "فشل في إرسال الرسالة. يرجى المحاولة مرة أخرى.",
                 company: "الشركة",
                 about: "من نحن",
                 services: "الخدمات",
@@ -1686,21 +1664,65 @@
             }
         }
 
-        // Contact form submission
+        // Show status message
+        function showStatusMessage(message, type) {
+            const statusMessage = document.getElementById('statusMessage');
+            statusMessage.textContent = message;
+            statusMessage.className = `status-message ${type}`;
+            statusMessage.style.display = 'block';
+            
+            setTimeout(() => {
+                statusMessage.style.display = 'none';
+            }, 5000);
+        }
+
+        // Enhanced Contact form submission with EmailJS
         function handleContactForm(event) {
             event.preventDefault();
             
+            const submitBtn = document.getElementById('submitBtn');
+            const originalText = submitBtn.textContent;
+            
+            // Show loading state
+            submitBtn.disabled = true;
+            submitBtn.innerHTML = `<div class="loading-spinner"></div>${translations[currentLang].sending || 'Sending...'}`;
+            
             // Get form data
             const formData = new FormData(event.target);
-            const data = Object.fromEntries(formData.entries());
+            const templateParams = {
+                name: formData.get('name'),
+                email: formData.get('email'),
+                subject: formData.get('subject'),
+                message: formData.get('message')
+            };
             
-            // Simulate form submission
-            alert(currentLang === 'ar' ? 'تم إرسال رسالتك بنجاح!' : 
-                  currentLang === 'fr' ? 'Votre message a été envoyé avec succès!' : 
-                  'Your message has been sent successfully!');
+            console.log('Sending email with params:', templateParams);
             
-            // Reset form
-            event.target.reset();
+            // Send email using EmailJS
+            emailjs.init('user_-0G2xq0gcuRGjhnpe'); // Replace with your actual public key
+            emailjs.send('service_9iu6x88', 'user__ejs-test-mail-service__', templateParams)
+            
+                .then((response) => {
+                    console.log('SUCCESS!', response.status, response.text);
+                    showStatusMessage(
+                        translations[currentLang].message_sent || 'Message sent successfully!',
+                        'success'
+                    );
+                    event.target.reset();
+                })
+                .catch((error) => {
+                    console.error('FAILED...', error);
+                    console.log('Error details:', JSON.stringify(error));
+                    showStatusMessage(
+                        translations[currentLang].message_error || 'Failed to send message. Please try again.',
+                        'error'
+                    );
+                })
+                .finally(() => {
+                    // Reset button state
+                    submitBtn.disabled = false;
+                    submitBtn.innerHTML = originalText;
+                });
         }
 
         // Smooth scrolling for navigation links
@@ -1726,37 +1748,26 @@
             });
         }
 
-        // Initialize everything when DOM is loaded
-        document.addEventListener('DOMContentLoaded', function() {
-            // Setup event listeners
-            window.addEventListener('scroll', handleScroll);
-            document.getElementById('contactForm').addEventListener('submit', handleContactForm);
-            
-            // Setup observers
-            const counterSection = document.querySelector('.counter-section');
-            if (counterSection) {
-                observer.observe(counterSection);
-            }
-            
-            // Setup smooth scrolling
-            setupSmoothScrolling();
-            
-            // Close language dropdown when clicking outside
-            document.addEventListener('click', function(event) {
-                const languageSwitcher = document.querySelector('.language-switcher');
-                const dropdown = document.getElementById('lang-dropdown');
-                
-                if (!languageSwitcher.contains(event.target)) {
-                    dropdown.classList.remove('active');
-                }
+        // Enhanced scroll animations
+        function setupScrollAnimations() {
+            const animationObserver = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.style.opacity = '1';
+                        entry.target.style.transform = 'translateY(0)';
+                    }
+                });
+            }, { threshold: 0.1 });
+
+            // Animate service cards, team members, etc.
+            const animatedElements = document.querySelectorAll('.service-card, .team-member, .testimonial');
+            animatedElements.forEach((el, index) => {
+                el.style.opacity = '0';
+                el.style.transform = 'translateY(30px)';
+                el.style.transition = `opacity 0.6s ease ${index * 0.1}s, transform 0.6s ease ${index * 0.1}s`;
+                animationObserver.observe(el);
             });
-            
-            // Initialize language display
-            updateLanguageDisplay();
-            
-            // Add floating animation to shapes
-            createFloatingShapes();
-        });
+        }
 
         // Create floating shapes animation
         function createFloatingShapes() {
@@ -1780,55 +1791,38 @@
             });
         }
 
-        // Add typing effect to hero title
-        function addTypingEffect() {
-            const heroTitle = document.querySelector('.hero h1');
-            if (heroTitle) {
-                const text = heroTitle.textContent;
-                heroTitle.textContent = '';
-                let i = 0;
-                
-                function typeWriter() {
-                    if (i < text.length) {
-                        heroTitle.textContent += text.charAt(i);
-                        i++;
-                        setTimeout(typeWriter, 100);
-                    }
-                }
-                
-                setTimeout(typeWriter, 1000);
-            }
-        }
-
-        // Enhanced scroll animations
-        function setupScrollAnimations() {
-            const animationObserver = new IntersectionObserver((entries) => {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                        entry.target.style.opacity = '1';
-                        entry.target.style.transform = 'translateY(0)';
-                    }
-                });
-            }, { threshold: 0.1 });
-
-            // Animate service cards, team members, etc.
-            const animatedElements = document.querySelectorAll('.service-card, .team-member, .testimonial');
-            animatedElements.forEach((el, index) => {
-                el.style.opacity = '0';
-                el.style.transform = 'translateY(30px)';
-                el.style.transition = `opacity 0.6s ease ${index * 0.1}s, transform 0.6s ease ${index * 0.1}s`;
-                animationObserver.observe(el);
-            });
-        }
-
-        // Call additional setup functions
+        // Initialize everything when DOM is loaded
         document.addEventListener('DOMContentLoaded', function() {
+            // Setup event listeners
+            window.addEventListener('scroll', handleScroll);
+            document.getElementById('contactForm').addEventListener('submit', handleContactForm);
+            
+            // Setup observers
+            const counterSection = document.querySelector('.counter-section');
+            if (counterSection) {
+                observer.observe(counterSection);
+            }
+            
+            // Setup smooth scrolling and animations
+            setupSmoothScrolling();
             setupScrollAnimations();
-            // addTypingEffect(); // Uncomment if you want the typing effect
+            
+            // Close language dropdown when clicking outside
+            document.addEventListener('click', function(event) {
+                const languageSwitcher = document.querySelector('.language-switcher');
+                const dropdown = document.getElementById('lang-dropdown');
+                
+                if (!languageSwitcher.contains(event.target)) {
+                    dropdown.classList.remove('active');
+                }
+            });
+            
+            // Initialize language display
+            updateLanguageDisplay();
+            
+            // Add floating animation to shapes
+            createFloatingShapes();
         });
     </script>
 </body>
 </html>
-
-
-
