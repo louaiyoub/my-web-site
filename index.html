@@ -3,8 +3,10 @@
 <head>
     <meta charset="utf-8">    
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>LNC TECHNOLOGIE - Start Your Project</title>
+    <title>LNC TECHNOLOGIE - Web Development</title>
+    <meta name="description" content="LNC TECHNOLOGIE - Leading web development company specializing in innovative digital solutions.">
     <link rel="shortcut icon" href="https://i.ibb.co/nMMyk0SD/94e902af-4cd5-45f9-b32f-f60a6f9dfb9f.png" />
+    <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
         :root {
@@ -18,8 +20,6 @@
             --card-bg: #f5f7fa;
             --shadow: 0 5px 15px rgba(0,0,0,0.05);
             --shadow-lg: 0 15px 30px rgba(0,0,0,0.1);
-            --success: #10b981;
-            --error: #ef4444;
         }
         
         body.dark-mode {
@@ -61,543 +61,563 @@
         .theme-toggle { background: rgba(255,255,255,0.15); border: 1px solid rgba(255,255,255,0.3); color: var(--white); font-size: 1.2rem; cursor: pointer; margin-left: 1rem; padding: 0.6rem; border-radius: 50%; width: 45px; height: 45px; display: flex; align-items: center; justify-content: center; transition: all 0.3s; }
         .theme-toggle:hover { transform: rotate(180deg); }
         
-        .hamburger { display: none; cursor: pointer; flex-direction: column; gap: 5px; }
-        .hamburger div { width: 28px; height: 3px; background: var(--white); border-radius: 3px; transition: all 0.3s; }
+        .hamburger { display: none; cursor: pointer; }
+        .hamburger div { width: 25px; height: 3px; background: var(--white); margin: 5px; transition: all 0.3s; border-radius: 3px; }
         
-        .main-content { margin-top: 90px; padding: 3rem 0 5rem; }
+        .main-content { margin-top: 90px; }
         
-        .page-header { text-align: center; margin-bottom: 4rem; animation: fadeInDown 1s ease; }
-        @keyframes fadeInDown { from { opacity: 0; transform: translateY(-50px); } to { opacity: 1; transform: translateY(0); } }
+        .hero { background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 50%, var(--accent) 100%); color: var(--white); padding: 8rem 0 6rem; text-align: center; position: relative; overflow: hidden; }
+        .hero::before { content: ''; position: absolute; inset: 0; background: radial-gradient(circle at 20% 50%, rgba(255,255,255,0.1) 0%, transparent 50%); animation: pulse 15s ease-in-out infinite; }
+        @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.5; } }
         
-        .page-header h1 { font-size: 3.5rem; margin-bottom: 1rem; background: linear-gradient(135deg, var(--primary) 0%, var(--accent) 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; font-weight: 700; }
-        .page-header p { font-size: 1.2rem; opacity: 0.7; max-width: 600px; margin: 0 auto; }
+        .hero-content { max-width: 800px; margin: 0 auto; position: relative; z-index: 2; }
+        .hero h1 { font-size: 3.5rem; margin-bottom: 1.5rem; animation: fadeInUp 0.8s ease-out; font-weight: 700; }
+        .hero p { font-size: 1.3rem; margin-bottom: 2.5rem; animation: fadeInUp 0.8s ease-out 0.2s forwards; opacity: 0; }
+        .hero-buttons { animation: fadeInUp 0.8s ease-out 0.4s forwards; opacity: 0; }
+        @keyframes fadeInUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
         
-        .progress-steps { display: flex; justify-content: space-between; margin-bottom: 4rem; position: relative; padding: 0 20px; }
-        .progress-steps::before { content: ''; position: absolute; top: 25px; left: 20px; right: 20px; height: 3px; background: var(--card-bg); z-index: 0; }
-        .progress-line { position: absolute; top: 25px; left: 20px; height: 3px; background: linear-gradient(90deg, var(--primary), var(--accent)); transition: width 0.6s; z-index: 1; }
+        .btn { display: inline-block; background: var(--white); color: var(--primary); padding: 1rem 2.5rem; border-radius: 50px; text-decoration: none; font-weight: 600; transition: all 0.3s; margin: 0.5rem; border: 2px solid transparent; }
+        .btn:hover { transform: translateY(-5px); box-shadow: 0 10px 25px rgba(0,0,0,0.2); }
+        .btn-outline { background: transparent; border: 2px solid var(--white); color: var(--white); }
+        .btn-outline:hover { background: var(--white); color: var(--primary); }
+        .btn-primary { background: var(--primary); color: var(--white); }
         
-        .step { display: flex; flex-direction: column; align-items: center; position: relative; z-index: 2; flex: 1; }
-        .step-circle { width: 50px; height: 50px; border-radius: 50%; background: var(--card-bg); border: 3px solid var(--card-bg); display: flex; align-items: center; justify-content: center; font-weight: bold; transition: all 0.4s; margin-bottom: 0.75rem; }
-        .step.active .step-circle { background: linear-gradient(135deg, var(--primary), var(--accent)); color: var(--white); border-color: var(--primary); transform: scale(1.2); }
-        .step.completed .step-circle { background: var(--success); border-color: var(--success); color: var(--white); }
-        .step.completed .step-circle::after { content: '✓'; }
-        .step-label { font-size: 0.9rem; text-align: center; max-width: 120px; font-weight: 600; }
-        .step.active .step-label { color: var(--primary); }
+        .services { padding: 6rem 0; background: var(--bg); }
+        .section-header { text-align: center; margin-bottom: 4rem; }
+        .section-header h2 { color: var(--primary); font-size: 2.8rem; margin-bottom: 1rem; font-weight: 700; position: relative; display: inline-block; }
+        .section-header h2::after { content: ''; position: absolute; bottom: -10px; left: 50%; transform: translateX(-50%); width: 60px; height: 4px; background: linear-gradient(90deg, var(--primary), var(--accent)); border-radius: 2px; }
         
-        .project-form { background: var(--card-bg); border-radius: 20px; padding: 3rem; box-shadow: var(--shadow-lg); }
-        .form-step { display: none; }
-        .form-step.active { display: block; animation: slideIn 0.6s ease; }
-        @keyframes slideIn { from { opacity: 0; transform: translateX(30px); } to { opacity: 1; transform: translateX(0); } }
+        .services-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 2.5rem; }
+        .service-card { background: var(--card-bg); border-radius: 15px; padding: 2.5rem 2rem; text-align: center; transition: all 0.4s; box-shadow: var(--shadow); }
+        .service-card:hover { transform: translateY(-15px); box-shadow: var(--shadow-lg); }
+        .service-card i { font-size: 3.5rem; color: var(--primary); margin-bottom: 1.5rem; transition: all 0.3s; }
+        .service-card:hover i { transform: scale(1.2); color: var(--accent); }
+        .service-card h3 { color: var(--primary-dark); margin-bottom: 1rem; font-size: 1.4rem; }
         
-        .form-section { margin-bottom: 2.5rem; }
-        .form-section h2 { color: var(--primary); font-size: 1.8rem; margin-bottom: 1.5rem; padding-bottom: 0.75rem; border-bottom: 3px solid var(--accent); display: flex; align-items: center; gap: 0.75rem; font-weight: 700; }
+        .counter-section { background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%); color: var(--white); padding: 5rem 0; text-align: center; }
+        .counter-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 3rem; }
+        .counter-item h3 { font-size: 3rem; margin-bottom: 1rem; font-weight: 700; }
+        .counter-item p { font-size: 1.1rem; text-transform: uppercase; letter-spacing: 1.5px; }
         
-        .form-group { margin-bottom: 1.75rem; }
-        .form-group label { display: block; margin-bottom: 0.6rem; font-weight: 600; }
-        .required { color: var(--error); }
-        .form-group input, .form-group textarea, .form-group select { width: 100%; padding: 1rem; border: 2px solid var(--card-bg); border-radius: 12px; background: var(--bg); color: var(--text); font-size: 1rem; transition: all 0.3s; }
-        .form-group input:focus, .form-group textarea:focus, .form-group select:focus { outline: none; border-color: var(--primary); box-shadow: 0 0 0 4px rgba(0,71,171,0.1); }
-        .form-group textarea { min-height: 140px; resize: vertical; }
+        .about { padding: 6rem 0; background: var(--card-bg); }
+        .about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: center; }
+        .about-content h2 { color: var(--primary); margin-bottom: 1.5rem; font-size: 2.5rem; font-weight: 700; }
+        .about-image { border-radius: 20px; overflow: hidden; box-shadow: var(--shadow-lg); }
+        .about-image img { width: 100%; transition: transform 0.5s; }
+        .about-image:hover img { transform: scale(1.08); }
         
-        .error-message { color: var(--error); font-size: 0.85rem; margin-top: 0.5rem; display: none; }
-        .form-group.invalid input, .form-group.invalid textarea { border-color: var(--error); }
-        .form-group.invalid .error-message { display: block; }
+        .team-section { padding: 6rem 0; background: var(--bg); }
+        .team-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 2.5rem; }
+        .team-member { background: var(--card-bg); border-radius: 15px; overflow: hidden; box-shadow: var(--shadow); transition: all 0.4s; }
+        .team-member:hover { transform: translateY(-15px); box-shadow: var(--shadow-lg); }
+        .team-image { height: 300px; background: linear-gradient(135deg, var(--primary-light), var(--accent)); overflow: hidden; }
+        .team-image img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.5s; }
+        .team-member:hover .team-image img { transform: scale(1.1); }
+        .team-info { padding: 2rem 1.5rem; text-align: center; }
+        .social-links { display: flex; justify-content: center; gap: 0.8rem; }
+        .social-links a { width: 40px; height: 40px; border-radius: 50%; background: var(--primary); color: var(--white); display: flex; justify-content: center; align-items: center; transition: all 0.3s; }
+        .social-links a:hover { background: var(--accent); transform: translateY(-5px); }
+        
+        .testimonials { padding: 6rem 0; background: var(--card-bg); }
+        .testimonial-slider { max-width: 900px; margin: 0 auto; overflow: hidden; border-radius: 20px; }
+        .testimonial-container { display: flex; transition: transform 0.5s; }
+        .testimonial { min-width: 100%; padding: 3rem; background: var(--bg); text-align: center; }
+        .testimonial img { width: 100px; height: 100px; border-radius: 50%; margin: 0 auto 1.5rem; border: 4px solid var(--primary); }
+        .testimonial-nav { display: flex; justify-content: center; margin-top: 2rem; gap: 1rem; }
+        .testimonial-nav button { background: var(--primary); border: none; color: var(--white); font-size: 1.5rem; cursor: pointer; width: 50px; height: 50px; border-radius: 50%; transition: all 0.3s; }
+        .testimonial-nav button:hover { background: var(--accent); transform: scale(1.1); }
+        
+        .contact { padding: 6rem 0; background: linear-gradient(135deg, var(--primary) 0%, var(--accent) 100%); color: var(--white); }
+        .contact-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; }
+        .contact-details div { display: flex; align-items: center; margin-bottom: 1.5rem; }
+        .contact-details i { margin-right: 1rem; width: 40px; height: 40px; display: flex; align-items: center; justify-content: center; background: rgba(255,255,255,0.2); border-radius: 50%; }
+        .contact-form { background: rgba(255,255,255,0.1); padding: 2.5rem; border-radius: 20px; backdrop-filter: blur(10px); }
+        .form-group { margin-bottom: 1.5rem; }
+        .form-group label { display: block; margin-bottom: 0.5rem; }
+        .contact-form input, .contact-form textarea { width: 100%; padding: 1rem; border: none; border-radius: 10px; background: rgba(255,255,255,0.9); color: var(--primary-dark); }
+        .contact-form textarea { height: 150px; resize: none; }
+        .map-container { margin-top: 4rem; border-radius: 20px; overflow: hidden; height: 400px; }
+        
+        footer { background: var(--primary-dark); color: var(--white); padding: 4rem 0 2rem; }
+        .footer-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 2rem; margin-bottom: 2rem; }
+        .footer-col ul { list-style: none; }
+        .footer-col ul li { margin-bottom: 0.8rem; }
+        .footer-col ul li a { color: #ccc; text-decoration: none; transition: all 0.3s; }
+        .footer-col ul li a:hover { color: var(--white); padding-left: 5px; }
+        .footer-bottom { border-top: 1px solid rgba(255,255,255,0.1); padding-top: 2rem; text-align: center; }
+        .social-icons { margin-top: 1rem; }
+        .social-icons a { width: 40px; height: 40px; border-radius: 50%; background: rgba(255,255,255,0.1); color: var(--white); display: inline-flex; justify-content: center; align-items: center; margin: 0 0.5rem; transition: all 0.3s; }
+        .social-icons a:hover { background: var(--accent); transform: translateY(-3px); }
 
-        .project-type-cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1.5rem; margin-bottom: 1.5rem; }
-        .project-type-card { padding: 2rem 1.5rem; border: 3px solid var(--card-bg); border-radius: 16px; text-align: center; cursor: pointer; transition: all 0.4s; background: var(--bg); }
-        .project-type-card:hover { border-color: var(--primary); transform: translateY(-8px); box-shadow: var(--shadow-lg); }
-        .project-type-card.selected { border-color: var(--primary); background: linear-gradient(135deg, rgba(0,71,171,0.08), rgba(63,117,213,0.12)); transform: translateY(-8px); }
-        .project-type-card input { display: none; }
-        .project-type-icon { font-size: 3rem; margin-bottom: 1rem; }
-        .project-type-card h4 { margin: 0.75rem 0; font-size: 1.2rem; color: var(--primary); }
-        .project-type-price { font-size: 1.5rem; font-weight: 700; color: var(--accent); margin: 0.5rem 0; }
-        
-        .checkbox-group { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 1.2rem; }
-        .checkbox-item { display: flex; align-items: center; padding: 1.3rem; background: var(--bg); border: 2px solid var(--card-bg); border-radius: 12px; cursor: pointer; transition: all 0.3s; }
-        .checkbox-item:hover { border-color: var(--primary); transform: translateY(-4px); }
-        .checkbox-item input { width: 22px; height: 22px; margin-right: 1rem; cursor: pointer; accent-color: var(--primary); }
-        .checkbox-item.checked { border-color: var(--primary); background: linear-gradient(135deg, rgba(0,71,171,0.08), rgba(63,117,213,0.08)); }
-        .option-price { margin-left: auto; font-weight: 700; color: var(--accent); }
-        
-        .timeline-selector { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 1.2rem; }
-        .timeline-option { padding: 2rem 1.5rem; border: 2px solid var(--card-bg); border-radius: 16px; text-align: center; cursor: pointer; transition: all 0.3s; background: var(--bg); }
-        .timeline-option:hover, .timeline-option.selected { border-color: var(--primary); transform: translateY(-5px); box-shadow: var(--shadow-lg); }
-        .timeline-option.selected { background: linear-gradient(135deg, rgba(0,71,171,0.1), rgba(63,117,213,0.1)); }
-        .timeline-option input { display: none; }
-        .timeline-option h4 { color: var(--primary); margin-bottom: 0.5rem; font-size: 1.2rem; }
-        
-        .payment-methods { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 1.5rem; margin-bottom: 2rem; }
-        .payment-method { padding: 2rem 1.5rem; border: 3px solid var(--card-bg); border-radius: 16px; text-align: center; cursor: pointer; transition: all 0.4s; background: var(--bg); }
-        .payment-method:hover { border-color: var(--primary); transform: translateY(-8px); box-shadow: var(--shadow-lg); }
-        .payment-method.selected { border-color: var(--primary); background: linear-gradient(135deg, rgba(0,71,171,0.08), rgba(63,117,213,0.12)); transform: translateY(-8px); }
-        .payment-method input { display: none; }
-        .payment-method-icon { font-size: 3rem; margin-bottom: 1rem; }
-        .payment-method h4 { margin: 0.75rem 0; font-size: 1.2rem; }
-        
-        .ccp-details { display: none; margin-top: 2rem; background: var(--bg); border: 3px solid var(--primary); border-radius: 16px; padding: 2.5rem; }
-        .ccp-details.active { display: block; animation: fadeIn 0.6s; }
-        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
-        .ccp-details h3 { color: var(--primary); font-size: 1.6rem; margin-bottom: 1.5rem; text-align: center; display: flex; align-items: center; justify-content: center; gap: 0.75rem; }
-        .ccp-info-item { background: var(--card-bg); padding: 1.3rem; border-radius: 12px; margin-bottom: 1rem; display: flex; justify-content: space-between; align-items: center; }
-        .ccp-info-label { font-weight: 600; display: flex; align-items: center; gap: 0.6rem; }
-        .ccp-info-value { font-family: 'Courier New', monospace; font-size: 1.2rem; font-weight: bold; color: var(--primary); }
-        .copy-button { background: var(--primary); color: white; border: none; padding: 0.5rem 1rem; border-radius: 8px; cursor: pointer; font-size: 0.9rem; transition: all 0.3s; display: flex; align-items: center; gap: 0.4rem; }
-        .copy-button:hover { background: var(--primary-dark); transform: scale(1.05); }
-        .copy-button.copied { background: var(--success); }
-        
-        .price-summary { background: linear-gradient(135deg, var(--primary), var(--primary-light)); color: var(--white); padding: 2.5rem; border-radius: 16px; box-shadow: var(--shadow-lg); margin-top: 2rem; }
-        .price-summary h3 { font-size: 1.8rem; margin-bottom: 1.5rem; }
-        .price-item { display: flex; justify-content: space-between; padding: 0.75rem 0; border-bottom: 1px solid rgba(255,255,255,0.2); }
-        .price-total { display: flex; justify-content: space-between; font-size: 2rem; font-weight: bold; margin-top: 1.5rem; padding-top: 1.5rem; border-top: 3px solid rgba(255,255,255,0.3); }
-        
-        .btn { display: inline-block; background: linear-gradient(135deg, var(--primary), var(--accent)); color: var(--white); padding: 1rem 2.5rem; border: none; border-radius: 50px; font-size: 1.1rem; font-weight: 700; cursor: pointer; transition: all 0.3s; text-decoration: none; box-shadow: 0 8px 25px rgba(0,71,171,0.3); }
-        .btn:hover { transform: translateY(-4px); box-shadow: 0 12px 35px rgba(0,71,171,0.4); }
-        .btn:disabled { background: var(--card-bg); cursor: not-allowed; opacity: 0.6; }
-        .btn-secondary { background: var(--card-bg); color: var(--text); }
-        .btn-secondary:hover { background: var(--primary-dark); color: var(--white); }
-        
-        .form-navigation { display: flex; justify-content: space-between; margin-top: 3rem; gap: 1.5rem; }
-        
-        .success-message { display: none; background: linear-gradient(135deg, var(--success), var(--primary-light)); color: var(--white); padding: 4rem 3rem; border-radius: 20px; text-align: center; box-shadow: var(--shadow-lg); }
-        .success-message.active { display: block; animation: scaleIn 0.8s; }
-        @keyframes scaleIn { from { opacity: 0; transform: scale(0.8); } to { opacity: 1; transform: scale(1); } }
-        .success-icon { font-size: 5rem; margin-bottom: 1.5rem; }
-        .success-message h2 { font-size: 2.5rem; margin-bottom: 1.5rem; font-weight: 700; }
-        
         .status-msg { position: fixed; top: 100px; right: 20px; padding: 1rem 2rem; border-radius: 10px; color: white; font-weight: 600; opacity: 0; transform: translateX(400px); transition: all 0.3s; z-index: 1000; }
         .status-msg.show { opacity: 1; transform: translateX(0); }
         .status-msg.success { background: linear-gradient(135deg, #28a745, #20c997); }
         .status-msg.error { background: linear-gradient(135deg, #dc3545, #c82333); }
-
+        
         @media (max-width: 768px) {
-            .hamburger { display: flex; }
+            .hamburger { display: block; }
             .nav-menu { position: fixed; left: -100%; top: 90px; flex-direction: column; background: var(--primary); width: 100%; text-align: center; transition: 0.3s; padding: 2rem 0; }
             .nav-menu.active { left: 0; }
             .nav-menu li { margin: 1rem 0; }
-            .page-header h1 { font-size: 2.5rem; }
-            .project-form { padding: 2rem 1.5rem; }
-            .step-label { font-size: 0.75rem; max-width: 80px; }
-            .step-circle { width: 40px; height: 40px; font-size: 1rem; }
-            .checkbox-group, .project-type-cards, .timeline-selector, .payment-methods { grid-template-columns: 1fr; }
-            .form-navigation { flex-direction: column; }
+            .hero h1 { font-size: 2.5rem; }
+            .about-grid, .contact-grid { grid-template-columns: 1fr; }
+            .services-grid, .team-grid { grid-template-columns: 1fr; }
+            .counter-grid { grid-template-columns: repeat(2, 1fr); }
             .logo-img { width: 60px; height: 60px; }
+        }
+        
+        @media (max-width: 480px) {
+            .container { width: 95%; }
+            .hero { padding: 6rem 0 3rem; }
+            .hero h1 { font-size: 2rem; }
+            .counter-grid { grid-template-columns: 1fr; }
         }
     </style>
 </head>
 <body>
     <div class="scroll-progress" id="scrollProgress"></div>
-    <div class="status-msg" id="statusMsg"></div>
     
     <header id="header">
-        <div class="container nav-container">
-            <a href="https://lnctech.netlify.app/">
-                <img class="logo-img" src="https://i.ibb.co/nMMyk0SD/94e902af-4cd5-45f9-b32f-f60a6f9dfb9f.png" alt="LNC Tech">
-            </a>
-            <div class="hamburger" onclick="toggleMenu()">
-                <div></div>
-                <div></div>
-                <div></div>
-            </div>
-            <ul class="nav-menu" id="navMenu">
-                <li><a data-i18n="home" href="https://lnctech.netlify.app/">Home</a></li>
-                <li><a data-i18n="services" href="https://lnctech.netlify.app/#services">Services</a></li>
-                <li><a data-i18n="about" href="https://lnc-tech-about-us.netlify.app/">About</a></li>
-                <li><a data-i18n="portfolio" href="https://lnc-tech-portfilio.netlify.app/">Portfolio</a></li>
-                <li><a data-i18n="contact" href="https://lnctech.netlify.app/#contact">Contact</a></li>
-                <li>
-                    <div class="language-switcher">
-                        <div class="lang-button" onclick="toggleLangDropdown()">
-                            <span id="currentLang">🇺🇸 EN</span>
-                        </div>
-                        <div class="lang-dropdown" id="langDropdown">
-                            <div class="lang-option active" onclick="changeLang('en')">🇺🇸 English</div>
-                            <div class="lang-option" onclick="changeLang('fr')">🇫🇷 Français</div>
-                            <div class="lang-option" onclick="changeLang('ar')">🇸🇦 العربية</div>
-                        </div>
+        <div class="container">
+            <div class="nav-container">
+                <a class="logo" href="https://lnctech.netlify.app/">
+                    <img class="logo-img" src="https://i.ibb.co/nMMyk0SD/94e902af-4cd5-45f9-b32f-f60a6f9dfb9f.png" alt="LNC Tech Logo">
+                </a>
+                <nav>
+                    <ul class="nav-menu" id="navMenu">
+                        <li><a data-i18n="home" href="#home">Home</a></li>
+                        <li><a data-i18n="services" href="#services">Services</a></li>
+                        <li><a data-i18n="about" href="#about">About</a></li>
+                        <li><a data-i18n="team" href="#team">Team</a></li>
+                        <li><a data-i18n="Examples" href="https://lnc-tech-portfilio.netlify.app/">Examples</a></li>
+                        <li><a data-i18n="testimonials" href="#testimonials">Testimonials</a></li>
+                        <li><a data-i18n="contact" href="#contact">Contact</a></li>
+                    </ul>
+                </nav>
+                <div class="language-switcher">
+                    <div class="lang-button" onclick="toggleLangDropdown()">
+                        <span id="currentLang">🇺🇸 EN</span>
+                        <i class="fas fa-chevron-down"></i>
                     </div>
-                </li>
-                <li>
-                    <button class="theme-toggle" onclick="toggleTheme()">
-                        <i class="fas fa-moon" id="themeIcon"></i>
-                    </button>
-                </li>
-            </ul>
+                    <div class="lang-dropdown" id="langDropdown">
+                        <div class="lang-option active" onclick="changeLang('en')">🇺🇸 English</div>
+                        <div class="lang-option" onclick="changeLang('fr')">🇫🇷 Français</div>
+                        <div class="lang-option" onclick="changeLang('ar')">🇸🇦 العربية</div>
+                    </div>
+                </div>
+                <button class="theme-toggle" onclick="toggleTheme()">
+                    <i class="fas fa-moon" id="themeIcon"></i>
+                </button>
+                <div class="hamburger" onclick="toggleMenu()">
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                </div>
+            </div>
         </div>
     </header>
 
+    <div class="status-msg" id="statusMsg"></div>
+
     <main class="main-content">
+        <section id="home" class="hero">
+            <div class="container">
+                <div class="hero-content">
+                    <h1 data-i18n="heroTitle">Innovative Web & App Solutions</h1>
+                    <p data-i18n="heroSubtitle">We create cutting-edge digital experiences that drive your business forward.</p>
+                    <div class="hero-buttons">
+                        <a href="#contact" class="btn" data-i18n="getStarted">Get Started</a>
+                        <a href="#about" class="btn btn-outline" data-i18n="learnMore">Learn More</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="services" class="services">
+            <div class="container">
+                <div class="section-header">
+                    <h2 data-i18n="ourServices">Our Services</h2>
+                    <p data-i18n="servicesDesc">We offer comprehensive digital solutions.</p>
+                </div>
+                <div class="services-grid">
+                    <div class="service-card">
+                        <i class="fas fa-code"></i>
+                        <h3 data-i18n="webDev">Web Development</h3>
+                        <p data-i18n="webDevDesc">Custom websites with latest technologies.</p>
+                    </div>
+                    <div class="service-card">
+                        <i class="fas fa-palette"></i>
+                        <h3 data-i18n="uiUx">UI/UX Design</h3>
+                        <p data-i18n="uiUxDesc">Beautiful and intuitive interfaces.</p>
+                    </div>
+                    <div class="service-card">
+                        <i class="fas fa-shopping-cart"></i>
+                        <h3 data-i18n="ecommerce">E-Commerce</h3>
+                        <p data-i18n="ecommerceDesc">Complete online selling solutions.</p>
+                    </div>
+                    <div class="service-card">
+                        <i class="fas fa-cloud"></i>
+                        <h3 data-i18n="cloud">Cloud Solutions</h3>
+                        <p data-i18n="cloudDesc">Scalable cloud infrastructure.</p>
+                    </div>
+                    <div class="service-card">
+                        <i class="fas fa-cogs"></i>
+                        <h3 data-i18n="maintenance">Maintenance</h3>
+                        <p data-i18n="maintenanceDesc">Ongoing support services.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="counter-section">
+            <div class="container">
+                <div class="counter-grid">
+                    <div class="counter-item">
+                        <h3 data-count="150">0</h3>
+                        <p data-i18n="projectsCompleted">Projects Completed</p>
+                    </div>
+                    <div class="counter-item">
+                        <h3 data-count="100">0</h3>
+                        <p data-i18n="happyClients">Happy Clients</p>
+                    </div>
+                    <div class="counter-item">
+                        <h3 data-count="5">0</h3>
+                        <p data-i18n="yearsExp">Years Experience</p>
+                    </div>
+                    <div class="counter-item">
+                        <h3>24/7</h3>
+                        <p data-i18n="support">Support</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="about" class="about">
+            <div class="container">
+                <div class="about-grid">
+                    <div class="about-content">
+                        <h2 data-i18n="aboutUs">About LNC TECHNOLOGIE</h2>
+                        <p data-i18n="aboutP1">We are a passionate team dedicated to creating exceptional digital experiences.</p>
+                        <p data-i18n="aboutP2">Our mission is to help businesses leverage technology.</p>
+                        <a href="https://lnc-tech-about-us.netlify.app/" class="btn btn-primary" data-i18n="learnMore">Learn More</a>
+                    </div>
+                    <div class="about-image">
+                        <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 800 600'%3E%3Crect fill='%23f0f8ff' width='800' height='600'/%3E%3Crect x='50' y='50' width='700' height='500' fill='%23fff' stroke='%23e0e0e0' stroke-width='2'/%3E%3Ccircle cx='150' cy='150' r='30' fill='%230047AB'/%3E%3Ccircle cx='300' cy='150' r='30' fill='%233F75D5'/%3E%3Ccircle cx='450' cy='150' r='30' fill='%2300A3E0'/%3E%3C/svg%3E" alt="About">
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="team" class="team-section">
+            <div class="container">
+                <div class="section-header">
+                    <h2 data-i18n="ourTeam">Our Team</h2>
+                    <p data-i18n="teamDesc">Meet our talented individuals.</p>
+                </div>
+                <div class="team-grid">
+                    <div class="team-member">
+                        <div class="team-image">
+                            <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 400'%3E%3Crect fill='%230047AB' width='400' height='400'/%3E%3C/svg%3E" alt="Team">
+                        </div>
+                        <div class="team-info">
+                            <h3>NADEM BENBOU3ZIZE</h3>
+                            <p data-i18n="digitalMarketer">Digital Marketer</p>
+                            <div class="social-links">
+                                <a href="#"><i class="fab fa-instagram"></i></a>
+                                <a href="#"><i class="fab fa-twitter"></i></a>
+                                <a href="#"><i class="fab fa-github"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="team-member">
+                        <div class="team-image">
+                            <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 400'%3E%3Crect fill='%233F75D5' width='400' height='400'/%3E%3C/svg%3E" alt="Team">
+                        </div>
+                        <div class="team-info">
+                            <h3>YOUB LOUAI</h3>
+                            <p data-i18n="frontendDev">Frontend Developer</p>
+                            <div class="social-links">
+                                <a href="https://www.linkedin.com/in/louai-youb-a77885371/"><i class="fab fa-linkedin-in"></i></a>
+                                <a href="https://x.com/LouaiYoub1411"><i class="fab fa-twitter"></i></a>
+                                <a href="https://github.com/louaiyoub"><i class="fab fa-github"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="team-member">
+                        <div class="team-image">
+                            <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 400'%3E%3Crect fill='%2300A3E0' width='400' height='400'/%3E%3C/svg%3E" alt="Team">
+                        </div>
+                        <div class="team-info">
+                            <h3>ABDELATIF YOUB</h3>
+                            <p data-i18n="backendDev">Backend Developer</p>
+                            <div class="social-links">
+                                <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                                <a href="#"><i class="fab fa-twitter"></i></a>
+                                <a href="#"><i class="fab fa-github"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="testimonials" class="testimonials">
+            <div class="container">
+                <div class="section-header">
+                    <h2 data-i18n="testimonials">What Clients Say</h2>
+                    <p data-i18n="testimonialsDesc">Hear from satisfied clients.</p>
+                </div>
+                <div class="testimonial-slider">
+                    <div class="testimonial-container" id="testimonialContainer">
+                        <div class="testimonial">
+                            <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='50' fill='%2300A3E0'/%3E%3C/svg%3E" alt="Client">
+                            <p data-i18n="testimonial2">"Game-changer for our business."</p>
+                            <h4>MAX</h4>
+                            <small data-i18n="client2">Founder, TechStart</small>
+                        </div>
+                        <div class="testimonial">
+                            <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='50' fill='%23FF6B6B'/%3E%3C/svg%3E" alt="Client">
+                            <p data-i18n="testimonial3">"Professional and innovative solutions."</p>
+                            <h4>JONEY</h4>
+                            <small data-i18n="client3">Director, E-commerce Plus</small>
+                        </div>
+                    </div>
+                    <div class="testimonial-nav">
+                        <button onclick="changeTestimonial(-1)"><i class="fas fa-chevron-left"></i></button>
+                        <button onclick="changeTestimonial(1)"><i class="fas fa-chevron-right"></i></button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="contact" class="contact">
+            <div class="container">
+                <div class="contact-grid">
+                    <div class="contact-info">
+                        <h2 data-i18n="getInTouch">Get In Touch</h2>
+                        <p data-i18n="contactDesc">Ready to start your next project?</p>
+                        <div class="contact-details">
+                            <div>
+                                <i class="fas fa-map-marker-alt"></i>
+                                <span data-i18n="address">Algiers, Algeria</span>
+                            </div>
+                            <div>
+                                <i class="fas fa-phone"></i>
+                                <span>+213 552 56 70 96</span>
+                            </div>
+                            <div>
+                                <i class="fas fa-envelope"></i>
+                                <span>contact@lnctechnologie.com</span>
+                            </div>
+                            <div>
+                                <i class="fas fa-clock"></i>
+                                <span data-i18n="hours">Mon - Fri: 9:00 AM - 6:00 PM</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="contact-form">
+                        <form id="contactForm">
+                            <div class="form-group">
+                                <label data-i18n="name">Name</label>
+                                <input type="text" id="name" name="name" required>
+                            </div>
+                            <div class="form-group">
+                                <label data-i18n="email">Email</label>
+                                <input type="email" id="email" name="email" required>
+                            </div>
+                            <div class="form-group">
+                                <label data-i18n="subject">Subject</label>
+                                <input type="text" id="subject" name="subject" required>
+                            </div>
+                            <div class="form-group">
+                                <label data-i18n="message">Message</label>
+                                <textarea id="message" name="message" required></textarea>
+                            </div>
+                            <button type="submit" class="btn" data-i18n="sendMessage">Send Message</button>
+                        </form>
+                    </div>
+                </div>
+                <div class="map-container">
+                    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d206253.18152419406!2d2.9867672!3d36.7537569!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x128fb2699c8b5977%3A0x3e4b7e07d7f0c355!2sAlgiers%2C%20Algeria!5e0!3m2!1sen!2sdz!4v1234567890" width="100%" height="400" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
         <div class="container">
-            <div class="page-header">
-                <h1 data-i18n="pageTitle">Start Your Project</h1>
-                <p data-i18n="pageSubtitle">Fill out the form below to get started on your custom web development project.</p>
+            <div class="footer-grid">
+                <div class="footer-col">
+                    <h3 data-i18n="company">Company</h3>
+                    <ul>
+                        <li><a href="#about" data-i18n="about">About Us</a></li>
+                        <li><a href="#services" data-i18n="services">Services</a></li>
+                        <li><a href="#team" data-i18n="team">Team</a></li>
+                        <li><a href="#contact" data-i18n="contact">Contact</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h3 data-i18n="services">Services</h3>
+                    <ul>
+                        <li><a href="#" data-i18n="webDev">Web Development</a></li>
+                        <li><a href="#" data-i18n="uiUx">UI/UX Design</a></li>
+                        <li><a href="#" data-i18n="ecommerce">E-Commerce</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h3 data-i18n="support">Support</h3>
+                    <ul>
+                        <li><a href="#">Help Center</a></li>
+                        <li><a href="#">Documentation</a></li>
+                        <li><a href="#">Privacy Policy</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h3 data-i18n="connect">Connect</h3>
+                    <ul>
+                        <li><a href="#">Facebook</a></li>
+                        <li><a href="#">Twitter</a></li>
+                        <li><a href="#">LinkedIn</a></li>
+                    </ul>
+                </div>
             </div>
-
-            <div class="progress-steps">
-                <div class="progress-line" id="progressLine"></div>
-                <div class="step active" data-step="1">
-                    <div class="step-circle">1</div>
-                    <div class="step-label" data-i18n="step1">Project Details</div>
-                </div>
-                <div class="step" data-step="2">
-                    <div class="step-circle">2</div>
-                    <div class="step-label" data-i18n="step2">Features</div>
-                </div>
-                <div class="step" data-step="3">
-                    <div class="step-circle">3</div>
-                    <div class="step-label" data-i18n="step3">Timeline</div>
-                </div>
-                <div class="step" data-step="4">
-                    <div class="step-circle">4</div>
-                    <div class="step-label" data-i18n="step4">Payment</div>
-                </div>
-                <div class="step" data-step="5">
-                    <div class="step-circle">5</div>
-                    <div class="step-label" data-i18n="step5">Review</div>
-                </div>
-            </div>
-
-            <div class="project-form">
-                <!-- Step 1: Project Details -->
-                <div class="form-step active" data-step="1">
-                    <div class="form-section">
-                        <h2>📋 <span data-i18n="projectInfo">Project Information</span></h2>
-                        
-                        <div class="form-group">
-                            <label data-i18n="projectType">Project Type <span class="required">*</span></label>
-                            <div class="project-type-cards" id="projectTypeCards">
-                                <div class="project-type-card" data-type="website" data-price="2000">
-                                    <input type="radio" name="projectType" value="website">
-                                    <div class="project-type-icon">🌐</div>
-                                    <h4 data-i18n="typeWebsite">Website</h4>
-                                    <div class="project-type-price">$2,000</div>
-                                    <p data-i18n="typeWebsiteDesc">Professional business website</p>
-                                </div>
-                                <div class="project-type-card" data-type="webapp" data-price="5000">
-                                    <input type="radio" name="projectType" value="webapp">
-                                    <div class="project-type-icon">💻</div>
-                                    <h4 data-i18n="typeWebapp">Web Application</h4>
-                                    <div class="project-type-price">$5,000</div>
-                                    <p data-i18n="typeWebappDesc">Custom web application</p>
-                                </div>
-                                <div class="project-type-card" data-type="ecommerce" data-price="8000">
-                                    <input type="radio" name="projectType" value="ecommerce">
-                                    <div class="project-type-icon">🛒</div>
-                                    <h4 data-i18n="typeEcommerce">E-Commerce</h4>
-                                    <div class="project-type-price">$8,000</div>
-                                    <p data-i18n="typeEcommerceDesc">Online store solution</p>
-                                </div>
-                                <div class="project-type-card" data-type="mobile" data-price="10000">
-                                    <input type="radio" name="projectType" value="mobile">
-                                    <div class="project-type-icon">📱</div>
-                                    <h4 data-i18n="typeMobile">Mobile App</h4>
-                                    <div class="project-type-price">$10,000</div>
-                                    <p data-i18n="typeMobileDesc">iOS & Android app</p>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            <label for="projectName" data-i18n="projectName">Project Name <span class="required">*</span></label>
-                            <input type="text" id="projectName" placeholder="Enter your project name" required>
-                            <span class="error-message" data-i18n="errorProjectName">Please enter a project name</span>
-                        </div>
-                        
-                        <div class="form-group">
-                            <label for="projectDescription" data-i18n="projectDescription">Project Description <span class="required">*</span></label>
-                            <textarea id="projectDescription" placeholder="Tell us about your project..." required></textarea>
-                            <span class="error-message" data-i18n="errorProjectDesc">Please provide a description</span>
-                        </div>
-                    </div>
-
-                    <div class="form-section">
-                        <h2>👤 <span data-i18n="contactInfo">Contact Information</span></h2>
-                        <div class="form-group">
-                            <label for="fullName" data-i18n="fullName">Full Name <span class="required">*</span></label>
-                            <input type="text" id="fullName" placeholder="John Doe" required>
-                            <span class="error-message" data-i18n="errorFullName">Please enter your name</span>
-                        </div>
-                        <div class="form-group">
-                            <label for="email" data-i18n="email">Email <span class="required">*</span></label>
-                            <input type="email" id="email" placeholder="john@example.com" required>
-                            <span class="error-message" data-i18n="errorEmail">Please enter a valid email</span>
-                        </div>
-                        <div class="form-group">
-                            <label for="phone" data-i18n="phone">Phone</label>
-                            <input type="tel" id="phone" placeholder="+213 552 56 70 96">
-                        </div>
-                        <div class="form-group">
-                            <label for="company" data-i18n="company">Company</label>
-                            <input type="text" id="company" placeholder="Your Company">
-                        </div>
-                    </div>
-
-                    <div class="form-navigation">
-                        <button class="btn" onclick="nextStep()"><span data-i18n="nextStep">Next Step</span> →</button>
-                    </div>
-                </div>
-
-                <!-- Step 2: Features -->
-                <div class="form-step" data-step="2">
-                    <div class="form-section">
-                        <h2>⚙️ <span data-i18n="projectFeatures">Project Features</span></h2>
-                        <div class="checkbox-group">
-                            <div class="checkbox-item">
-                                <input type="checkbox" id="responsive" data-price="0">
-                                <label for="responsive" data-i18n="featureResponsive">Responsive Design</label>
-                                <span class="option-price" data-i18n="included">Included</span>
-                            </div>
-                            <div class="checkbox-item">
-                                <input type="checkbox" id="cms" data-price="500">
-                                <label for="cms" data-i18n="featureCms">Content Management System</label>
-                                <span class="option-price">$500</span>
-                            </div>
-                            <div class="checkbox-item">
-                                <input type="checkbox" id="seo" data-price="300">
-                                <label for="seo" data-i18n="featureSeo">SEO Optimization</label>
-                                <span class="option-price">$300</span>
-                            </div>
-                            <div class="checkbox-item">
-                                <input type="checkbox" id="analytics" data-price="200">
-                                <label for="analytics" data-i18n="featureAnalytics">Analytics Integration</label>
-                                <span class="option-price">$200</span>
-                            </div>
-                            <div class="checkbox-item">
-                                <input type="checkbox" id="api" data-price="800">
-                                <label for="api" data-i18n="featureApi">API Integration</label>
-                                <span class="option-price">$800</span>
-                            </div>
-                            <div class="checkbox-item">
-                                <input type="checkbox" id="multilang" data-price="400">
-                                <label for="multilang" data-i18n="featureMultilang">Multi-Language Support</label>
-                                <span class="option-price">$400</span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="form-navigation">
-                        <button class="btn btn-secondary" onclick="prevStep()">← <span data-i18n="previous">Previous</span></button>
-                        <button class="btn" onclick="nextStep()"><span data-i18n="nextStep">Next Step</span> →</button>
-                    </div>
-                </div>
-
-                <!-- Step 3: Timeline -->
-                <div class="form-step" data-step="3">
-                    <div class="form-section">
-                        <h2>📅 <span data-i18n="projectTimeline">Project Timeline</span></h2>
-                        <p style="margin-bottom: 1.5rem; opacity: 0.8;" data-i18n="timelineQuestion">When do you need your project completed?</p>
-                        <div class="timeline-selector">
-                            <div class="timeline-option">
-                                <input type="radio" name="timeline" id="urgent" value="1-2 weeks">
-                                <h4>🚀 <span data-i18n="timelineUrgent">Urgent</span></h4>
-                                <p data-i18n="timelineUrgentTime">1-2 weeks</p>
-                            </div>
-                            <div class="timeline-option">
-                                <input type="radio" name="timeline" id="standard" value="3-4 weeks">
-                                <h4>⚡ <span data-i18n="timelineStandard">Standard</span></h4>
-                                <p data-i18n="timelineStandardTime">3-4 weeks</p>
-                            </div>
-                            <div class="timeline-option">
-                                <input type="radio" name="timeline" id="flexible" value="1-2 months">
-                                <h4>🎯 <span data-i18n="timelineFlexible">Flexible</span></h4>
-                                <p data-i18n="timelineFlexibleTime">1-2 months</p>
-                            </div>
-                            <div class="timeline-option">
-                                <input type="radio" name="timeline" id="extended" value="3+ months">
-                                <h4>📆 <span data-i18n="timelineExtended">Extended</span></h4>
-                                <p data-i18n="timelineExtendedTime">3+ months</p>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="form-navigation">
-                        <button class="btn btn-secondary" onclick="prevStep()">← <span data-i18n="previous">Previous</span></button>
-                        <button class="btn" onclick="nextStep()"><span data-i18n="nextStep">Next Step</span> →</button>
-                    </div>
-                </div>
-
-                <!-- Step 4: Payment -->
-                <div class="form-step" data-step="4">
-                    <div class="form-section">
-                        <h2>💳 <span data-i18n="paymentMethod">Payment Method</span></h2>
-                        <div class="payment-methods">
-                            <div class="payment-method">
-                                <input type="radio" name="payment" id="creditCard" value="credit_card">
-                                <div class="payment-method-icon">💳</div>
-                                <h4 data-i18n="paymentCredit">Credit Card</h4>
-                                <p data-i18n="paymentCreditDesc">Visa, Mastercard, Amex</p>
-                            </div>
-                            <div class="payment-method">
-                                <input type="radio" name="payment" id="paypal" value="paypal">
-                                <div class="payment-method-icon">🅿️</div>
-                                <h4 data-i18n="paymentPaypal">PayPal</h4>
-                                <p data-i18n="paymentPaypalDesc">Secure online payment</p>
-                            </div>
-                            <div class="payment-method">
-                                <input type="radio" name="payment" id="ccp" value="ccp">
-                                <div class="payment-method-icon">🏦</div>
-                                <h4 data-i18n="paymentCcp">CCP Transfer</h4>
-                                <p data-i18n="paymentCcpDesc">Algerian postal account</p>
-                            </div>
-                            <div class="payment-method">
-                                <input type="radio" name="payment" id="bankTransfer" value="bank_transfer">
-                                <div class="payment-method-icon">🏛️</div>
-                                <h4 data-i18n="paymentBank">Bank Transfer</h4>
-                                <p data-i18n="paymentBankDesc">Direct bank transfer</p>
-                            </div>
-                        </div>
-
-                        <div class="ccp-details" id="ccpDetails">
-                            <h3>🏦 <span data-i18n="ccpTitle">CCP Account Details</span></h3>
-                            <div class="ccp-info-item">
-                                <div class="ccp-info-label">
-                                    <span>📌</span> <span data-i18n="ccpHolder">Account Holder</span>
-                                </div>
-                                <div class="ccp-info-value">LNC TECHNOLOGIE</div>
-                            </div>
-                            <div class="ccp-info-item">
-                                <div class="ccp-info-label">
-                                    <span>🔢</span> <span data-i18n="ccpNumber">CCP Account Number</span>
-                                </div>
-                                <div class="ccp-info-value">00799999900123456789</div>
-                                <button class="copy-button" onclick="copyToClipboard('00799999900123456789', this)">
-                                    📋 <span data-i18n="copy">Copy</span>
-                                </button>
-                            </div>
-                            <div class="ccp-info-item">
-                                <div class="ccp-info-label">
-                                    <span>🔑</span> <span data-i18n="ccpKey">CCP Key</span>
-                                </div>
-                                <div class="ccp-info-value">42</div>
-                                <button class="copy-button" onclick="copyToClipboard('42', this)">
-                                    📋 <span data-i18n="copy">Copy</span>
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="form-navigation">
-                        <button class="btn btn-secondary" onclick="prevStep()">← <span data-i18n="previous">Previous</span></button>
-                        <button class="btn" onclick="nextStep()"><span data-i18n="reviewOrder">Review Order</span> →</button>
-                    </div>
-                </div>
-
-                <!-- Step 5: Review -->
-                <div class="form-step" data-step="5">
-                    <div class="form-section">
-                        <h2>✅ <span data-i18n="orderSummary">Order Summary</span></h2>
-                        <div id="orderSummary"></div>
-                    </div>
-
-                    <div class="price-summary">
-                        <h3>💰 <span data-i18n="priceBreakdown">Price Breakdown</span></h3>
-                        <div id="priceBreakdown"></div>
-                        <div class="price-total">
-                            <span data-i18n="total">Total</span>
-                            <span id="totalPrice">$0</span>
-                        </div>
-                    </div>
-
-                    <div class="form-navigation">
-                        <button class="btn btn-secondary" onclick="prevStep()">← <span data-i18n="previous">Previous</span></button>
-                        <button class="btn" onclick="submitForm()"><span data-i18n="submitProject">Submit Project</span> 🚀</button>
-                    </div>
-                </div>
-
-                <div class="success-message" id="successMessage">
-                    <div class="success-icon">🎉</div>
-                    <h2 data-i18n="successTitle">Project Submitted Successfully!</h2>
-                    <p data-i18n="successMessage">Thank you for choosing LNC TECHNOLOGIE. We've received your project details and will get back to you within 24 hours.</p>
+            <div class="footer-bottom">
+                <p>&copy; 2024 LNC TECHNOLOGIE. <span data-i18n="allRights">All rights reserved.</span></p>
+                <div class="social-icons">
+                    <a href="#"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                    <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                    <a href=""><i class="fab fa-tiktok"></i></a>
                 </div>
             </div>
         </div>
-    </main>
+    </footer>
 
     <script>
+        // Translations
         const translations = {
             en: {
-                home: "Home", services: "Services", about: "About", portfolio: "Portfolio", contact: "Contact",
-                pageTitle: "Start Your Project", pageSubtitle: "Fill out the form below to get started on your custom web development project.",
-                step1: "Project Details", step2: "Features", step3: "Timeline", step4: "Payment", step5: "Review",
-                projectInfo: "Project Information", projectType: "Project Type", projectName: "Project Name", projectDescription: "Project Description",
-                contactInfo: "Contact Information", fullName: "Full Name", email: "Email", phone: "Phone", company: "Company",
-                typeWebsite: "Website", typeWebapp: "Web Application", typeEcommerce: "E-Commerce", typeMobile: "Mobile App",
-                typeWebsiteDesc: "Professional business website", typeWebappDesc: "Custom web application", typeEcommerceDesc: "Online store solution", typeMobileDesc: "iOS & Android app",
-                errorProjectName: "Please enter a project name", errorProjectDesc: "Please provide a description", errorFullName: "Please enter your name", errorEmail: "Please enter a valid email",
-                projectFeatures: "Project Features", included: "Included",
-                featureResponsive: "Responsive Design", featureCms: "Content Management System", featureSeo: "SEO Optimization", featureAnalytics: "Analytics Integration", featureApi: "API Integration", featureMultilang: "Multi-Language Support",
-                projectTimeline: "Project Timeline", timelineQuestion: "When do you need your project completed?",
-                timelineUrgent: "Urgent", timelineStandard: "Standard", timelineFlexible: "Flexible", timelineExtended: "Extended",
-                timelineUrgentTime: "1-2 weeks", timelineStandardTime: "3-4 weeks", timelineFlexibleTime: "1-2 months", timelineExtendedTime: "3+ months",
-                paymentMethod: "Payment Method", paymentCredit: "Credit Card", paymentPaypal: "PayPal", paymentCcp: "CCP Transfer", paymentBank: "Bank Transfer",
-                paymentCreditDesc: "Visa, Mastercard, Amex", paymentPaypalDesc: "Secure online payment", paymentCcpDesc: "Algerian postal account", paymentBankDesc: "Direct bank transfer",
-                ccpTitle: "CCP Account Details", ccpHolder: "Account Holder", ccpNumber: "CCP Account Number", ccpKey: "CCP Key", copy: "Copy",
-                orderSummary: "Order Summary", priceBreakdown: "Price Breakdown", total: "Total",
-                nextStep: "Next Step", previous: "Previous", reviewOrder: "Review Order", submitProject: "Submit Project",
-                successTitle: "Project Submitted Successfully!", successMessage: "Thank you for choosing LNC TECHNOLOGIE. We've received your project details and will get back to you within 24 hours."
+                home: "Home", services: "Services", about: "About", team: "Team", testimonials: "Testimonials", contact: "Contact",
+                heroTitle: "Innovative Web & App Solutions", heroSubtitle: "We create cutting-edge digital experiences that drive your business forward.",
+                getStarted: "Get Started", learnMore: "Learn More", ourServices: "Our Services", servicesDesc: "We offer comprehensive digital solutions.",
+                webDev: "Web Development", webDevDesc: "Custom websites with latest technologies.", uiUx: "UI/UX Design", uiUxDesc: "Beautiful and intuitive interfaces.",
+                ecommerce: "E-Commerce", ecommerceDesc: "Complete online selling solutions.", cloud: "Cloud Solutions", cloudDesc: "Scalable cloud infrastructure.",
+                maintenance: "Maintenance", maintenanceDesc: "Ongoing support services.", projectsCompleted: "Projects Completed", happyClients: "Happy Clients",
+                yearsExp: "Years Experience", support: "Support", aboutUs: "About LNC TECHNOLOGIE", aboutP1: "We are a passionate team dedicated to creating exceptional digital experiences.",
+                aboutP2: "Our mission is to help businesses leverage technology.", ourTeam: "Our Team", teamDesc: "Meet our talented individuals.",
+                digitalMarketer: "Digital Marketer", frontendDev: "Frontend Developer", backendDev: "Backend Developer", testimonialsDesc: "Hear from satisfied clients.",
+                testimonial1: "Outstanding website that exceeded expectations.", client1: "CEO, Digital Solutions", testimonial2: "Game-changer for our business.",
+                client2: "Founder, TechStart", testimonial3: "Professional and innovative solutions.", client3: "Director, E-commerce Plus",
+                getInTouch: "Get In Touch", contactDesc: "Ready to start your next project?", address: "Algiers, Algeria", hours: "Mon - Fri: 9:00 AM - 6:00 PM",
+                name: "Name", email: "Email", subject: "Subject", message: "Message", sendMessage: "Send Message", company: "Company", connect: "Connect", allRights: "All rights reserved."
             },
             fr: {
-                home: "Accueil", services: "Services", about: "À propos", portfolio: "Portfolio", contact: "Contact",
-                pageTitle: "Démarrez Votre Projet", pageSubtitle: "Remplissez le formulaire ci-dessous pour commencer votre projet.",
-                step1: "Détails", step2: "Fonctionnalités", step3: "Calendrier", step4: "Paiement", step5: "Révision",
-                projectInfo: "Informations du Projet", projectType: "Type de Projet", projectName: "Nom du Projet", projectDescription: "Description",
-                contactInfo: "Informations de Contact", fullName: "Nom Complet", email: "Email", phone: "Téléphone", company: "Entreprise",
-                typeWebsite: "Site Web", typeWebapp: "Application Web", typeEcommerce: "E-Commerce", typeMobile: "Application Mobile",
-                typeWebsiteDesc: "Site web professionnel", typeWebappDesc: "Application web personnalisée", typeEcommerceDesc: "Solution de boutique", typeMobileDesc: "App iOS & Android",
-                errorProjectName: "Veuillez entrer un nom", errorProjectDesc: "Veuillez fournir une description", errorFullName: "Veuillez entrer votre nom", errorEmail: "Veuillez entrer un email valide",
-                projectFeatures: "Fonctionnalités", included: "Inclus",
-                featureResponsive: "Design Responsive", featureCms: "Système de Gestion", featureSeo: "Optimisation SEO", featureAnalytics: "Intégration Analytics", featureApi: "Intégration API", featureMultilang: "Support Multi-Langues",
-                projectTimeline: "Calendrier", timelineQuestion: "Quand avez-vous besoin de votre projet?",
-                timelineUrgent: "Urgent", timelineStandard: "Standard", timelineFlexible: "Flexible", timelineExtended: "Étendu",
-                timelineUrgentTime: "1-2 semaines", timelineStandardTime: "3-4 semaines", timelineFlexibleTime: "1-2 mois", timelineExtendedTime: "3+ mois",
-                paymentMethod: "Méthode de Paiement", paymentCredit: "Carte de Crédit", paymentPaypal: "PayPal", paymentCcp: "Transfert CCP", paymentBank: "Virement Bancaire",
-                paymentCreditDesc: "Visa, Mastercard, Amex", paymentPaypalDesc: "Paiement sécurisé", paymentCcpDesc: "Compte postal algérien", paymentBankDesc: "Virement direct",
-                ccpTitle: "Détails du Compte CCP", ccpHolder: "Titulaire", ccpNumber: "Numéro CCP", ccpKey: "Clé CCP", copy: "Copier",
-                orderSummary: "Résumé", priceBreakdown: "Détail des Prix", total: "Total",
-                nextStep: "Suivant", previous: "Précédent", reviewOrder: "Réviser", submitProject: "Soumettre",
-                successTitle: "Projet Soumis!", successMessage: "Merci d'avoir choisi LNC TECHNOLOGIE. Nous vous répondrons dans les 24 heures."
+                home: "Accueil", services: "Services", about: "À propos", team: "Équipe", testimonials: "Témoignages", contact: "Contact",
+                heroTitle: "Solutions Web & Apps Innovantes", heroSubtitle: "Nous créons des expériences numériques de pointe.",
+                getStarted: "Commencer", learnMore: "En savoir plus", ourServices: "Nos Services", servicesDesc: "Solutions numériques complètes.",
+                webDev: "Développement Web", webDevDesc: "Sites web personnalisés.", uiUx: "Design UI/UX", uiUxDesc: "Interfaces belles et intuitives.",
+                ecommerce: "E-Commerce", ecommerceDesc: "Solutions de vente en ligne.", cloud: "Solutions Cloud", cloudDesc: "Infrastructure cloud évolutive.",
+                maintenance: "Maintenance", maintenanceDesc: "Support continu.", projectsCompleted: "Projets Terminés", happyClients: "Clients Satisfaits",
+                yearsExp: "Années d'Expérience", support: "Support", aboutUs: "À propos de LNC", aboutP1: "Équipe passionnée créant des expériences exceptionnelles.",
+                aboutP2: "Notre mission: aider les entreprises.", ourTeam: "Notre Équipe", teamDesc: "Rencontrez nos talents.",
+                digitalMarketer: "Marketing Digital", frontendDev: "Développeur Frontend", backendDev: "Développeur Backend", testimonialsDesc: "Avis de nos clients.",
+                testimonial1: "Site web exceptionnel.", client1: "PDG, Solutions Numériques", testimonial2: "Tournant pour notre entreprise.",
+                client2: "Fondateur, TechStart", testimonial3: "Solutions professionnelles.", client3: "Directeur, E-commerce Plus",
+                getInTouch: "Contactez-nous", contactDesc: "Prêt pour votre projet?", address: "Alger, Algérie", hours: "Lun - Ven: 9h - 18h",
+                name: "Nom", email: "Email", subject: "Sujet", message: "Message", sendMessage: "Envoyer", company: "Entreprise", connect: "Connecter", allRights: "Tous droits réservés."
             },
             ar: {
-                home: "الرئيسية", services: "الخدمات", about: "من نحن", portfolio: "المعرض", contact: "اتصل بنا",
-                pageTitle: "ابدأ مشروعك", pageSubtitle: "املأ النموذج أدناه للبدء في مشروعك.",
-                step1: "التفاصيل", step2: "المميزات", step3: "الجدول", step4: "الدفع", step5: "المراجعة",
-                projectInfo: "معلومات المشروع", projectType: "نوع المشروع", projectName: "اسم المشروع", projectDescription: "الوصف",
-                contactInfo: "معلومات الاتصال", fullName: "الاسم الكامل", email: "البريد الإلكتروني", phone: "الهاتف", company: "الشركة",
-                typeWebsite: "موقع ويب", typeWebapp: "تطبيق ويب", typeEcommerce: "التجارة الإلكترونية", typeMobile: "تطبيق جوال",
-                typeWebsiteDesc: "موقع أعمال احترافي", typeWebappDesc: "تطبيق ويب مخصص", typeEcommerceDesc: "حل متجر إلكتروني", typeMobileDesc: "تطبيق iOS و Android",
-                errorProjectName: "الرجاء إدخال الاسم", errorProjectDesc: "الرجاء تقديم وصف", errorFullName: "الرجاء إدخال اسمك", errorEmail: "الرجاء إدخال بريد صالح",
-                projectFeatures: "مميزات المشروع", included: "مشمول",
-                featureResponsive: "تصميم متجاوب", featureCms: "نظام إدارة المحتوى", featureSeo: "تحسين محركات البحث", featureAnalytics: "تكامل التحليلات", featureApi: "تكامل API", featureMultilang: "دعم متعدد اللغات",
-                projectTimeline: "الجدول الزمني", timelineQuestion: "متى تحتاج مشروعك؟",
-                timelineUrgent: "عاجل", timelineStandard: "قياسي", timelineFlexible: "مرن", timelineExtended: "ممتد",
-                timelineUrgentTime: "1-2 أسابيع", timelineStandardTime: "3-4 أسابيع", timelineFlexibleTime: "1-2 أشهر", timelineExtendedTime: "3+ أشهر",
-                paymentMethod: "طريقة الدفع", paymentCredit: "بطاقة ائتمان", paymentPaypal: "PayPal", paymentCcp: "تحويل CCP", paymentBank: "تحويل بنكي",
-                paymentCreditDesc: "فيزا، ماستركارد", paymentPaypalDesc: "دفع آمن", paymentCcpDesc: "حساب بريدي جزائري", paymentBankDesc: "تحويل بنكي مباشر",
-                ccpTitle: "تفاصيل حساب CCP", ccpHolder: "صاحب الحساب", ccpNumber: "رقم CCP", ccpKey: "مفتاح CCP", copy: "نسخ",
-                orderSummary: "ملخص الطلب", priceBreakdown: "تفصيل الأسعار", total: "المجموع",
-                nextStep: "التالي", previous: "السابق", reviewOrder: "مراجعة", submitProject: "إرسال",
-                successTitle: "تم إرسال المشروع!", successMessage: "شكرًا لاختيارك LNC TECHNOLOGIE. سنرد عليك خلال 24 ساعة."
+                home: "الرئيسية", services: "الخدمات", about: "من نحن", team: "الفريق", testimonials: "الشهادات", contact: "اتصل",
+                heroTitle: "حلول مواقع وتطبيقات مبتكرة", heroSubtitle: "نحن ننشئ تجارب رقمية متطورة.",
+                getStarted: "ابدأ الآن", learnMore: "اعرف أكثر", ourServices: "خدماتنا", servicesDesc: "حلول رقمية شاملة.",
+                webDev: "تطوير المواقع", webDevDesc: "مواقع مخصصة بأحدث التقنيات.", uiUx: "تصميم واجهة المستخدم", uiUxDesc: "واجهات جميلة وبديهية.",
+                ecommerce: "التجارة الإلكترونية", ecommerceDesc: "حلول البيع عبر الإنترنت.", cloud: "حلول السحابة", cloudDesc: "بنية تحتية سحابية قابلة للتطوير.",
+                maintenance: "الصيانة", maintenanceDesc: "خدمات دعم مستمرة.", projectsCompleted: "المشاريع المكتملة", happyClients: "عملاء سعداء",
+                yearsExp: "سنوات الخبرة", support: "دعم", aboutUs: "حول LNC", aboutP1: "فريق شغوف بإنشاء تجارب استثنائية.",
+                aboutP2: "مهمتنا: مساعدة الشركات.", ourTeam: "فريقنا", teamDesc: "تعرف على المواهب لدينا.",
+                digitalMarketer: "مسوق رقمي", frontendDev: "مطور واجهة أمامية", backendDev: "مطور واجهة خلفية", testimonialsDesc: "اسمع من عملائنا.",
+                testimonial1: "موقع رائع فاق التوقعات.", client1: "الرئيس التنفيذي", testimonial2: "نقطة تحول لأعمالنا.",
+                client2: "المؤسس، تيك ستارت", testimonial3: "حلول مهنية.", client3: "المدير، إي كومرس",
+                getInTouch: "تواصل معنا", contactDesc: "مستعد لمشروعك؟", address: "الجزائر العاصمة", hours: "الإثنين - الجمعة: 9 ص - 6 م",
+                name: "الاسم", email: "البريد", subject: "الموضوع", message: "الرسالة", sendMessage: "إرسال", company: "الشركة", connect: "تواصل", allRights: "جميع الحقوق محفوظة."
             }
         };
 
-        let currentStep = 1;
-        let currentLang = localStorage.getItem('language') || 'en';
-        let isDark = localStorage.getItem('theme') === 'dark';
-        let selectedFeatures = [];
-        let basePrice = 0;
+        let currentLang = 'en';
+        let currentTestimonial = 0;
+        let isDark = false;
 
-        // Initialize
-        window.addEventListener('DOMContentLoaded', () => {
-            updateLanguage();
-            if (isDark) {
-                document.body.classList.add('dark-mode');
-                document.getElementById('themeIcon').className = 'fas fa-sun';
-            }
-            updateProgressBar();
-            setupEventListeners();
-        });
+        // Initialize EmailJS
+        emailjs.init('-0G2xq0gcuRGjhnpe');
 
-        // Scroll effects
-        window.addEventListener('scroll', () => {
+        // Language Functions
+        function toggleLangDropdown() {
+            document.getElementById('langDropdown').classList.toggle('active');
+        }
+
+        function changeLang(lang) {
+            currentLang = lang;
+            document.documentElement.setAttribute('lang', lang);
+            document.documentElement.setAttribute('dir', lang === 'ar' ? 'rtl' : 'ltr');
+            
+            const flags = { en: '🇺🇸 EN', fr: '🇫🇷 FR', ar: '🇸🇦 AR' };
+            document.getElementById('currentLang').textContent = flags[lang];
+            
+            document.querySelectorAll('.lang-option').forEach(opt => opt.classList.remove('active'));
+            event.target.classList.add('active');
+            
+            document.querySelectorAll('[data-i18n]').forEach(el => {
+                const key = el.getAttribute('data-i18n');
+                if (translations[lang][key]) {
+                    el.textContent = translations[lang][key];
+                }
+            });
+            
+            toggleLangDropdown();
+        }
+
+        // Theme Toggle
+        function toggleTheme() {
+            isDark = !isDark;
+            document.body.classList.toggle('dark-mode');
+            document.getElementById('themeIcon').className = isDark ? 'fas fa-sun' : 'fas fa-moon';
+        }
+
+        // Mobile Menu
+        function toggleMenu() {
+            document.getElementById('navMenu').classList.toggle('active');
+        }
+
+        // Testimonial Slider
+        function changeTestimonial(dir) {
+            const testimonials = document.querySelectorAll('.testimonial');
+            currentTestimonial = (currentTestimonial + dir + testimonials.length) % testimonials.length;
+            document.getElementById('testimonialContainer').style.transform = `translateX(-${currentTestimonial * 100}%)`;
+        }
+
+        setInterval(() => changeTestimonial(1), 5000);
+
+        // Counter Animation
+        function animateCounters() {
+            document.querySelectorAll('[data-count]').forEach(counter => {
+                const target = parseInt(counter.getAttribute('data-count'));
+                const increment = target / 100;
+                let current = 0;
+                
+                const timer = setInterval(() => {
+                    current += increment;
+                    if (current >= target) {
+                        current = target;
+                        clearInterval(timer);
+                    }
+                    counter.textContent = Math.floor(current);
+                }, 20);
+            });
+        }
+
+        // Scroll Effects
+        function handleScroll() {
             const header = document.getElementById('header');
             const scrollProgress = document.getElementById('scrollProgress');
             
@@ -609,216 +629,63 @@
             
             const scrollPercent = (window.scrollY / (document.documentElement.scrollHeight - window.innerHeight)) * 100;
             scrollProgress.style.width = scrollPercent + '%';
+        }
+
+        // Status Message
+        function showStatus(msg, type) {
+            const statusMsg = document.getElementById('statusMsg');
+            statusMsg.textContent = msg;
+            statusMsg.className = `status-msg ${type} show`;
+            setTimeout(() => statusMsg.classList.remove('show'), 3000);
+        }
+
+        // Contact Form
+        document.getElementById('contactForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            emailjs.sendForm('service_9iu6x88', 'template_zf5gqzd', this)
+                .then(() => {
+                    showStatus(currentLang === 'ar' ? 'تم إرسال الرسالة!' : currentLang === 'fr' ? 'Message envoyé!' : 'Message sent!', 'success');
+                    this.reset();
+                })
+                .catch(() => {
+                    showStatus(currentLang === 'ar' ? 'فشل الإرسال' : currentLang === 'fr' ? 'Échec de l\'envoi' : 'Send failed', 'error');
+                });
         });
 
-        function setupEventListeners() {
-            document.querySelectorAll('.project-type-card').forEach(card => {
-                card.addEventListener('click', function() {
-                    document.querySelectorAll('.project-type-card').forEach(c => c.classList.remove('selected'));
-                    this.classList.add('selected');
-                    this.querySelector('input').checked = true;
-                    basePrice = parseInt(this.dataset.price);
-                });
-            });
-
-            document.querySelectorAll('.checkbox-item input').forEach(checkbox => {
-                checkbox.addEventListener('change', function() {
-                    this.closest('.checkbox-item').classList.toggle('checked', this.checked);
-                    updateSelectedFeatures();
-                });
-            });
-
-            document.querySelectorAll('.timeline-option').forEach(option => {
-                option.addEventListener('click', function() {
-                    document.querySelectorAll('.timeline-option').forEach(opt => opt.classList.remove('selected'));
-                    this.classList.add('selected');
-                    this.querySelector('input').checked = true;
-                });
-            });
-
-            document.querySelectorAll('.payment-method').forEach(method => {
-                method.addEventListener('click', function() {
-                    document.querySelectorAll('.payment-method').forEach(m => m.classList.remove('selected'));
-                    this.classList.add('selected');
-                    this.querySelector('input').checked = true;
-                    showPaymentForm(this.querySelector('input').value);
-                });
-            });
-        }
-
-        function toggleLangDropdown() {
-            document.getElementById('langDropdown').classList.toggle('active');
-        }
-
-        function changeLang(lang) {
-            currentLang = lang;
-            localStorage.setItem('language', lang);
-            document.documentElement.setAttribute('lang', lang);
-            document.documentElement.setAttribute('dir', lang === 'ar' ? 'rtl' : 'ltr');
-            
-            const flags = { en: '🇺🇸 EN', fr: '🇫🇷 FR', ar: '🇸🇦 AR' };
-            document.getElementById('currentLang').textContent = flags[lang];
-            
-            document.querySelectorAll('.lang-option').forEach(opt => opt.classList.remove('active'));
-            event.target.classList.add('active');
-            
-            updateLanguage();
-            toggleLangDropdown();
-        }
-
-        function updateLanguage() {
-            document.querySelectorAll('[data-i18n]').forEach(el => {
-                const key = el.getAttribute('data-i18n');
-                if (translations[currentLang][key]) {
-                    el.textContent = translations[currentLang][key];
+        // Intersection Observer
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting && entry.target.classList.contains('counter-section')) {
+                    animateCounters();
+                    observer.unobserve(entry.target);
                 }
             });
-        }
+        }, { threshold: 0.1 });
 
-        function toggleTheme() {
-            isDark = !isDark;
-            document.body.classList.toggle('dark-mode');
-            document.getElementById('themeIcon').className = isDark ? 'fas fa-sun' : 'fas fa-moon';
-            localStorage.setItem('theme', isDark ? 'dark' : 'light');
-        }
-
-        function toggleMenu() {
-            document.getElementById('navMenu').classList.toggle('active');
-        }
-
-        function nextStep() {
-            if (validateStep(currentStep)) {
-                document.querySelector(`.form-step[data-step="${currentStep}"]`).classList.remove('active');
-                currentStep++;
-                document.querySelector(`.form-step[data-step="${currentStep}"]`).classList.add('active');
-                updateProgressBar();
-                if (currentStep === 5) {
-                    generateOrderSummary();
-                }
-                window.scrollTo({ top: 0, behavior: 'smooth' });
-            }
-        }
-
-        function prevStep() {
-            document.querySelector(`.form-step[data-step="${currentStep}"]`).classList.remove('active');
-            currentStep--;
-            document.querySelector(`.form-step[data-step="${currentStep}"]`).classList.add('active');
-            updateProgressBar();
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-        }
-
-        function updateProgressBar() {
-            const steps = document.querySelectorAll('.step');
-            const progressLine = document.getElementById('progressLine');
-            
-            steps.forEach((step, index) => {
-                const stepNum = index + 1;
-                step.classList.remove('active', 'completed');
-                if (stepNum < currentStep) {
-                    step.classList.add('completed');
-                } else if (stepNum === currentStep) {
-                    step.classList.add('active');
+        // Smooth Scroll
+        document.querySelectorAll('a[href^="#"]').forEach(link => {
+            link.addEventListener('click', function(e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth' });
+                    document.getElementById('navMenu').classList.remove('active');
                 }
             });
-
-            const progress = ((currentStep - 1) / (steps.length - 1)) * 100;
-            progressLine.style.width = `calc(${progress}% - 20px)`;
-        }
-
-        function validateStep(step) {
-            let isValid = true;
-            const currentStepEl = document.querySelector(`.form-step[data-step="${step}"]`);
-            
-            if (step === 1) {
-                const projectTypeSelected = document.querySelector('.project-type-card.selected');
-                if (!projectTypeSelected) {
-                    isValid = false;
-                }
-            }
-
-            currentStepEl.querySelectorAll('[required]').forEach(field => {
-                const formGroup = field.closest('.form-group');
-                if (!field.value.trim()) {
-                    formGroup?.classList.add('invalid');
-                    isValid = false;
-                } else {
-                    formGroup?.classList.remove('invalid');
-                }
-            });
-
-            return isValid;
-        }
-
-        function updateSelectedFeatures() {
-            selectedFeatures = [];
-            document.querySelectorAll('.checkbox-item input:checked').forEach(checkbox => {
-                selectedFeatures.push({
-                    name: checkbox.nextElementSibling.textContent,
-                    price: parseInt(checkbox.dataset.price) || 0
-                });
-            });
-        }
-
-        function showPaymentForm(paymentType) {
-            document.getElementById('ccpDetails')?.classList.remove('active');
-            if (paymentType === 'ccp') {
-                document.getElementById('ccpDetails')?.classList.add('active');
-            }
-        }
-
-        function copyToClipboard(text, button) {
-            navigator.clipboard.writeText(text).then(() => {
-                const originalText = button.innerHTML;
-                button.innerHTML = '✓ Copied!';
-                button.classList.add('copied');
-                setTimeout(() => {
-                    button.innerHTML = originalText;
-                    button.classList.remove('copied');
-                }, 2000);
-            });
-        }
-
-        function generateOrderSummary() {
-            const summary = document.getElementById('orderSummary');
-            const priceBreakdown = document.getElementById('priceBreakdown');
-
-            const projectType = document.querySelector('.project-type-card.selected h4').textContent;
-            const projectName = document.getElementById('projectName').value;
-            const fullName = document.getElementById('fullName').value;
-            const email = document.getElementById('email').value;
-
-            summary.innerHTML = `
-                <div style="background: var(--bg); padding: 2rem; border-radius: 12px; margin-bottom: 2rem;">
-                    <h3 style="margin-bottom: 1rem; color: var(--primary);">${translations[currentLang].projectInfo}</h3>
-                    <p><strong>${translations[currentLang].projectType}:</strong> ${projectType}</p>
-                    <p><strong>${translations[currentLang].projectName}:</strong> ${projectName}</p>
-                    <p><strong>${translations[currentLang].fullName}:</strong> ${fullName}</p>
-                    <p><strong>${translations[currentLang].email}:</strong> ${email}</p>
-                </div>
-            `;
-
-            let total = basePrice;
-            priceBreakdown.innerHTML = `<div class="price-item"><span>${projectType}</span><span>${basePrice.toLocaleString()}</span></div>`;
-
-            selectedFeatures.forEach(feature => {
-                total += feature.price;
-                priceBreakdown.innerHTML += `<div class="price-item"><span>${feature.name}</span><span>${feature.price.toLocaleString()}</span></div>`;
-            });
-
-            document.getElementById('totalPrice').textContent = `${total.toLocaleString()}`;
-        }
-
-        function submitForm() {
-            document.querySelector('.project-form').style.display = 'none';
-            document.getElementById('successMessage').classList.add('active');
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-        }
+        });
 
         // Close dropdowns on outside click
-        document.addEventListener('click', (e) => {
+        document.addEventListener('click', function(e) {
             if (!e.target.closest('.language-switcher')) {
                 document.getElementById('langDropdown').classList.remove('active');
             }
+        });
+
+        // Initialize
+        window.addEventListener('scroll', handleScroll);
+        document.addEventListener('DOMContentLoaded', function() {
+            observer.observe(document.querySelector('.counter-section'));
         });
     </script>
 </body>
