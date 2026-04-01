@@ -9,6 +9,8 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<!-- EmailJS SDK -->
+<script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
 <style>
 :root {
   --primary:#0047AB; --primary-light:#3F75D5; --primary-dark:#00347D;
@@ -185,7 +187,18 @@ section{padding:5.5rem 0;}
 .form-group textarea{min-height:130px;resize:vertical;}
 body.dark .form-group input,body.dark .form-group textarea{background:rgba(22,27,46,.88);color:#e2e8f0;}
 body.dark .form-group input:focus,body.dark .form-group textarea:focus{background:#161b2e;}
-.form-status{margin-top:.8rem;font-size:.9rem;font-weight:600;display:none;}
+.form-status{margin-top:.8rem;font-size:.9rem;font-weight:600;display:none;padding:.6rem 1rem;border-radius:8px;}
+.form-status.success{background:rgba(76,175,80,.2);border:1px solid rgba(76,175,80,.4);}
+.form-status.error{background:rgba(244,67,54,.2);border:1px solid rgba(244,67,54,.4);}
+
+/* Submit button loading state */
+.btn-submit{position:relative;min-width:160px;}
+.btn-submit.loading{pointer-events:none;opacity:.8;}
+.btn-submit .btn-text{transition:opacity .2s;}
+.btn-submit.loading .btn-text{opacity:0;}
+.btn-submit .spinner{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:20px;height:20px;border:2px solid rgba(0,71,171,.3);border-top-color:var(--primary);border-radius:50%;animation:spin .7s linear infinite;display:none;}
+.btn-submit.loading .spinner{display:block;}
+@keyframes spin{to{transform:translate(-50%,-50%) rotate(360deg);}}
 
 /* FOOTER */
 footer{background:var(--primary-dark);color:#fff;padding:4rem 0 2rem;}
@@ -343,7 +356,7 @@ footer{background:var(--primary-dark);color:#fff;padding:4rem 0 2rem;}
       <div class="team-grid">
         <div class="team-card reveal">
           <div class="avatar"><i class="fas fa-user"></i></div>
-          <div class="info"><h3>Ahmed Nedim BenbouAziz</h3><div class="role" data-i18n="role1">Digital Marketer</div>
+          <div class="info"><h3>Ahmed Nedim BenbouAziz</h3><div class="role" data-i18n="role1">Digital Marketer </div>
           <div class="team-socials"><a href="#"><i class="fab fa-linkedin-in"></i></a><a href="#"><i class="fab fa-twitter"></i></a><a href="#"><i class="fas fa-envelope"></i></a></div></div>
         </div>
         <div class="team-card reveal">
@@ -446,11 +459,26 @@ footer{background:var(--primary-dark);color:#fff;padding:4rem 0 2rem;}
         </div>
         <div class="reveal">
           <form id="contactForm" class="contact-form-box">
-            <div class="form-group"><label data-i18n="fName">Name</label><input type="text" placeholder="Your Name" required></div>
-            <div class="form-group"><label data-i18n="fEmail">Email</label><input type="email" placeholder="your@email.com" required></div>
-            <div class="form-group"><label data-i18n="fSubject">Subject</label><input type="text" placeholder="Subject"></div>
-            <div class="form-group"><label data-i18n="fMsg">Message</label><textarea placeholder="Your message..." required></textarea></div>
-            <button type="submit" class="btn btn-white" data-i18n="fSubmit">Send Message</button>
+            <div class="form-group">
+              <label data-i18n="fName">Name</label>
+              <input type="text" id="from_name" placeholder="Your Name" required>
+            </div>
+            <div class="form-group">
+              <label data-i18n="fEmail">Email</label>
+              <input type="email" id="from_email" placeholder="your@email.com" required>
+            </div>
+            <div class="form-group">
+              <label data-i18n="fSubject">Subject</label>
+              <input type="text" id="subject" placeholder="Subject">
+            </div>
+            <div class="form-group">
+              <label data-i18n="fMsg">Message</label>
+              <textarea id="message" placeholder="Your message..." required></textarea>
+            </div>
+            <button type="submit" class="btn btn-white btn-submit">
+              <span class="btn-text" data-i18n="fSubmit">Send Message</span>
+              <span class="spinner"></span>
+            </button>
             <div class="form-status" id="fStatus"></div>
           </form>
         </div>
@@ -505,6 +533,9 @@ footer{background:var(--primary-dark);color:#fff;padding:4rem 0 2rem;}
 <button id="btt" aria-label="Back to top"><i class="fas fa-arrow-up"></i></button>
 
 <script>
+// ── EMAILJS INIT ──────────────────────────────────────────────────
+emailjs.init('-0G2xq0gcuRGjhnpe');
+
 // ── TRANSLATIONS ──────────────────────────────────────────────────
 const T = {
   en:{
@@ -529,6 +560,7 @@ const T = {
     t1q:'"LNC TECHNOLOGIE transformed our website into a modern platform that significantly increased our conversions."',t1r:"Marketing Director, Global Innovations",t2q:'"Working with LNC TECHNOLOGIE was a game-changer. Their technical expertise resulted in an app our customers love."',t2r:"CEO, TechSolutions Inc.",t3q:'"The e-commerce platform revolutionized our business. Sales increased 80% since launch."',t3r:"E-Commerce Manager, StyleHub",
     contactTitle:"Get In Touch",contactSub:"Ready to start your project? Let's discuss how we can help your business grow.",contactHours:"Sun – Thu: 9:00 AM – 6:00 PM",fName:"Name",fEmail:"Email",fSubject:"Subject",fMsg:"Message",fSubmit:"Send Message",
     footAbout:"We design and develop custom websites and applications that help businesses grow.",footServices:"Services",footLinks:"Quick Links",footContact:"Contact",footCopy:"All Rights Reserved.",
+    msgSending:"Sending…",msgSuccess:"✅ Message sent successfully! We'll get back to you soon.",msgError:"❌ Something went wrong. Please try again or email us directly.",
   },
   fr:{
     navHome:"Accueil",navServices:"Services",navAbout:"À propos",navTeam:"Équipe",navPortfolio:"Portfolio",navTestimonials:"Témoignages",navAboutPage:"À propos",navExamples:"Exemples",navStart:"Démarrer",
@@ -552,6 +584,7 @@ const T = {
     t1q:'"LNC TECHNOLOGIE a transformé notre site en une plateforme moderne qui a considérablement augmenté nos conversions."',t1r:"Directrice Marketing, Global Innovations",t2q:'"Travailler avec LNC TECHNOLOGIE a changé la donne. Leur expertise a créé une app que nos clients adorent."',t2r:"PDG, TechSolutions Inc.",t3q:'"La plateforme e-commerce a révolutionné notre activité. Les ventes ont augmenté de 80%."',t3r:"Responsable E-Commerce, StyleHub",
     contactTitle:"Contactez-Nous",contactSub:"Prêt à démarrer votre projet? Parlons de votre croissance.",contactHours:"Dim – Jeu: 9h00 – 18h00",fName:"Nom",fEmail:"Email",fSubject:"Sujet",fMsg:"Message",fSubmit:"Envoyer",
     footAbout:"Nous concevons des sites et applications sur mesure qui aident les entreprises à croître.",footServices:"Services",footLinks:"Liens Rapides",footContact:"Contact",footCopy:"Tous droits réservés.",
+    msgSending:"Envoi en cours…",msgSuccess:"✅ Message envoyé avec succès ! Nous vous répondrons bientôt.",msgError:"❌ Une erreur s'est produite. Veuillez réessayer ou nous écrire directement.",
   },
   ar:{
     navHome:"الرئيسية",navServices:"الخدمات",navAbout:"حول",navTeam:"الفريق",navPortfolio:"أعمالنا",navTestimonials:"آراء",navAboutPage:"من نحن",navExamples:"الأمثلة",navStart:"ابدأ مشروعاً",
@@ -575,6 +608,7 @@ const T = {
     t1q:'"حوّلت LNC TECHNOLOGIE موقعنا إلى منصة حديثة زادت تحويلاتنا بشكل كبير."',t1r:"مديرة التسويق، Global Innovations",t2q:'"العمل مع LNC TECHNOLOGIE كان تغييراً جذرياً. خبرتهم أنتجت تطبيقاً يحبه عملاؤنا."',t2r:"الرئيس التنفيذي، TechSolutions Inc.",t3q:'"ثورت المنصة أعمالنا. ارتفعت المبيعات 80% منذ الإطلاق."',t3r:"مدير التجارة الإلكترونية، StyleHub",
     contactTitle:"تواصل معنا",contactSub:"مستعد لبدء مشروعك؟ لنناقش كيف يمكننا مساعدتك.",contactHours:"الأحد – الخميس: 9:00 ص – 6:00 م",fName:"الاسم",fEmail:"البريد الإلكتروني",fSubject:"الموضوع",fMsg:"الرسالة",fSubmit:"إرسال الرسالة",
     footAbout:"نصمم ونطور مواقع وتطبيقات مخصصة تساعد الأعمال على النمو.",footServices:"الخدمات",footLinks:"روابط سريعة",footContact:"التواصل",footCopy:"جميع الحقوق محفوظة.",
+    msgSending:"جارٍ الإرسال…",msgSuccess:"✅ تم إرسال الرسالة بنجاح! سنتواصل معك قريباً.",msgError:"❌ حدث خطأ ما. يرجى المحاولة مرة أخرى أو مراسلتنا مباشرةً.",
   }
 };
 
@@ -672,14 +706,45 @@ setInterval(()=>goSlide(slide+1),7000);
   }
 })();
 
-// contact form
-document.getElementById('contactForm').addEventListener('submit',e=>{
+// ── CONTACT FORM with EmailJS ─────────────────────────────────────
+document.getElementById('contactForm').addEventListener('submit', async function(e) {
   e.preventDefault();
-  const st=document.getElementById('fStatus');
-  st.style.display='block';st.style.color='#4CAF50';
-  st.textContent=lang==='ar'?'تم إرسال الرسالة بنجاح!':lang==='fr'?'Message envoyé avec succès !':'Message sent successfully!';
-  e.target.reset();
-  setTimeout(()=>st.style.display='none',4000);
+
+  const submitBtn = this.querySelector('.btn-submit');
+  const st = document.getElementById('fStatus');
+  const t = T[lang];
+
+  // Loading state
+  submitBtn.classList.add('loading');
+  submitBtn.querySelector('.btn-text').textContent = t.msgSending || 'Sending…';
+  st.style.display = 'none';
+  st.className = 'form-status';
+
+  const templateParams = {
+    from_name:  document.getElementById('from_name').value.trim(),
+    from_email: document.getElementById('from_email').value.trim(),
+    subject:    document.getElementById('subject').value.trim() || '(No subject)',
+    message:    document.getElementById('message').value.trim(),
+  };
+
+  try {
+    await emailjs.send('service_9iu6x88', 'template_638tmyt', templateParams);
+
+    // Success
+    st.textContent = t.msgSuccess || '✅ Message sent successfully!';
+    st.classList.add('success');
+    st.style.display = 'block';
+    this.reset();
+  } catch (err) {
+    console.error('EmailJS error:', err);
+    st.textContent = t.msgError || '❌ Something went wrong. Please try again.';
+    st.classList.add('error');
+    st.style.display = 'block';
+  } finally {
+    submitBtn.classList.remove('loading');
+    submitBtn.querySelector('.btn-text').textContent = t.fSubmit || 'Send Message';
+    setTimeout(() => { st.style.display = 'none'; }, 6000);
+  }
 });
 </script>
 </body>
