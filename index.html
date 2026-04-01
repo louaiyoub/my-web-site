@@ -1,692 +1,686 @@
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
 <head>
-    <meta charset="utf-8">    
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>LNC TECHNOLOGIE - Web Development</title>
-    <meta name="description" content="LNC TECHNOLOGIE - Leading web development company specializing in innovative digital solutions.">
-    <link rel="shortcut icon" href="https://i.ibb.co/nMMyk0SD/94e902af-4cd5-45f9-b32f-f60a6f9dfb9f.png" />
-    <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    <style>
-        :root {
-            --primary: #0047AB;
-            --primary-light: #3F75D5;
-            --primary-dark: #00347D;
-            --accent: #008ae0;
-            --white: #ffffff;
-            --bg: #ffffff;
-            --text: #333;
-            --card-bg: #f5f7fa;
-            --shadow: 0 5px 15px rgba(0,0,0,0.05);
-            --shadow-lg: 0 15px 30px rgba(0,0,0,0.1);
-        }
-        
-        body.dark-mode {
-            --bg: #121212;
-            --text: #e0e0e0;
-            --card-bg: #1e1e1e;
-            --shadow: 0 5px 15px rgba(255,255,255,0.05);
-        }
-        
-        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', Tahoma, sans-serif; }
-        html { scroll-behavior: smooth; }
-        body { background: var(--bg); color: var(--text); line-height: 1.6; overflow-x: hidden; transition: all 0.3s; }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#0047AB">
+<title>LNC TECHNOLOGIE – Web & Application Development</title>
+<link rel="shortcut icon" href="https://i.ibb.co/nMMyk0SD/94e902af-4cd5-45f9-b32f-f60a6f9dfb9f.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<style>
+:root {
+  --primary:#0047AB; --primary-light:#3F75D5; --primary-dark:#00347D;
+  --accent:#00A3E0; --white:#fff;
+  --bg:#fff; --text:#1a1f36; --card-bg:#f5f7fa;
+  --shadow:0 4px 24px rgba(0,71,171,.10);
+  --shadow-lg:0 15px 40px rgba(0,71,171,.18);
+  --radius:14px; --radius-lg:20px;
+}
+body.dark { --bg:#0d1117; --text:#e2e8f0; --card-bg:#161b2e; }
 
-        .scroll-progress { position: fixed; top: 0; left: 0; width: 0; height: 4px; background: linear-gradient(90deg, var(--accent), var(--primary-light)); z-index: 1001; }
-        
-        header { background: var(--primary); color: var(--white); padding: 1rem 0; box-shadow: var(--shadow); position: fixed; width: 100%; top: 0; z-index: 100; transition: all 0.3s; backdrop-filter: blur(10px); }
-        header.scrolled { background: rgba(0,26,61,0.95); padding: 0.6rem 0; }
-        
-        .container { width: 90%; max-width: 1200px; margin: 0 auto; }
-        .nav-container { display: flex; justify-content: space-between; align-items: center; }
-        .logo-img { width: 80px; height: 80px; transition: transform 0.3s; }
-        .logo-img:hover { transform: scale(1.05) rotate(5deg); }
-        
-        .nav-menu { display: flex; list-style: none; align-items: center; }
-        .nav-menu li { margin-left: 2rem; }
-        .nav-menu a { color: var(--white); text-decoration: none; font-weight: 500; padding: 5px 10px; position: relative; }
-        .nav-menu a::after { content: ''; position: absolute; bottom: 0; left: 50%; transform: translateX(-50%); width: 0; height: 2px; background: var(--accent); transition: width 0.3s; }
-        .nav-menu a:hover::after { width: 80%; }
+*{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif;line-height:1.6;overflow-x:hidden;transition:background .3s,color .3s;}
+[lang=ar],[lang=ar] *{font-family:'DM Sans','Tahoma',sans-serif;}
 
-        .language-switcher { position: relative; margin-left: 1rem; }
-        .lang-button { background: rgba(255,255,255,0.15); border: 1px solid rgba(255,255,255,0.3); color: var(--white); padding: 0.6rem 1.2rem; border-radius: 25px; cursor: pointer; display: flex; align-items: center; gap: 0.5rem; transition: all 0.3s; }
-        .lang-button:hover { background: rgba(255,255,255,0.25); }
-        .lang-dropdown { position: absolute; top: calc(100% + 10px); right: 0; background: var(--card-bg); border-radius: 12px; box-shadow: 0 10px 40px rgba(0,0,0,0.2); min-width: 150px; opacity: 0; visibility: hidden; transform: translateY(-10px); transition: all 0.3s; z-index: 1000; }
-        .lang-dropdown.active { opacity: 1; visibility: visible; transform: translateY(0); }
-        .lang-option { padding: 0.8rem 1.2rem; cursor: pointer; color: var(--text); display: flex; align-items: center; gap: 0.7rem; transition: all 0.3s; }
-        .lang-option:hover { background: var(--primary-light); color: var(--white); }
-        .lang-option.active { background: var(--primary); color: var(--white); }
-        
-        .theme-toggle { background: rgba(255,255,255,0.15); border: 1px solid rgba(255,255,255,0.3); color: var(--white); font-size: 1.2rem; cursor: pointer; margin-left: 1rem; padding: 0.6rem; border-radius: 50%; width: 45px; height: 45px; display: flex; align-items: center; justify-content: center; transition: all 0.3s; }
-        .theme-toggle:hover { transform: rotate(180deg); }
-        
-        .hamburger { display: none; cursor: pointer; }
-        .hamburger div { width: 25px; height: 3px; background: var(--white); margin: 5px; transition: all 0.3s; border-radius: 3px; }
-        
-        .main-content { margin-top: 90px; }
-        
-        .hero { background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 50%, var(--accent) 100%); color: var(--white); padding: 8rem 0 6rem; text-align: center; position: relative; overflow: hidden; }
-        .hero::before { content: ''; position: absolute; inset: 0; background: radial-gradient(circle at 20% 50%, rgba(255,255,255,0.1) 0%, transparent 50%); animation: pulse 15s ease-in-out infinite; }
-        @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.5; } }
-        
-        .hero-content { max-width: 800px; margin: 0 auto; position: relative; z-index: 2; }
-        .hero h1 { font-size: 3.5rem; margin-bottom: 1.5rem; animation: fadeInUp 0.8s ease-out; font-weight: 700; }
-        .hero p { font-size: 1.3rem; margin-bottom: 2.5rem; animation: fadeInUp 0.8s ease-out 0.2s forwards; opacity: 0; }
-        .hero-buttons { animation: fadeInUp 0.8s ease-out 0.4s forwards; opacity: 0; }
-        @keyframes fadeInUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
-        
-        .btn { display: inline-block; background: var(--white); color: var(--primary); padding: 1rem 2.5rem; border-radius: 50px; text-decoration: none; font-weight: 600; transition: all 0.3s; margin: 0.5rem; border: 2px solid transparent; }
-        .btn:hover { transform: translateY(-5px); box-shadow: 0 10px 25px rgba(0,0,0,0.2); }
-        .btn-outline { background: transparent; border: 2px solid var(--white); color: var(--white); }
-        .btn-outline:hover { background: var(--white); color: var(--primary); }
-        .btn-primary { background: var(--primary); color: var(--white); }
-        
-        .services { padding: 6rem 0; background: var(--bg); }
-        .section-header { text-align: center; margin-bottom: 4rem; }
-        .section-header h2 { color: var(--primary); font-size: 2.8rem; margin-bottom: 1rem; font-weight: 700; position: relative; display: inline-block; }
-        .section-header h2::after { content: ''; position: absolute; bottom: -10px; left: 50%; transform: translateX(-50%); width: 60px; height: 4px; background: linear-gradient(90deg, var(--primary), var(--accent)); border-radius: 2px; }
-        
-        .services-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 2.5rem; }
-        .service-card { background: var(--card-bg); border-radius: 15px; padding: 2.5rem 2rem; text-align: center; transition: all 0.4s; box-shadow: var(--shadow); }
-        .service-card:hover { transform: translateY(-15px); box-shadow: var(--shadow-lg); }
-        .service-card i { font-size: 3.5rem; color: var(--primary); margin-bottom: 1.5rem; transition: all 0.3s; }
-        .service-card:hover i { transform: scale(1.2); color: var(--accent); }
-        .service-card h3 { color: var(--primary-dark); margin-bottom: 1rem; font-size: 1.4rem; }
-        
-        .counter-section { background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%); color: var(--white); padding: 5rem 0; text-align: center; }
-        .counter-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 3rem; }
-        .counter-item h3 { font-size: 3rem; margin-bottom: 1rem; font-weight: 700; }
-        .counter-item p { font-size: 1.1rem; text-transform: uppercase; letter-spacing: 1.5px; }
-        
-        .about { padding: 6rem 0; background: var(--card-bg); }
-        .about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: center; }
-        .about-content h2 { color: var(--primary); margin-bottom: 1.5rem; font-size: 2.5rem; font-weight: 700; }
-        .about-image { border-radius: 20px; overflow: hidden; box-shadow: var(--shadow-lg); }
-        .about-image img { width: 100%; transition: transform 0.5s; }
-        .about-image:hover img { transform: scale(1.08); }
-        
-        .team-section { padding: 6rem 0; background: var(--bg); }
-        .team-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 2.5rem; }
-        .team-member { background: var(--card-bg); border-radius: 15px; overflow: hidden; box-shadow: var(--shadow); transition: all 0.4s; }
-        .team-member:hover { transform: translateY(-15px); box-shadow: var(--shadow-lg); }
-        .team-image { height: 300px; background: linear-gradient(135deg, var(--primary-light), var(--accent)); overflow: hidden; }
-        .team-image img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.5s; }
-        .team-member:hover .team-image img { transform: scale(1.1); }
-        .team-info { padding: 2rem 1.5rem; text-align: center; }
-        .social-links { display: flex; justify-content: center; gap: 0.8rem; }
-        .social-links a { width: 40px; height: 40px; border-radius: 50%; background: var(--primary); color: var(--white); display: flex; justify-content: center; align-items: center; transition: all 0.3s; }
-        .social-links a:hover { background: var(--accent); transform: translateY(-5px); }
-        
-        .testimonials { padding: 6rem 0; background: var(--card-bg); }
-        .testimonial-slider { max-width: 900px; margin: 0 auto; overflow: hidden; border-radius: 20px; }
-        .testimonial-container { display: flex; transition: transform 0.5s; }
-        .testimonial { min-width: 100%; padding: 3rem; background: var(--bg); text-align: center; }
-        .testimonial img { width: 100px; height: 100px; border-radius: 50%; margin: 0 auto 1.5rem; border: 4px solid var(--primary); }
-        .testimonial-nav { display: flex; justify-content: center; margin-top: 2rem; gap: 1rem; }
-        .testimonial-nav button { background: var(--primary); border: none; color: var(--white); font-size: 1.5rem; cursor: pointer; width: 50px; height: 50px; border-radius: 50%; transition: all 0.3s; }
-        .testimonial-nav button:hover { background: var(--accent); transform: scale(1.1); }
-        
-        .contact { padding: 6rem 0; background: linear-gradient(135deg, var(--primary) 0%, var(--accent) 100%); color: var(--white); }
-        .contact-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; }
-        .contact-details div { display: flex; align-items: center; margin-bottom: 1.5rem; }
-        .contact-details i { margin-right: 1rem; width: 40px; height: 40px; display: flex; align-items: center; justify-content: center; background: rgba(255,255,255,0.2); border-radius: 50%; }
-        .contact-form { background: rgba(255,255,255,0.1); padding: 2.5rem; border-radius: 20px; backdrop-filter: blur(10px); }
-        .form-group { margin-bottom: 1.5rem; }
-        .form-group label { display: block; margin-bottom: 0.5rem; }
-        .contact-form input, .contact-form textarea { width: 100%; padding: 1rem; border: none; border-radius: 10px; background: rgba(255,255,255,0.9); color: var(--primary-dark); }
-        .contact-form textarea { height: 150px; resize: none; }
-        .map-container { margin-top: 4rem; border-radius: 20px; overflow: hidden; height: 400px; }
-        
-        footer { background: var(--primary-dark); color: var(--white); padding: 4rem 0 2rem; }
-        .footer-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 2rem; margin-bottom: 2rem; }
-        .footer-col ul { list-style: none; }
-        .footer-col ul li { margin-bottom: 0.8rem; }
-        .footer-col ul li a { color: #ccc; text-decoration: none; transition: all 0.3s; }
-        .footer-col ul li a:hover { color: var(--white); padding-left: 5px; }
-        .footer-bottom { border-top: 1px solid rgba(255,255,255,0.1); padding-top: 2rem; text-align: center; }
-        .social-icons { margin-top: 1rem; }
-        .social-icons a { width: 40px; height: 40px; border-radius: 50%; background: rgba(255,255,255,0.1); color: var(--white); display: inline-flex; justify-content: center; align-items: center; margin: 0 0.5rem; transition: all 0.3s; }
-        .social-icons a:hover { background: var(--accent); transform: translateY(-3px); }
+/* SCROLL PROGRESS */
+#scrollBar{position:fixed;top:0;left:0;height:3px;width:0;background:linear-gradient(90deg,var(--primary-light),var(--accent));z-index:1001;}
 
-        .status-msg { position: fixed; top: 100px; right: 20px; padding: 1rem 2rem; border-radius: 10px; color: white; font-weight: 600; opacity: 0; transform: translateX(400px); transition: all 0.3s; z-index: 1000; }
-        .status-msg.show { opacity: 1; transform: translateX(0); }
-        .status-msg.success { background: linear-gradient(135deg, #28a745, #20c997); }
-        .status-msg.error { background: linear-gradient(135deg, #dc3545, #c82333); }
-        
-        @media (max-width: 768px) {
-            .hamburger { display: block; }
-            .nav-menu { position: fixed; left: -100%; top: 90px; flex-direction: column; background: var(--primary); width: 100%; text-align: center; transition: 0.3s; padding: 2rem 0; }
-            .nav-menu.active { left: 0; }
-            .nav-menu li { margin: 1rem 0; }
-            .hero h1 { font-size: 2.5rem; }
-            .about-grid, .contact-grid { grid-template-columns: 1fr; }
-            .services-grid, .team-grid { grid-template-columns: 1fr; }
-            .counter-grid { grid-template-columns: repeat(2, 1fr); }
-            .logo-img { width: 60px; height: 60px; }
-        }
-        
-        @media (max-width: 480px) {
-            .container { width: 95%; }
-            .hero { padding: 6rem 0 3rem; }
-            .hero h1 { font-size: 2rem; }
-            .counter-grid { grid-template-columns: 1fr; }
-        }
-    </style>
+/* HEADER */
+header{background:var(--primary);color:#fff;padding:.8rem 0;position:fixed;width:100%;top:0;z-index:100;transition:all .3s;box-shadow:0 2px 20px rgba(0,0,0,.15);}
+header.scrolled{background:rgba(0,26,61,.96);backdrop-filter:blur(12px);padding:.5rem 0;}
+.container{width:90%;max-width:1200px;margin:0 auto;}
+.nav-wrap{display:flex;justify-content:space-between;align-items:center;}
+.logo-link{display:flex;align-items:center;gap:.7rem;text-decoration:none;}
+.logo-img{width:72px;height:72px;transition:transform .5s;}
+.logo-img:hover{transform:rotate(360deg) scale(1.08);}
+.logo-text{font-family:'Syne',sans-serif;font-size:1.3rem;font-weight:800;color:#fff;letter-spacing:.04em;}
+.logo-text span{color:var(--accent);}
+nav ul{display:flex;list-style:none;align-items:center;gap:.2rem;}
+nav ul li a{color:rgba(255,255,255,.88);text-decoration:none;font-weight:500;font-size:.92rem;padding:.45rem .8rem;border-radius:8px;transition:all .2s;position:relative;}
+nav ul li a:hover,nav ul li a.active{color:#fff;background:rgba(255,255,255,.12);}
+.nav-cta{background:var(--accent)!important;color:#fff!important;border-radius:20px!important;padding:.45rem 1.1rem!important;}
+.nav-cta:hover{background:#0090c7!important;transform:translateY(-1px);}
+
+/* LANG SWITCHER */
+.lang-wrap{position:relative;}
+.lang-btn{background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.25);color:#fff;padding:.45rem .9rem;border-radius:20px;cursor:pointer;display:flex;align-items:center;gap:.4rem;font-family:'DM Sans',sans-serif;font-size:.85rem;transition:all .25s;}
+.lang-btn:hover{background:rgba(255,255,255,.22);}
+.lang-dd{position:absolute;top:calc(100% + 8px);right:0;background:var(--card-bg);border-radius:12px;box-shadow:0 10px 40px rgba(0,0,0,.18);min-width:155px;opacity:0;visibility:hidden;transform:translateY(-8px);transition:all .25s;z-index:200;border:1px solid rgba(0,71,171,.1);overflow:hidden;}
+.lang-dd.open{opacity:1;visibility:visible;transform:translateY(0);}
+.lang-opt{padding:.65rem 1rem;cursor:pointer;color:var(--text);display:flex;align-items:center;gap:.5rem;font-size:.88rem;transition:background .2s;}
+.lang-opt:hover{background:rgba(0,71,171,.07);}
+.lang-opt.active{background:var(--primary);color:#fff;}
+
+/* THEME BTN */
+.theme-btn{background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.25);color:#fff;width:38px;height:38px;border-radius:50%;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:1rem;transition:all .3s;}
+.theme-btn:hover{background:rgba(255,255,255,.22);transform:rotate(20deg);}
+
+/* HAMBURGER */
+.hamburger{display:none;cursor:pointer;flex-direction:column;gap:5px;padding:4px;}
+.hamburger span{display:block;width:22px;height:2px;background:#fff;border-radius:2px;transition:all .3s;}
+.hamburger.open span:nth-child(1){transform:rotate(45deg) translate(5px,5px);}
+.hamburger.open span:nth-child(2){opacity:0;}
+.hamburger.open span:nth-child(3){transform:rotate(-45deg) translate(5px,-5px);}
+
+/* HERO */
+.hero{background:linear-gradient(135deg,var(--primary) 0%,var(--primary-light) 55%,var(--accent) 100%);color:#fff;padding:9rem 0 6rem;text-align:center;position:relative;overflow:hidden;}
+.hero::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 25% 60%,rgba(255,255,255,.08) 0%,transparent 60%);animation:pulse 12s ease-in-out infinite;}
+@keyframes pulse{0%,100%{opacity:1;}50%{opacity:.4;}}
+.hero-particles{position:absolute;inset:0;pointer-events:none;}
+.hero-particles span{position:absolute;border-radius:50%;background:rgba(255,255,255,.08);animation:float 18s linear infinite;}
+@keyframes float{0%{transform:translateY(100vh) scale(0);opacity:0;}10%{opacity:1;}90%{opacity:.5;}100%{transform:translateY(-100px) scale(1.5);opacity:0;}}
+.hero-inner{position:relative;z-index:2;max-width:820px;margin:0 auto;}
+.hero-badge{display:inline-block;background:rgba(255,255,255,.15);border:1px solid rgba(255,255,255,.3);padding:.35rem 1rem;border-radius:20px;font-size:.82rem;font-weight:600;letter-spacing:.06em;text-transform:uppercase;margin-bottom:1.2rem;animation:fadeUp .7s ease both;}
+.hero h1{font-family:'Syne',sans-serif;font-size:3.4rem;font-weight:800;line-height:1.12;margin-bottom:1.4rem;animation:fadeUp .7s ease .1s both;}
+.hero p{font-size:1.2rem;opacity:.9;margin-bottom:2.5rem;animation:fadeUp .7s ease .2s both;}
+.hero-btns{display:flex;gap:1rem;justify-content:center;flex-wrap:wrap;animation:fadeUp .7s ease .35s both;}
+.btn{display:inline-flex;align-items:center;gap:.5rem;padding:.85rem 2rem;border-radius:50px;font-weight:700;font-family:'DM Sans',sans-serif;font-size:.97rem;cursor:pointer;transition:all .3s;text-decoration:none;border:2px solid transparent;}
+.btn-white{background:#fff;color:var(--primary);}
+.btn-white:hover{transform:translateY(-3px);box-shadow:0 8px 24px rgba(0,0,0,.15);}
+.btn-outline-white{background:transparent;border-color:rgba(255,255,255,.6);color:#fff;}
+.btn-outline-white:hover{background:rgba(255,255,255,.12);border-color:#fff;transform:translateY(-3px);}
+.btn-primary{background:linear-gradient(135deg,var(--primary),var(--accent));color:#fff;box-shadow:0 4px 15px rgba(0,71,171,.3);}
+.btn-primary:hover{transform:translateY(-3px);box-shadow:0 8px 25px rgba(0,71,171,.4);filter:brightness(1.05);}
+@keyframes fadeUp{from{opacity:0;transform:translateY(22px);}to{opacity:1;transform:translateY(0);}}
+
+/* TRUST BAR */
+.trust-bar{background:var(--card-bg);padding:1.5rem 0;border-bottom:1px solid rgba(0,71,171,.08);}
+.trust-bar-inner{display:flex;justify-content:center;gap:3rem;flex-wrap:wrap;}
+.trust-item{display:flex;align-items:center;gap:.6rem;font-size:.9rem;color:var(--text);}
+.trust-item strong{font-family:'Syne',sans-serif;font-size:1.1rem;color:var(--primary);}
+
+/* SECTIONS */
+section{padding:5.5rem 0;}
+.section-header{text-align:center;margin-bottom:3.5rem;}
+.section-header h2{font-family:'Syne',sans-serif;color:var(--primary);font-size:2.5rem;font-weight:800;margin-bottom:.8rem;position:relative;display:inline-block;}
+.section-header h2::after{content:'';position:absolute;bottom:-10px;left:50%;transform:translateX(-50%);width:50px;height:3px;background:linear-gradient(90deg,var(--primary),var(--accent));border-radius:2px;}
+.section-header p{color:var(--text);opacity:.7;font-size:1.05rem;max-width:580px;margin:.8rem auto 0;}
+
+/* SERVICES */
+.services{background:var(--bg);}
+.services-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:1.8rem;}
+.service-card{background:var(--card-bg);border-radius:var(--radius);padding:2.2rem 1.8rem;text-align:center;transition:all .35s;box-shadow:var(--shadow);border:1px solid rgba(0,71,171,.05);position:relative;top:0;}
+.service-card:hover{top:-10px;box-shadow:var(--shadow-lg);}
+.service-card .icon{width:64px;height:64px;background:linear-gradient(135deg,var(--primary),var(--accent));border-radius:16px;display:flex;align-items:center;justify-content:center;margin:0 auto 1.4rem;font-size:1.7rem;color:#fff;transition:transform .3s;}
+.service-card:hover .icon{transform:scale(1.1) rotate(6deg);}
+.service-card h3{font-family:'Syne',sans-serif;color:var(--primary-dark);font-size:1.15rem;margin-bottom:.7rem;}
+.service-card p{color:var(--text);opacity:.75;font-size:.92rem;}
+
+/* COUNTERS */
+.counters{background:linear-gradient(135deg,var(--primary) 0%,var(--primary-dark) 100%);color:#fff;padding:4rem 0;}
+.counter-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:2rem;text-align:center;}
+.counter-item .num{font-family:'Syne',sans-serif;font-size:3rem;font-weight:800;display:block;}
+.counter-item .label{font-size:.95rem;opacity:.85;text-transform:uppercase;letter-spacing:.08em;}
+
+/* ABOUT */
+.about{background:var(--card-bg);}
+.about-grid{display:grid;grid-template-columns:1fr 1fr;gap:4rem;align-items:center;}
+.about-content h2{font-family:'Syne',sans-serif;color:var(--primary);font-size:2.2rem;font-weight:800;margin-bottom:1.4rem;position:relative;}
+.about-content h2::after{content:'';position:absolute;bottom:-10px;left:0;width:50px;height:3px;background:linear-gradient(90deg,var(--primary),var(--accent));border-radius:2px;}
+[dir=rtl] .about-content h2::after{left:auto;right:0;}
+.about-content p{color:var(--text);opacity:.8;margin-bottom:1.2rem;font-size:.97rem;}
+.about-img{border-radius:var(--radius-lg);overflow:hidden;box-shadow:var(--shadow-lg);position:relative;}
+.about-img img{width:100%;display:block;transition:transform .5s;}
+.about-img:hover img{transform:scale(1.04);}
+
+/* TEAM */
+.team{background:var(--bg);}
+.team-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:1.8rem;}
+.team-card{background:var(--card-bg);border-radius:var(--radius);overflow:hidden;box-shadow:var(--shadow);transition:all .35s;border:1px solid rgba(0,71,171,.05);}
+.team-card:hover{transform:translateY(-10px);box-shadow:var(--shadow-lg);}
+.team-card .avatar{height:220px;background:linear-gradient(135deg,var(--primary),var(--accent));display:flex;align-items:center;justify-content:center;font-size:4.5rem;color:rgba(255,255,255,.7);}
+.team-card .info{padding:1.5rem;text-align:center;}
+.team-card .info h3{font-family:'Syne',sans-serif;color:var(--primary-dark);margin-bottom:.3rem;}
+.team-card .info .role{color:var(--accent);font-weight:500;font-size:.9rem;margin-bottom:1rem;}
+.team-socials{display:flex;justify-content:center;gap:.5rem;}
+.team-socials a{width:36px;height:36px;border-radius:50%;background:var(--primary);color:#fff;display:flex;align-items:center;justify-content:center;font-size:.85rem;transition:all .25s;text-decoration:none;}
+.team-socials a:hover{background:var(--accent);transform:translateY(-3px);}
+
+/* PORTFOLIO */
+.portfolio{background:var(--card-bg);}
+.filter-bar{display:flex;justify-content:center;flex-wrap:wrap;gap:.6rem;margin-bottom:2.5rem;}
+.filter-btn{background:transparent;border:2px solid rgba(0,71,171,.2);color:var(--text);padding:.5rem 1.3rem;border-radius:20px;cursor:pointer;font-family:'DM Sans',sans-serif;font-weight:500;transition:all .25s;font-size:.9rem;}
+.filter-btn:hover,.filter-btn.active{background:var(--primary);border-color:var(--primary);color:#fff;}
+.portfolio-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:1.8rem;}
+.port-item{border-radius:var(--radius);overflow:hidden;position:relative;box-shadow:var(--shadow);cursor:pointer;}
+.port-item img{width:100%;height:220px;object-fit:cover;display:block;transition:transform .5s;}
+.port-item:hover img{transform:scale(1.08);}
+.port-overlay{position:absolute;inset:0;background:linear-gradient(135deg,rgba(0,71,171,.85),rgba(0,163,224,.75));color:#fff;display:flex;flex-direction:column;justify-content:center;align-items:center;padding:1.5rem;opacity:0;transition:opacity .3s;text-align:center;}
+.port-overlay h3{font-family:'Syne',sans-serif;margin-bottom:.5rem;transform:translateY(-12px);transition:transform .3s;}
+.port-overlay p{font-size:.9rem;transform:translateY(12px);transition:transform .3s;opacity:.9;}
+.port-item:hover .port-overlay{opacity:1;}
+.port-item:hover .port-overlay h3,.port-item:hover .port-overlay p{transform:translateY(0);}
+
+/* TESTIMONIALS */
+.testimonials{background:var(--bg);}
+.test-slider{max-width:780px;margin:0 auto;overflow:hidden;border-radius:var(--radius-lg);}
+.test-track{display:flex;transition:transform .5s cubic-bezier(.4,0,.2,1);}
+.test-slide{min-width:100%;padding:2.5rem 2rem;background:var(--card-bg);border-radius:var(--radius-lg);text-align:center;box-shadow:var(--shadow);}
+.test-avatar{width:72px;height:72px;border-radius:50%;object-fit:cover;margin:0 auto 1rem;display:block;border:3px solid var(--primary);}
+.test-quote{font-style:italic;font-size:1rem;color:var(--text);opacity:.85;margin-bottom:1.2rem;line-height:1.7;}
+.test-name{font-family:'Syne',sans-serif;color:var(--primary);font-weight:700;}
+.test-role{font-size:.85rem;color:var(--text);opacity:.6;margin-top:.2rem;}
+.test-nav{display:flex;justify-content:center;gap:.8rem;margin-top:1.5rem;}
+.test-nav button{background:var(--primary);border:none;color:#fff;width:40px;height:40px;border-radius:50%;cursor:pointer;font-size:1rem;transition:all .25s;display:flex;align-items:center;justify-content:center;}
+.test-nav button:hover{background:var(--accent);transform:scale(1.1);}
+
+/* CONTACT */
+.contact{background:linear-gradient(135deg,var(--primary) 0%,var(--primary-light) 100%);color:#fff;position:relative;overflow:hidden;}
+.contact::before{content:'';position:absolute;top:-60px;right:-60px;width:300px;height:300px;background:rgba(255,255,255,.05);border-radius:50%;}
+.contact-grid{display:grid;grid-template-columns:1fr 1fr;gap:3rem;position:relative;z-index:1;}
+.contact-info h2{font-family:'Syne',sans-serif;font-size:2.2rem;font-weight:800;margin-bottom:1.2rem;position:relative;}
+.contact-info h2::after{content:'';position:absolute;bottom:-10px;left:0;width:50px;height:3px;background:rgba(255,255,255,.6);border-radius:2px;}
+[dir=rtl] .contact-info h2::after{left:auto;right:0;}
+.contact-info p{opacity:.88;margin-bottom:1.5rem;font-size:.97rem;}
+.contact-detail{display:flex;align-items:center;gap:.8rem;margin-bottom:.8rem;font-size:.93rem;opacity:.9;}
+.contact-detail i{width:28px;text-align:center;font-size:1rem;}
+.contact-form-box{background:rgba(255,255,255,.1);backdrop-filter:blur(8px);padding:2rem;border-radius:var(--radius-lg);border:1px solid rgba(255,255,255,.15);}
+.form-group{margin-bottom:1rem;}
+.form-group label{display:block;margin-bottom:.4rem;font-weight:600;font-size:.9rem;}
+.form-group input,.form-group textarea,.form-group select{width:100%;padding:.85rem 1rem;border:none;border-radius:10px;background:rgba(255,255,255,.88);color:#1a1f36;font-family:'DM Sans',sans-serif;font-size:.95rem;transition:background .25s;}
+.form-group input:focus,.form-group textarea:focus{outline:none;background:#fff;}
+.form-group textarea{min-height:130px;resize:vertical;}
+body.dark .form-group input,body.dark .form-group textarea{background:rgba(22,27,46,.88);color:#e2e8f0;}
+body.dark .form-group input:focus,body.dark .form-group textarea:focus{background:#161b2e;}
+.form-status{margin-top:.8rem;font-size:.9rem;font-weight:600;display:none;}
+
+/* FOOTER */
+footer{background:var(--primary-dark);color:#fff;padding:4rem 0 2rem;}
+.footer-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:2.5rem;margin-bottom:2.5rem;}
+.footer-col h4{font-family:'Syne',sans-serif;font-size:1rem;font-weight:700;margin-bottom:1.2rem;position:relative;display:inline-block;}
+.footer-col h4::after{content:'';position:absolute;bottom:-6px;left:0;width:28px;height:2px;background:var(--accent);border-radius:2px;}
+[dir=rtl] .footer-col h4::after{left:auto;right:0;}
+.footer-col ul{list-style:none;}
+.footer-col ul li{margin-bottom:.6rem;}
+.footer-col ul li a{color:rgba(255,255,255,.65);text-decoration:none;font-size:.9rem;transition:all .2s;}
+.footer-col ul li a:hover{color:#fff;}
+.footer-col p{color:rgba(255,255,255,.65);font-size:.9rem;line-height:1.6;}
+.footer-social{display:flex;gap:.6rem;margin-top:1rem;}
+.footer-social a{width:38px;height:38px;border-radius:50%;background:rgba(255,255,255,.1);color:#fff;display:flex;align-items:center;justify-content:center;font-size:.9rem;transition:all .25s;text-decoration:none;}
+.footer-social a:hover{background:var(--accent);transform:translateY(-3px);}
+.footer-bottom{border-top:1px solid rgba(255,255,255,.1);padding-top:1.5rem;text-align:center;color:rgba(255,255,255,.5);font-size:.88rem;}
+
+/* BACK TO TOP */
+#btt{position:fixed;bottom:22px;right:22px;background:var(--primary);color:#fff;width:46px;height:46px;border-radius:50%;display:flex;align-items:center;justify-content:center;cursor:pointer;opacity:0;visibility:hidden;transition:all .3s;box-shadow:var(--shadow-lg);border:none;font-size:1rem;}
+#btt.show{opacity:1;visibility:visible;}
+#btt:hover{transform:translateY(-3px);background:var(--accent);}
+
+/* FADE-IN ON SCROLL */
+.reveal{opacity:0;transform:translateY(28px);transition:opacity .7s ease,transform .7s ease;}
+.reveal.in{opacity:1;transform:translateY(0);}
+
+/* RESPONSIVE */
+@media(max-width:900px){
+  .about-grid,.contact-grid{grid-template-columns:1fr;}
+  .hero h1{font-size:2.4rem;}
+}
+@media(max-width:768px){
+  nav ul{position:fixed;top:0;left:-100%;width:78%;height:100vh;flex-direction:column;background:var(--primary-dark);padding:5rem 2rem 2rem;transition:.3s;z-index:99;gap:.3rem;overflow-y:auto;}
+  nav ul.open{left:0;}
+  .hamburger{display:flex;}
+  .logo-text{display:none;}
+  .trust-bar-inner{gap:1.5rem;}
+}
+</style>
 </head>
 <body>
-    <div class="scroll-progress" id="scrollProgress"></div>
-    
-    <header id="header">
-        <div class="container">
-            <div class="nav-container">
-                <a class="logo" href="https://lnctech.netlify.app/">
-                    <img class="logo-img" src="https://i.ibb.co/nMMyk0SD/94e902af-4cd5-45f9-b32f-f60a6f9dfb9f.png" alt="LNC Tech Logo">
-                </a>
-                <nav>
-                    <ul class="nav-menu" id="navMenu">
-                        <li><a data-i18n="home" href="#home">Home</a></li>
-                        <li><a data-i18n="services" href="#services">Services</a></li>
-                        <li><a data-i18n="about" href="#about">About</a></li>
-                        <li><a data-i18n="team" href="#team">Team</a></li>
-                        <li><a data-i18n="Examples" href="https://lnc-tech-portfilio.netlify.app/">Examples</a></li>
-                        <li><a data-i18n="testimonials" href="#testimonials">Testimonials</a></li>
-                        <li><a data-i18n="contact" href="#contact">Contact</a></li>
-                    </ul>
-                </nav>
-                <div class="language-switcher">
-                    <div class="lang-button" onclick="toggleLangDropdown()">
-                        <span id="currentLang">🇺🇸 EN</span>
-                        <i class="fas fa-chevron-down"></i>
-                    </div>
-                    <div class="lang-dropdown" id="langDropdown">
-                        <div class="lang-option active" onclick="changeLang('en')">🇺🇸 English</div>
-                        <div class="lang-option" onclick="changeLang('fr')">🇫🇷 Français</div>
-                        <div class="lang-option" onclick="changeLang('ar')">🇸🇦 العربية</div>
-                    </div>
-                </div>
-                <button class="theme-toggle" onclick="toggleTheme()">
-                    <i class="fas fa-moon" id="themeIcon"></i>
-                </button>
-                <div class="hamburger" onclick="toggleMenu()">
-                    <div></div>
-                    <div></div>
-                    <div></div>
-                </div>
+<div id="scrollBar"></div>
+
+<header id="hdr">
+  <div class="container nav-wrap">
+    <a href="https://lnctech.netlify.app/" class="logo-link">
+      <img class="logo-img" src="https://i.ibb.co/nMMyk0SD/94e902af-4cd5-45f9-b32f-f60a6f9dfb9f.png" alt="LNC TECHNOLOGIE">
+      <span class="logo-text">LNC <span>TECH</span></span>
+    </a>
+    <nav>
+      <ul id="navMenu">
+        <li><a href="#home" data-i18n="navHome">Home</a></li>
+        <li><a href="#services" data-i18n="navServices">Services</a></li>
+        <li><a href="#about" data-i18n="navAbout">About</a></li>
+        <li><a href="#team" data-i18n="navTeam">Team</a></li>
+        <li><a href="#portfolio" data-i18n="navPortfolio">Portfolio</a></li>
+        <li><a href="#testimonials" data-i18n="navTestimonials">Testimonials</a></li>
+        <li><a href="https://lnc-tech-about-us.netlify.app/" data-i18n="navAboutPage">About Us</a></li>
+        <li><a href="https://lnc-tech-portfilio.netlify.app/" data-i18n="navExamples">Examples</a></li>
+        <li><a href="https://louaiyoub.github.io/hw/" class="nav-cta" data-i18n="navStart">Start Project</a></li>
+        <li>
+          <div class="lang-wrap">
+            <button class="lang-btn" id="langBtn"><i class="fas fa-globe"></i><span id="langLabel">EN</span><i class="fas fa-chevron-down" style="font-size:.65rem;"></i></button>
+            <div class="lang-dd" id="langDd">
+              <div class="lang-opt active" data-lang="en">🇺🇸 English</div>
+              <div class="lang-opt" data-lang="fr">🇫🇷 Français</div>
+              <div class="lang-opt" data-lang="ar">🇩🇿 العربية</div>
             </div>
+          </div>
+        </li>
+        <li><button class="theme-btn" id="themeBtn"><i class="fas fa-moon"></i></button></li>
+      </ul>
+    </nav>
+    <div class="hamburger" id="ham"><span></span><span></span><span></span></div>
+  </div>
+</header>
+
+<main style="margin-top:88px;">
+  <!-- HERO -->
+  <section class="hero" id="home">
+    <div class="hero-particles" id="particles"></div>
+    <div class="container hero-inner">
+      <div class="hero-badge" data-i18n="heroBadge">🚀 Web · Mobile · Cloud</div>
+      <h1 data-i18n="heroTitle">Innovative Web &amp; Application Solutions</h1>
+      <p data-i18n="heroSub">We create powerful digital experiences that transform businesses. Custom websites and applications designed to elevate your brand.</p>
+      <div class="hero-btns">
+        <a href="#services" class="btn btn-white" data-i18n="heroBtn1">Our Services</a>
+        <a href="https://louaiyoub.github.io/hw/" class="btn btn-outline-white" data-i18n="heroBtn2">Start a Project</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- TRUST BAR -->
+  <div class="trust-bar">
+    <div class="trust-bar-inner">
+      <div class="trust-item">⭐ <strong>4.9/5</strong> <span data-i18n="trustRating">avg rating</span></div>
+      <div class="trust-item">✅ <strong>150+</strong> <span data-i18n="trustProjects">projects delivered</span></div>
+      <div class="trust-item">⚡ <strong>24h</strong> <span data-i18n="trustResponse">response guarantee</span></div>
+      <div class="trust-item">🔒 <span data-i18n="trustSecure">Secure &amp; reliable</span></div>
+    </div>
+  </div>
+
+  <!-- SERVICES -->
+  <section class="services" id="services">
+    <div class="container">
+      <div class="section-header reveal">
+        <h2 data-i18n="servicesTitle">Our Services</h2>
+        <p data-i18n="servicesSub">Comprehensive digital solutions to help your business thrive.</p>
+      </div>
+      <div class="services-grid">
+        <div class="service-card reveal"><div class="icon"><i class="fas fa-laptop-code"></i></div><h3 data-i18n="s1Title">Website Development</h3><p data-i18n="s1Desc">Responsive websites and complex web apps that work flawlessly across all devices.</p></div>
+        <div class="service-card reveal"><div class="icon"><i class="fas fa-mobile-alt"></i></div><h3 data-i18n="s2Title">Mobile Applications</h3><p data-i18n="s2Desc">Native and cross-platform apps delivering exceptional experiences on iOS &amp; Android.</p></div>
+        <div class="service-card reveal"><div class="icon"><i class="fas fa-shopping-cart"></i></div><h3 data-i18n="s3Title">E-commerce Solutions</h3><p data-i18n="s3Desc">Complete stores with secure payments, inventory management, and analytics.</p></div>
+        <div class="service-card reveal"><div class="icon"><i class="fas fa-cloud"></i></div><h3 data-i18n="s4Title">Cloud Solutions</h3><p data-i18n="s4Desc">Scalable cloud infrastructure and migration to optimize operations.</p></div>
+        <div class="service-card reveal"><div class="icon"><i class="fas fa-paint-brush"></i></div><h3 data-i18n="s5Title">UI/UX Design</h3><p data-i18n="s5Desc">Beautiful intuitive designs that enhance engagement and drive conversions.</p></div>
+        <div class="service-card reveal"><div class="icon"><i class="fas fa-headset"></i></div><h3 data-i18n="s6Title">Technical Support</h3><p data-i18n="s6Desc">24/7 support and maintenance to keep your systems running smoothly.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- COUNTERS -->
+  <section class="counters">
+    <div class="container">
+      <div class="counter-grid">
+        <div class="counter-item"><span class="num counter" data-target="150">0</span><span class="label" data-i18n="cProjects">Projects Completed</span></div>
+        <div class="counter-item"><span class="num counter" data-target="100">0</span><span class="label" data-i18n="cClients">Happy Clients</span></div>
+        <div class="counter-item"><span class="num counter" data-target="3">0</span><span class="label" data-i18n="cTeam">Team Members</span></div>
+        <div class="counter-item"><span class="num counter" data-target="5">0</span><span class="label" data-i18n="cYears">Years Experience</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ABOUT -->
+  <section class="about" id="about">
+    <div class="container">
+      <div class="about-grid">
+        <div class="about-content reveal">
+          <h2 data-i18n="aboutTitle">About LNC TECHNOLOGIE</h2>
+          <p data-i18n="aboutP1">Founded with a vision to bridge the gap between innovative technology and practical business solutions, LNC TECHNOLOGIE has been at the forefront of digital transformation since our inception.</p>
+          <p data-i18n="aboutP2">We started as a small team of passionate developers and designers who believed every business deserves access to cutting-edge technology. Today we serve clients across various industries worldwide.</p>
+          <p data-i18n="aboutP3">Our mission: create digital experiences that not only meet clients' needs but exceed their expectations and drive real business growth.</p>
+          <a href="https://lnc-tech-about-us.netlify.app/" class="btn btn-primary" style="margin-top:1rem;" data-i18n="aboutBtn">Learn More →</a>
         </div>
-    </header>
-
-    <div class="status-msg" id="statusMsg"></div>
-
-    <main class="main-content">
-        <section id="home" class="hero">
-            <div class="container">
-                <div class="hero-content">
-                    <h1 data-i18n="heroTitle">Innovative Web & App Solutions</h1>
-                    <p data-i18n="heroSubtitle">We create cutting-edge digital experiences that drive your business forward.</p>
-                    <div class="hero-buttons">
-                        <a href="#contact" class="btn" data-i18n="getStarted">Get Started</a>
-                        <a href="#about" class="btn btn-outline" data-i18n="learnMore">Learn More</a>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <section id="services" class="services">
-            <div class="container">
-                <div class="section-header">
-                    <h2 data-i18n="ourServices">Our Services</h2>
-                    <p data-i18n="servicesDesc">We offer comprehensive digital solutions.</p>
-                </div>
-                <div class="services-grid">
-                    <div class="service-card">
-                        <i class="fas fa-code"></i>
-                        <h3 data-i18n="webDev">Web Development</h3>
-                        <p data-i18n="webDevDesc">Custom websites with latest technologies.</p>
-                    </div>
-                    <div class="service-card">
-                        <i class="fas fa-palette"></i>
-                        <h3 data-i18n="uiUx">UI/UX Design</h3>
-                        <p data-i18n="uiUxDesc">Beautiful and intuitive interfaces.</p>
-                    </div>
-                    <div class="service-card">
-                        <i class="fas fa-shopping-cart"></i>
-                        <h3 data-i18n="ecommerce">E-Commerce</h3>
-                        <p data-i18n="ecommerceDesc">Complete online selling solutions.</p>
-                    </div>
-                    <div class="service-card">
-                        <i class="fas fa-cloud"></i>
-                        <h3 data-i18n="cloud">Cloud Solutions</h3>
-                        <p data-i18n="cloudDesc">Scalable cloud infrastructure.</p>
-                    </div>
-                    <div class="service-card">
-                        <i class="fas fa-cogs"></i>
-                        <h3 data-i18n="maintenance">Maintenance</h3>
-                        <p data-i18n="maintenanceDesc">Ongoing support services.</p>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <section class="counter-section">
-            <div class="container">
-                <div class="counter-grid">
-                    <div class="counter-item">
-                        <h3 data-count="150">0</h3>
-                        <p data-i18n="projectsCompleted">Projects Completed</p>
-                    </div>
-                    <div class="counter-item">
-                        <h3 data-count="100">0</h3>
-                        <p data-i18n="happyClients">Happy Clients</p>
-                    </div>
-                    <div class="counter-item">
-                        <h3 data-count="5">0</h3>
-                        <p data-i18n="yearsExp">Years Experience</p>
-                    </div>
-                    <div class="counter-item">
-                        <h3>24/7</h3>
-                        <p data-i18n="support">Support</p>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <section id="about" class="about">
-            <div class="container">
-                <div class="about-grid">
-                    <div class="about-content">
-                        <h2 data-i18n="aboutUs">About LNC TECHNOLOGIE</h2>
-                        <p data-i18n="aboutP1">We are a passionate team dedicated to creating exceptional digital experiences.</p>
-                        <p data-i18n="aboutP2">Our mission is to help businesses leverage technology.</p>
-                        <a href="https://lnc-tech-about-us.netlify.app/" class="btn btn-primary" data-i18n="learnMore">Learn More</a>
-                    </div>
-                    <div class="about-image">
-                        <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 800 600'%3E%3Crect fill='%23f0f8ff' width='800' height='600'/%3E%3Crect x='50' y='50' width='700' height='500' fill='%23fff' stroke='%23e0e0e0' stroke-width='2'/%3E%3Ccircle cx='150' cy='150' r='30' fill='%230047AB'/%3E%3Ccircle cx='300' cy='150' r='30' fill='%233F75D5'/%3E%3Ccircle cx='450' cy='150' r='30' fill='%2300A3E0'/%3E%3C/svg%3E" alt="About">
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <section id="team" class="team-section">
-            <div class="container">
-                <div class="section-header">
-                    <h2 data-i18n="ourTeam">Our Team</h2>
-                    <p data-i18n="teamDesc">Meet our talented individuals.</p>
-                </div>
-                <div class="team-grid">
-                    <div class="team-member">
-                        <div class="team-image">
-                            <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 400'%3E%3Crect fill='%230047AB' width='400' height='400'/%3E%3C/svg%3E" alt="Team">
-                        </div>
-                        <div class="team-info">
-                            <h3>NADEM BENBOU3ZIZE</h3>
-                            <p data-i18n="digitalMarketer">Digital Marketer</p>
-                            <div class="social-links">
-                                <a href="#"><i class="fab fa-instagram"></i></a>
-                                <a href="#"><i class="fab fa-twitter"></i></a>
-                                <a href="#"><i class="fab fa-github"></i></a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="team-member">
-                        <div class="team-image">
-                            <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 400'%3E%3Crect fill='%233F75D5' width='400' height='400'/%3E%3C/svg%3E" alt="Team">
-                        </div>
-                        <div class="team-info">
-                            <h3>YOUB LOUAI</h3>
-                            <p data-i18n="frontendDev">Frontend Developer</p>
-                            <div class="social-links">
-                                <a href="https://www.linkedin.com/in/louai-youb-a77885371/"><i class="fab fa-linkedin-in"></i></a>
-                                <a href="https://x.com/LouaiYoub1411"><i class="fab fa-twitter"></i></a>
-                                <a href="https://github.com/louaiyoub"><i class="fab fa-github"></i></a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="team-member">
-                        <div class="team-image">
-                            <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 400'%3E%3Crect fill='%2300A3E0' width='400' height='400'/%3E%3C/svg%3E" alt="Team">
-                        </div>
-                        <div class="team-info">
-                            <h3>ABDELATIF YOUB</h3>
-                            <p data-i18n="backendDev">Backend Developer</p>
-                            <div class="social-links">
-                                <a href="#"><i class="fab fa-linkedin-in"></i></a>
-                                <a href="#"><i class="fab fa-twitter"></i></a>
-                                <a href="#"><i class="fab fa-github"></i></a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <section id="testimonials" class="testimonials">
-            <div class="container">
-                <div class="section-header">
-                    <h2 data-i18n="testimonials">What Clients Say</h2>
-                    <p data-i18n="testimonialsDesc">Hear from satisfied clients.</p>
-                </div>
-                <div class="testimonial-slider">
-                    <div class="testimonial-container" id="testimonialContainer">
-                        <div class="testimonial">
-                            <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='50' fill='%2300A3E0'/%3E%3C/svg%3E" alt="Client">
-                            <p data-i18n="testimonial2">"Game-changer for our business."</p>
-                            <h4>MAX</h4>
-                            <small data-i18n="client2">Founder, TechStart</small>
-                        </div>
-                        <div class="testimonial">
-                            <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='50' fill='%23FF6B6B'/%3E%3C/svg%3E" alt="Client">
-                            <p data-i18n="testimonial3">"Professional and innovative solutions."</p>
-                            <h4>JONEY</h4>
-                            <small data-i18n="client3">Director, E-commerce Plus</small>
-                        </div>
-                    </div>
-                    <div class="testimonial-nav">
-                        <button onclick="changeTestimonial(-1)"><i class="fas fa-chevron-left"></i></button>
-                        <button onclick="changeTestimonial(1)"><i class="fas fa-chevron-right"></i></button>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <section id="contact" class="contact">
-            <div class="container">
-                <div class="contact-grid">
-                    <div class="contact-info">
-                        <h2 data-i18n="getInTouch">Get In Touch</h2>
-                        <p data-i18n="contactDesc">Ready to start your next project?</p>
-                        <div class="contact-details">
-                            <div>
-                                <i class="fas fa-map-marker-alt"></i>
-                                <span data-i18n="address">Algiers, Algeria</span>
-                            </div>
-                            <div>
-                                <i class="fas fa-phone"></i>
-                                <span>+213 552 56 70 96</span>
-                            </div>
-                            <div>
-                                <i class="fas fa-envelope"></i>
-                                <span>contact@lnctechnologie.com</span>
-                            </div>
-                            <div>
-                                <i class="fas fa-clock"></i>
-                                <span data-i18n="hours">Mon - Fri: 9:00 AM - 6:00 PM</span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="contact-form">
-                        <form id="contactForm">
-                            <div class="form-group">
-                                <label data-i18n="name">Name</label>
-                                <input type="text" id="name" name="name" required>
-                            </div>
-                            <div class="form-group">
-                                <label data-i18n="email">Email</label>
-                                <input type="email" id="email" name="email" required>
-                            </div>
-                            <div class="form-group">
-                                <label data-i18n="subject">Subject</label>
-                                <input type="text" id="subject" name="subject" required>
-                            </div>
-                            <div class="form-group">
-                                <label data-i18n="message">Message</label>
-                                <textarea id="message" name="message" required></textarea>
-                            </div>
-                            <button type="submit" class="btn" data-i18n="sendMessage">Send Message</button>
-                        </form>
-                    </div>
-                </div>
-                <div class="map-container">
-                    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d206253.18152419406!2d2.9867672!3d36.7537569!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x128fb2699c8b5977%3A0x3e4b7e07d7f0c355!2sAlgiers%2C%20Algeria!5e0!3m2!1sen!2sdz!4v1234567890" width="100%" height="400" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
-                </div>
-            </div>
-        </section>
-    </main>
-
-    <footer>
-        <div class="container">
-            <div class="footer-grid">
-                <div class="footer-col">
-                    <h3 data-i18n="company">Company</h3>
-                    <ul>
-                        <li><a href="#about" data-i18n="about">About Us</a></li>
-                        <li><a href="#services" data-i18n="services">Services</a></li>
-                        <li><a href="#team" data-i18n="team">Team</a></li>
-                        <li><a href="#contact" data-i18n="contact">Contact</a></li>
-                    </ul>
-                </div>
-                <div class="footer-col">
-                    <h3 data-i18n="services">Services</h3>
-                    <ul>
-                        <li><a href="#" data-i18n="webDev">Web Development</a></li>
-                        <li><a href="#" data-i18n="uiUx">UI/UX Design</a></li>
-                        <li><a href="#" data-i18n="ecommerce">E-Commerce</a></li>
-                    </ul>
-                </div>
-                <div class="footer-col">
-                    <h3 data-i18n="support">Support</h3>
-                    <ul>
-                        <li><a href="#">Help Center</a></li>
-                        <li><a href="#">Documentation</a></li>
-                        <li><a href="#">Privacy Policy</a></li>
-                    </ul>
-                </div>
-                <div class="footer-col">
-                    <h3 data-i18n="connect">Connect</h3>
-                    <ul>
-                        <li><a href="#">Facebook</a></li>
-                        <li><a href="#">Twitter</a></li>
-                        <li><a href="#">LinkedIn</a></li>
-                    </ul>
-                </div>
-            </div>
-            <div class="footer-bottom">
-                <p>&copy; 2024 LNC TECHNOLOGIE. <span data-i18n="allRights">All rights reserved.</span></p>
-                <div class="social-icons">
-                    <a href="#"><i class="fab fa-facebook-f"></i></a>
-                    <a href="#"><i class="fab fa-twitter"></i></a>
-                    <a href="#"><i class="fab fa-linkedin-in"></i></a>
-                    <a href="#"><i class="fab fa-instagram"></i></a>
-                    <a href=""><i class="fab fa-tiktok"></i></a>
-                </div>
-            </div>
+        <div class="about-img reveal">
+          <img src="https://images.unsplash.com/photo-1498050108023-c5249f4df085?w=700&q=80" alt="Team at work">
         </div>
-    </footer>
+      </div>
+    </div>
+  </section>
 
-    <script>
-        // Translations
-        const translations = {
-            en: {
-                home: "Home", services: "Services", about: "About", team: "Team", testimonials: "Testimonials", contact: "Contact",
-                heroTitle: "Innovative Web & App Solutions", heroSubtitle: "We create cutting-edge digital experiences that drive your business forward.",
-                getStarted: "Get Started", learnMore: "Learn More", ourServices: "Our Services", servicesDesc: "We offer comprehensive digital solutions.",
-                webDev: "Web Development", webDevDesc: "Custom websites with latest technologies.", uiUx: "UI/UX Design", uiUxDesc: "Beautiful and intuitive interfaces.",
-                ecommerce: "E-Commerce", ecommerceDesc: "Complete online selling solutions.", cloud: "Cloud Solutions", cloudDesc: "Scalable cloud infrastructure.",
-                maintenance: "Maintenance", maintenanceDesc: "Ongoing support services.", projectsCompleted: "Projects Completed", happyClients: "Happy Clients",
-                yearsExp: "Years Experience", support: "Support", aboutUs: "About LNC TECHNOLOGIE", aboutP1: "We are a passionate team dedicated to creating exceptional digital experiences.",
-                aboutP2: "Our mission is to help businesses leverage technology.", ourTeam: "Our Team", teamDesc: "Meet our talented individuals.",
-                digitalMarketer: "Digital Marketer", frontendDev: "Frontend Developer", backendDev: "Backend Developer", testimonialsDesc: "Hear from satisfied clients.",
-                testimonial1: "Outstanding website that exceeded expectations.", client1: "CEO, Digital Solutions", testimonial2: "Game-changer for our business.",
-                client2: "Founder, TechStart", testimonial3: "Professional and innovative solutions.", client3: "Director, E-commerce Plus",
-                getInTouch: "Get In Touch", contactDesc: "Ready to start your next project?", address: "Algiers, Algeria", hours: "Mon - Fri: 9:00 AM - 6:00 PM",
-                name: "Name", email: "Email", subject: "Subject", message: "Message", sendMessage: "Send Message", company: "Company", connect: "Connect", allRights: "All rights reserved."
-            },
-            fr: {
-                home: "Accueil", services: "Services", about: "À propos", team: "Équipe", testimonials: "Témoignages", contact: "Contact",
-                heroTitle: "Solutions Web & Apps Innovantes", heroSubtitle: "Nous créons des expériences numériques de pointe.",
-                getStarted: "Commencer", learnMore: "En savoir plus", ourServices: "Nos Services", servicesDesc: "Solutions numériques complètes.",
-                webDev: "Développement Web", webDevDesc: "Sites web personnalisés.", uiUx: "Design UI/UX", uiUxDesc: "Interfaces belles et intuitives.",
-                ecommerce: "E-Commerce", ecommerceDesc: "Solutions de vente en ligne.", cloud: "Solutions Cloud", cloudDesc: "Infrastructure cloud évolutive.",
-                maintenance: "Maintenance", maintenanceDesc: "Support continu.", projectsCompleted: "Projets Terminés", happyClients: "Clients Satisfaits",
-                yearsExp: "Années d'Expérience", support: "Support", aboutUs: "À propos de LNC", aboutP1: "Équipe passionnée créant des expériences exceptionnelles.",
-                aboutP2: "Notre mission: aider les entreprises.", ourTeam: "Notre Équipe", teamDesc: "Rencontrez nos talents.",
-                digitalMarketer: "Marketing Digital", frontendDev: "Développeur Frontend", backendDev: "Développeur Backend", testimonialsDesc: "Avis de nos clients.",
-                testimonial1: "Site web exceptionnel.", client1: "PDG, Solutions Numériques", testimonial2: "Tournant pour notre entreprise.",
-                client2: "Fondateur, TechStart", testimonial3: "Solutions professionnelles.", client3: "Directeur, E-commerce Plus",
-                getInTouch: "Contactez-nous", contactDesc: "Prêt pour votre projet?", address: "Alger, Algérie", hours: "Lun - Ven: 9h - 18h",
-                name: "Nom", email: "Email", subject: "Sujet", message: "Message", sendMessage: "Envoyer", company: "Entreprise", connect: "Connecter", allRights: "Tous droits réservés."
-            },
-            ar: {
-                home: "الرئيسية", services: "الخدمات", about: "من نحن", team: "الفريق", testimonials: "الشهادات", contact: "اتصل",
-                heroTitle: "حلول مواقع وتطبيقات مبتكرة", heroSubtitle: "نحن ننشئ تجارب رقمية متطورة.",
-                getStarted: "ابدأ الآن", learnMore: "اعرف أكثر", ourServices: "خدماتنا", servicesDesc: "حلول رقمية شاملة.",
-                webDev: "تطوير المواقع", webDevDesc: "مواقع مخصصة بأحدث التقنيات.", uiUx: "تصميم واجهة المستخدم", uiUxDesc: "واجهات جميلة وبديهية.",
-                ecommerce: "التجارة الإلكترونية", ecommerceDesc: "حلول البيع عبر الإنترنت.", cloud: "حلول السحابة", cloudDesc: "بنية تحتية سحابية قابلة للتطوير.",
-                maintenance: "الصيانة", maintenanceDesc: "خدمات دعم مستمرة.", projectsCompleted: "المشاريع المكتملة", happyClients: "عملاء سعداء",
-                yearsExp: "سنوات الخبرة", support: "دعم", aboutUs: "حول LNC", aboutP1: "فريق شغوف بإنشاء تجارب استثنائية.",
-                aboutP2: "مهمتنا: مساعدة الشركات.", ourTeam: "فريقنا", teamDesc: "تعرف على المواهب لدينا.",
-                digitalMarketer: "مسوق رقمي", frontendDev: "مطور واجهة أمامية", backendDev: "مطور واجهة خلفية", testimonialsDesc: "اسمع من عملائنا.",
-                testimonial1: "موقع رائع فاق التوقعات.", client1: "الرئيس التنفيذي", testimonial2: "نقطة تحول لأعمالنا.",
-                client2: "المؤسس، تيك ستارت", testimonial3: "حلول مهنية.", client3: "المدير، إي كومرس",
-                getInTouch: "تواصل معنا", contactDesc: "مستعد لمشروعك؟", address: "الجزائر العاصمة", hours: "الإثنين - الجمعة: 9 ص - 6 م",
-                name: "الاسم", email: "البريد", subject: "الموضوع", message: "الرسالة", sendMessage: "إرسال", company: "الشركة", connect: "تواصل", allRights: "جميع الحقوق محفوظة."
-            }
-        };
+  <!-- TEAM -->
+  <section class="team" id="team">
+    <div class="container">
+      <div class="section-header reveal"><h2 data-i18n="teamTitle">Our Expert Team</h2><p data-i18n="teamSub">Meet the talented professionals behind our success.</p></div>
+      <div class="team-grid">
+        <div class="team-card reveal">
+          <div class="avatar"><i class="fas fa-user"></i></div>
+          <div class="info"><h3>Ahmed Nedim BenbouAziz</h3><div class="role" data-i18n="role1">Digital Marketer &amp; Founder</div>
+          <div class="team-socials"><a href="#"><i class="fab fa-linkedin-in"></i></a><a href="#"><i class="fab fa-twitter"></i></a><a href="#"><i class="fas fa-envelope"></i></a></div></div>
+        </div>
+        <div class="team-card reveal">
+          <div class="avatar"><i class="fas fa-user"></i></div>
+          <div class="info"><h3>YOUB LOUAI</h3><div class="role" data-i18n="role2">Frontend Developer</div>
+          <div class="team-socials"><a href="https://www.linkedin.com/in/louai-youb-a77885371/"><i class="fab fa-linkedin-in"></i></a><a href="https://x.com/LouaiYoub1411"><i class="fab fa-twitter"></i></a><a href="https://github.com/louaiyoub"><i class="fab fa-github"></i></a></div></div>
+        </div>
+        <div class="team-card reveal">
+          <div class="avatar"><i class="fas fa-user"></i></div>
+          <div class="info"><h3>ABDELATIF YOUB</h3><div class="role" data-i18n="role3">Backend Developer</div>
+          <div class="team-socials"><a href="#"><i class="fab fa-linkedin-in"></i></a><a href="#"><i class="fab fa-twitter"></i></a><a href="#"><i class="fab fa-github"></i></a></div></div>
+        </div>
+      </div>
+    </div>
+  </section>
 
-        let currentLang = 'en';
-        let currentTestimonial = 0;
-        let isDark = false;
+  <!-- PORTFOLIO -->
+  <section class="portfolio" id="portfolio">
+    <div class="container">
+      <div class="section-header reveal"><h2 data-i18n="portTitle">Our Portfolio</h2><p data-i18n="portSub">Recent projects — see how we transform digital presence.</p></div>
+      <div class="filter-bar reveal">
+        <button class="filter-btn active" data-filter="all" data-i18n="filterAll">All</button>
+        <button class="filter-btn" data-filter="web" data-i18n="filterWeb">Web</button>
+        <button class="filter-btn" data-filter="mobile" data-i18n="filterMobile">Mobile</button>
+        <button class="filter-btn" data-filter="ecommerce" data-i18n="filterEcom">E-commerce</button>
+      </div>
+      <div class="portfolio-grid" id="portGrid">
+        <div class="port-item reveal" data-cat="web">
+          <img src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=500&q=80" alt="Corporate Website">
+          <div class="port-overlay"><h3 data-i18n="p1t">Corporate Website</h3><p data-i18n="p1d">Modern responsive site for a financial consulting firm</p></div>
+        </div>
+        <div class="port-item reveal" data-cat="ecommerce">
+          <img src="https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?w=500&q=80" alt="E-commerce Platform">
+          <div class="port-overlay"><h3 data-i18n="p2t">E-commerce Platform</h3><p data-i18n="p2d">Full-featured store with payment integration</p></div>
+        </div>
+        <div class="port-item reveal" data-cat="mobile">
+          <img src="https://images.unsplash.com/photo-1512941937669-90a1b58e7e9c?w=500&q=80" alt="Mobile App">
+          <div class="port-overlay"><h3 data-i18n="p3t">Restaurant App</h3><p data-i18n="p3d">Mobile ordering app with kitchen management</p></div>
+        </div>
+        <div class="port-item reveal" data-cat="web">
+          <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=500&q=80" alt="Dashboard">
+          <div class="port-overlay"><h3 data-i18n="p4t">Analytics Dashboard</h3><p data-i18n="p4d">Real-time business intelligence platform</p></div>
+        </div>
+        <div class="port-item reveal" data-cat="ecommerce">
+          <img src="https://images.unsplash.com/photo-1563013544-824ae1b704d3?w=500&q=80" alt="Fashion Store">
+          <div class="port-overlay"><h3 data-i18n="p5t">Fashion Store</h3><p data-i18n="p5d">Luxury e-commerce with advanced filtering</p></div>
+        </div>
+        <div class="port-item reveal" data-cat="web">
+          <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=500&q=80" alt="Portfolio Site">
+          <div class="port-overlay"><h3 data-i18n="p6t">Agricultural Platform</h3><p data-i18n="p6d">Comprehensive platform for agricultural operations</p></div>
+        </div>
+      </div>
+    </div>
+  </section>
 
-        // Initialize EmailJS
-        emailjs.init('-0G2xq0gcuRGjhnpe');
+  <!-- TESTIMONIALS -->
+  <section class="testimonials" id="testimonials">
+    <div class="container">
+      <div class="section-header reveal"><h2 data-i18n="testTitle">Client Testimonials</h2><p data-i18n="testSub">What our clients say about our work.</p></div>
+      <div class="test-slider reveal">
+        <div class="test-track" id="testTrack">
+          <div class="test-slide">
+            <img class="test-avatar" src="https://i.pravatar.cc/150?img=1" alt="Client">
+            <p class="test-quote" data-i18n="t1q">"LNC TECHNOLOGIE transformed our website into a modern platform that significantly increased our conversions. Their team was professional and delivered beyond expectations."</p>
+            <div class="test-name">Sarah Thompson</div>
+            <div class="test-role" data-i18n="t1r">Marketing Director, Global Innovations</div>
+          </div>
+          <div class="test-slide">
+            <img class="test-avatar" src="https://i.pravatar.cc/150?img=3" alt="Client">
+            <p class="test-quote" data-i18n="t2q">"Working with LNC TECHNOLOGIE was a game-changer. Their technical expertise resulted in an app our customers love. We continue to partner with them for all digital needs."</p>
+            <div class="test-name">Michael Rodriguez</div>
+            <div class="test-role" data-i18n="t2r">CEO, TechSolutions Inc.</div>
+          </div>
+          <div class="test-slide">
+            <img class="test-avatar" src="https://i.pravatar.cc/150?img=5" alt="Client">
+            <p class="test-quote" data-i18n="t3q">"The e-commerce platform revolutionized our business. Sales increased by 80% since launch and the system is incredibly easy to manage."</p>
+            <div class="test-name">Olivia Chen</div>
+            <div class="test-role" data-i18n="t3r">E-Commerce Manager, StyleHub</div>
+          </div>
+        </div>
+        <div class="test-nav">
+          <button id="testPrev"><i class="fas fa-chevron-left"></i></button>
+          <button id="testNext"><i class="fas fa-chevron-right"></i></button>
+        </div>
+      </div>
+    </div>
+  </section>
 
-        // Language Functions
-        function toggleLangDropdown() {
-            document.getElementById('langDropdown').classList.toggle('active');
-        }
+  <!-- CONTACT -->
+  <section class="contact" id="contact">
+    <div class="container">
+      <div class="contact-grid">
+        <div class="contact-info reveal">
+          <h2 data-i18n="contactTitle">Get In Touch</h2>
+          <p data-i18n="contactSub">Ready to start your project? Let's discuss how we can help your business grow.</p>
+          <div class="contact-detail"><i class="fas fa-map-marker-alt"></i><span>Algiers, Algeria</span></div>
+          <div class="contact-detail"><i class="fas fa-phone"></i><span>+213 552 56 70 96</span></div>
+          <div class="contact-detail"><i class="fas fa-envelope"></i><span>contact@lnctechnologie.com</span></div>
+          <div class="contact-detail"><i class="fas fa-clock"></i><span data-i18n="contactHours">Sun – Thu: 9:00 AM – 6:00 PM</span></div>
+        </div>
+        <div class="reveal">
+          <form id="contactForm" class="contact-form-box">
+            <div class="form-group"><label data-i18n="fName">Name</label><input type="text" placeholder="Your Name" required></div>
+            <div class="form-group"><label data-i18n="fEmail">Email</label><input type="email" placeholder="your@email.com" required></div>
+            <div class="form-group"><label data-i18n="fSubject">Subject</label><input type="text" placeholder="Subject"></div>
+            <div class="form-group"><label data-i18n="fMsg">Message</label><textarea placeholder="Your message..." required></textarea></div>
+            <button type="submit" class="btn btn-white" data-i18n="fSubmit">Send Message</button>
+            <div class="form-status" id="fStatus"></div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
 
-        function changeLang(lang) {
-            currentLang = lang;
-            document.documentElement.setAttribute('lang', lang);
-            document.documentElement.setAttribute('dir', lang === 'ar' ? 'rtl' : 'ltr');
-            
-            const flags = { en: '🇺🇸 EN', fr: '🇫🇷 FR', ar: '🇸🇦 AR' };
-            document.getElementById('currentLang').textContent = flags[lang];
-            
-            document.querySelectorAll('.lang-option').forEach(opt => opt.classList.remove('active'));
-            event.target.classList.add('active');
-            
-            document.querySelectorAll('[data-i18n]').forEach(el => {
-                const key = el.getAttribute('data-i18n');
-                if (translations[lang][key]) {
-                    el.textContent = translations[lang][key];
-                }
-            });
-            
-            toggleLangDropdown();
-        }
+<footer>
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-col">
+        <h4>LNC TECHNOLOGIE</h4>
+        <p data-i18n="footAbout">We design and develop custom websites and applications that help businesses grow in the digital landscape.</p>
+        <div class="footer-social">
+          <a href="#"><i class="fab fa-facebook-f"></i></a>
+          <a href="#"><i class="fab fa-twitter"></i></a>
+          <a href="#"><i class="fab fa-linkedin-in"></i></a>
+          <a href="#"><i class="fab fa-instagram"></i></a>
+        </div>
+      </div>
+      <div class="footer-col">
+        <h4 data-i18n="footServices">Services</h4>
+        <ul>
+          <li><a href="#services" data-i18n="s1Title">Website Development</a></li>
+          <li><a href="#services" data-i18n="s2Title">Mobile Applications</a></li>
+          <li><a href="#services" data-i18n="s3Title">E-commerce Solutions</a></li>
+          <li><a href="#services" data-i18n="s4Title">Cloud Solutions</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4 data-i18n="footLinks">Quick Links</h4>
+        <ul>
+          <li><a href="https://lnctech.netlify.app/" data-i18n="navHome">Home</a></li>
+          <li><a href="https://lnc-tech-about-us.netlify.app/" data-i18n="navAboutPage">About Us</a></li>
+          <li><a href="https://lnc-tech-portfilio.netlify.app/" data-i18n="navExamples">Examples</a></li>
+          <li><a href="https://louaiyoub.github.io/hw/" data-i18n="navStart">Start Project</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4 data-i18n="footContact">Contact</h4>
+        <ul>
+          <li><a href="mailto:contact@lnctechnologie.com">contact@lnctechnologie.com</a></li>
+          <li><a href="tel:+213552567096">+213 552 56 70 96</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom"><p>&copy; 2025 LNC TECHNOLOGIE. <span data-i18n="footCopy">All Rights Reserved.</span></p></div>
+  </div>
+</footer>
 
-        // Theme Toggle
-        function toggleTheme() {
-            isDark = !isDark;
-            document.body.classList.toggle('dark-mode');
-            document.getElementById('themeIcon').className = isDark ? 'fas fa-sun' : 'fas fa-moon';
-        }
+<button id="btt" aria-label="Back to top"><i class="fas fa-arrow-up"></i></button>
 
-        // Mobile Menu
-        function toggleMenu() {
-            document.getElementById('navMenu').classList.toggle('active');
-        }
+<script>
+// ── TRANSLATIONS ──────────────────────────────────────────────────
+const T = {
+  en:{
+    navHome:"Home",navServices:"Services",navAbout:"About",navTeam:"Team",navPortfolio:"Portfolio",navTestimonials:"Testimonials",navAboutPage:"About Us",navExamples:"Examples",navStart:"Start Project",
+    heroBadge:"🚀 Web · Mobile · Cloud",heroTitle:"Innovative Web & Application Solutions",heroSub:"We create powerful digital experiences that transform businesses. Custom websites and applications designed to elevate your brand.",heroBtn1:"Our Services",heroBtn2:"Start a Project",
+    trustRating:"avg rating",trustProjects:"projects delivered",trustResponse:"response guarantee",trustSecure:"Secure & reliable",
+    servicesTitle:"Our Services",servicesSub:"Comprehensive digital solutions to help your business thrive.",
+    s1Title:"Website Development",s1Desc:"Responsive websites and complex web apps that work flawlessly across all devices.",
+    s2Title:"Mobile Applications",s2Desc:"Native and cross-platform apps delivering exceptional experiences on iOS & Android.",
+    s3Title:"E-commerce Solutions",s3Desc:"Complete stores with secure payments, inventory management, and analytics.",
+    s4Title:"Cloud Solutions",s4Desc:"Scalable cloud infrastructure and migration to optimize operations.",
+    s5Title:"UI/UX Design",s5Desc:"Beautiful intuitive designs that enhance engagement and drive conversions.",
+    s6Title:"Technical Support",s6Desc:"24/7 support and maintenance to keep your systems running smoothly.",
+    cProjects:"Projects Completed",cClients:"Happy Clients",cTeam:"Team Members",cYears:"Years Experience",
+    aboutTitle:"About LNC TECHNOLOGIE",aboutP1:"Founded with a vision to bridge the gap between innovative technology and practical business solutions, LNC TECHNOLOGIE has been at the forefront of digital transformation since our inception.",aboutP2:"We started as a small team of passionate developers and designers who believed every business deserves access to cutting-edge technology. Today we serve clients across various industries worldwide.",aboutP3:"Our mission: create digital experiences that not only meet clients' needs but exceed their expectations and drive real business growth.",aboutBtn:"Learn More →",
+    teamTitle:"Our Expert Team",teamSub:"Meet the talented professionals behind our success.",
+    role1:"Digital Marketer & Founder",role2:"Frontend Developer",role3:"Backend Developer",
+    portTitle:"Our Portfolio",portSub:"Recent projects — see how we transform digital presence.",
+    filterAll:"All",filterWeb:"Web",filterMobile:"Mobile",filterEcom:"E-commerce",
+    p1t:"Corporate Website",p1d:"Modern responsive site for a financial consulting firm",p2t:"E-commerce Platform",p2d:"Full-featured store with payment integration",p3t:"Restaurant App",p3d:"Mobile ordering app with kitchen management",p4t:"Analytics Dashboard",p4d:"Real-time business intelligence platform",p5t:"Fashion Store",p5d:"Luxury e-commerce with advanced filtering",p6t:"Agricultural Platform",p6d:"Comprehensive platform for agricultural operations",
+    testTitle:"Client Testimonials",testSub:"What our clients say about our work.",
+    t1q:'"LNC TECHNOLOGIE transformed our website into a modern platform that significantly increased our conversions."',t1r:"Marketing Director, Global Innovations",t2q:'"Working with LNC TECHNOLOGIE was a game-changer. Their technical expertise resulted in an app our customers love."',t2r:"CEO, TechSolutions Inc.",t3q:'"The e-commerce platform revolutionized our business. Sales increased 80% since launch."',t3r:"E-Commerce Manager, StyleHub",
+    contactTitle:"Get In Touch",contactSub:"Ready to start your project? Let's discuss how we can help your business grow.",contactHours:"Sun – Thu: 9:00 AM – 6:00 PM",fName:"Name",fEmail:"Email",fSubject:"Subject",fMsg:"Message",fSubmit:"Send Message",
+    footAbout:"We design and develop custom websites and applications that help businesses grow.",footServices:"Services",footLinks:"Quick Links",footContact:"Contact",footCopy:"All Rights Reserved.",
+  },
+  fr:{
+    navHome:"Accueil",navServices:"Services",navAbout:"À propos",navTeam:"Équipe",navPortfolio:"Portfolio",navTestimonials:"Témoignages",navAboutPage:"À propos",navExamples:"Exemples",navStart:"Démarrer",
+    heroBadge:"🚀 Web · Mobile · Cloud",heroTitle:"Solutions Web & Applications Innovantes",heroSub:"Nous créons des expériences numériques puissantes qui transforment les entreprises.",heroBtn1:"Nos Services",heroBtn2:"Démarrer un Projet",
+    trustRating:"note moyenne",trustProjects:"projets livrés",trustResponse:"garantie de réponse",trustSecure:"Sécurisé & fiable",
+    servicesTitle:"Nos Services",servicesSub:"Des solutions numériques complètes pour aider votre entreprise à prospérer.",
+    s1Title:"Développement Web",s1Desc:"Sites réactifs et applications web complexes sur tous les appareils.",
+    s2Title:"Applications Mobiles",s2Desc:"Apps natives et multiplateformes pour iOS & Android.",
+    s3Title:"Solutions E-commerce",s3Desc:"Boutiques complètes avec paiements sécurisés et analyses.",
+    s4Title:"Solutions Cloud",s4Desc:"Infrastructure cloud évolutive pour optimiser vos opérations.",
+    s5Title:"Design UI/UX",s5Desc:"Designs beaux et intuitifs qui améliorent les conversions.",
+    s6Title:"Support Technique",s6Desc:"Support 24/7 et maintenance pour vos systèmes.",
+    cProjects:"Projets Terminés",cClients:"Clients Satisfaits",cTeam:"Membres",cYears:"Années d'Expérience",
+    aboutTitle:"À Propos de LNC TECHNOLOGIE",aboutP1:"Fondée avec la vision de combler le fossé entre technologie innovante et solutions commerciales pratiques.",aboutP2:"Nous avons commencé comme une petite équipe de développeurs passionnés et avons grandi pour servir des clients à travers diverses industries.",aboutP3:"Notre mission: créer des expériences numériques qui dépassent les attentes et stimulent la croissance.",aboutBtn:"En savoir plus →",
+    teamTitle:"Notre Équipe d'Experts",teamSub:"Rencontrez les professionnels talentueux derrière nos projets.",
+    role1:"Marketeur Digital & Fondateur",role2:"Développeur Frontend",role3:"Développeur Backend",
+    portTitle:"Notre Portfolio",portSub:"Projets récents — voyez comment nous transformons les présences numériques.",
+    filterAll:"Tout",filterWeb:"Web",filterMobile:"Mobile",filterEcom:"E-commerce",
+    p1t:"Site Corporatif",p1d:"Site moderne pour un cabinet de conseil financier",p2t:"Plateforme E-commerce",p2d:"Boutique complète avec intégration de paiement",p3t:"App Restaurant",p3d:"Application de commande avec gestion cuisine",p4t:"Tableau de Bord",p4d:"Plateforme d'intelligence d'affaires en temps réel",p5t:"Boutique Mode",p5d:"E-commerce luxe avec filtrage avancé",p6t:"Plateforme Agricole",p6d:"Plateforme complète pour opérations agricoles",
+    testTitle:"Témoignages Clients",testSub:"Ce que nos clients disent de notre travail.",
+    t1q:'"LNC TECHNOLOGIE a transformé notre site en une plateforme moderne qui a considérablement augmenté nos conversions."',t1r:"Directrice Marketing, Global Innovations",t2q:'"Travailler avec LNC TECHNOLOGIE a changé la donne. Leur expertise a créé une app que nos clients adorent."',t2r:"PDG, TechSolutions Inc.",t3q:'"La plateforme e-commerce a révolutionné notre activité. Les ventes ont augmenté de 80%."',t3r:"Responsable E-Commerce, StyleHub",
+    contactTitle:"Contactez-Nous",contactSub:"Prêt à démarrer votre projet? Parlons de votre croissance.",contactHours:"Dim – Jeu: 9h00 – 18h00",fName:"Nom",fEmail:"Email",fSubject:"Sujet",fMsg:"Message",fSubmit:"Envoyer",
+    footAbout:"Nous concevons des sites et applications sur mesure qui aident les entreprises à croître.",footServices:"Services",footLinks:"Liens Rapides",footContact:"Contact",footCopy:"Tous droits réservés.",
+  },
+  ar:{
+    navHome:"الرئيسية",navServices:"الخدمات",navAbout:"حول",navTeam:"الفريق",navPortfolio:"أعمالنا",navTestimonials:"آراء",navAboutPage:"من نحن",navExamples:"الأمثلة",navStart:"ابدأ مشروعاً",
+    heroBadge:"🚀 ويب · جوال · سحابة",heroTitle:"حلول مبتكرة للمواقع والتطبيقات",heroSub:"نحن ننشئ تجارب رقمية قوية تحول الأعمال. مواقع وتطبيقات مخصصة ترفع علامتك التجارية.",heroBtn1:"خدماتنا",heroBtn2:"ابدأ مشروعاً",
+    trustRating:"متوسط التقييم",trustProjects:"مشروع مُسلَّم",trustResponse:"ضمان الرد",trustSecure:"آمن وموثوق",
+    servicesTitle:"خدماتنا",servicesSub:"حلول رقمية شاملة لمساعدة عملك على الازدهار.",
+    s1Title:"تطوير المواقع",s1Desc:"مواقع متجاوبة وتطبيقات ويب معقدة تعمل على جميع الأجهزة.",
+    s2Title:"تطبيقات الجوال",s2Desc:"تطبيقات جوال أصلية ومتعددة المنصات لـ iOS و Android.",
+    s3Title:"حلول التجارة الإلكترونية",s3Desc:"متاجر كاملة مع مدفوعات آمنة وإدارة المخزون.",
+    s4Title:"الحلول السحابية",s4Desc:"بنية تحتية سحابية قابلة للتوسع لتحسين العمليات.",
+    s5Title:"تصميم UI/UX",s5Desc:"تصاميم جميلة وبديهية تعزز المشاركة وتزيد التحويلات.",
+    s6Title:"الدعم الفني",s6Desc:"دعم 24/7 وصيانة لضمان عمل أنظمتك.",
+    cProjects:"مشروع مكتمل",cClients:"عميل سعيد",cTeam:"أعضاء الفريق",cYears:"سنوات خبرة",
+    aboutTitle:"حول LNC TECHNOLOGIE",aboutP1:"تأسست برؤية لسد الفجوة بين التكنولوجيا المبتكرة والحلول التجارية العملية.",aboutP2:"بدأنا كفريق صغير من المطورين الشغوفين ونمونا لخدمة عملاء عبر صناعات متنوعة.",aboutP3:"مهمتنا: إنشاء تجارب رقمية تتجاوز توقعات العملاء وتدفع النمو.",aboutBtn:"اعرف المزيد →",
+    teamTitle:"فريقنا الخبير",teamSub:"تعرف على المهنيين الموهوبين وراء نجاحنا.",
+    role1:"مسوق رقمي ومؤسس",role2:"مطور واجهة أمامية",role3:"مطور واجهة خلفية",
+    portTitle:"أعمالنا",portSub:"مشاريع حديثة — شاهد كيف نحول الحضور الرقمي.",
+    filterAll:"الكل",filterWeb:"ويب",filterMobile:"جوال",filterEcom:"تجارة إلكترونية",
+    p1t:"موقع شركة",p1d:"موقع حديث لشركة استشارات مالية",p2t:"منصة تجارة إلكترونية",p2d:"متجر كامل مع تكامل الدفع",p3t:"تطبيق مطعم",p3d:"تطبيق طلب مع إدارة المطبخ",p4t:"لوحة تحليلات",p4d:"منصة ذكاء أعمال في الوقت الفعلي",p5t:"متجر أزياء",p5d:"تجارة إلكترونية فاخرة مع تصفية متقدمة",p6t:"منصة زراعية",p6d:"منصة شاملة للعمليات الزراعية",
+    testTitle:"آراء العملاء",testSub:"ما يقوله عملاؤنا عن عملنا.",
+    t1q:'"حوّلت LNC TECHNOLOGIE موقعنا إلى منصة حديثة زادت تحويلاتنا بشكل كبير."',t1r:"مديرة التسويق، Global Innovations",t2q:'"العمل مع LNC TECHNOLOGIE كان تغييراً جذرياً. خبرتهم أنتجت تطبيقاً يحبه عملاؤنا."',t2r:"الرئيس التنفيذي، TechSolutions Inc.",t3q:'"ثورت المنصة أعمالنا. ارتفعت المبيعات 80% منذ الإطلاق."',t3r:"مدير التجارة الإلكترونية، StyleHub",
+    contactTitle:"تواصل معنا",contactSub:"مستعد لبدء مشروعك؟ لنناقش كيف يمكننا مساعدتك.",contactHours:"الأحد – الخميس: 9:00 ص – 6:00 م",fName:"الاسم",fEmail:"البريد الإلكتروني",fSubject:"الموضوع",fMsg:"الرسالة",fSubmit:"إرسال الرسالة",
+    footAbout:"نصمم ونطور مواقع وتطبيقات مخصصة تساعد الأعمال على النمو.",footServices:"الخدمات",footLinks:"روابط سريعة",footContact:"التواصل",footCopy:"جميع الحقوق محفوظة.",
+  }
+};
 
-        // Testimonial Slider
-        function changeTestimonial(dir) {
-            const testimonials = document.querySelectorAll('.testimonial');
-            currentTestimonial = (currentTestimonial + dir + testimonials.length) % testimonials.length;
-            document.getElementById('testimonialContainer').style.transform = `translateX(-${currentTestimonial * 100}%)`;
-        }
+let lang='en', darkMode=localStorage.getItem('theme')==='dark';
+function applyLang(l){
+  lang=l;
+  document.documentElement.lang=l;
+  document.documentElement.dir=l==='ar'?'rtl':'ltr';
+  document.querySelectorAll('[data-i18n]').forEach(el=>{
+    const k=el.getAttribute('data-i18n');
+    if(T[l]&&T[l][k]!==undefined)el.textContent=T[l][k];
+  });
+  document.getElementById('langLabel').textContent=l.toUpperCase();
+  document.querySelectorAll('.lang-opt').forEach(o=>o.classList.toggle('active',o.dataset.lang===l));
+  localStorage.setItem('lang',l);
+}
+function applyTheme(){
+  document.body.classList.toggle('dark',darkMode);
+  document.querySelector('#themeBtn i').className=darkMode?'fas fa-sun':'fas fa-moon';
+  localStorage.setItem('theme',darkMode?'dark':'light');
+}
+// init
+darkMode=localStorage.getItem('theme')==='dark';
+applyTheme();
+applyLang(localStorage.getItem('lang')||'en');
 
-        setInterval(() => changeTestimonial(1), 5000);
+// events
+document.getElementById('themeBtn').addEventListener('click',()=>{darkMode=!darkMode;applyTheme();});
+document.getElementById('langBtn').addEventListener('click',e=>{e.stopPropagation();document.getElementById('langDd').classList.toggle('open');});
+document.querySelectorAll('.lang-opt').forEach(o=>o.addEventListener('click',()=>{applyLang(o.dataset.lang);document.getElementById('langDd').classList.remove('open');}));
+document.addEventListener('click',()=>document.getElementById('langDd').classList.remove('open'));
+document.getElementById('ham').addEventListener('click',()=>{
+  document.getElementById('ham').classList.toggle('open');
+  document.getElementById('navMenu').classList.toggle('open');
+});
+document.querySelectorAll('nav a').forEach(a=>a.addEventListener('click',()=>{
+  document.getElementById('navMenu').classList.remove('open');
+  document.getElementById('ham').classList.remove('open');
+}));
 
-        // Counter Animation
-        function animateCounters() {
-            document.querySelectorAll('[data-count]').forEach(counter => {
-                const target = parseInt(counter.getAttribute('data-count'));
-                const increment = target / 100;
-                let current = 0;
-                
-                const timer = setInterval(() => {
-                    current += increment;
-                    if (current >= target) {
-                        current = target;
-                        clearInterval(timer);
-                    }
-                    counter.textContent = Math.floor(current);
-                }, 20);
-            });
-        }
+// scroll effects
+window.addEventListener('scroll',()=>{
+  const s=window.scrollY;
+  document.getElementById('hdr').classList.toggle('scrolled',s>50);
+  document.getElementById('btt').classList.toggle('show',s>300);
+  const pct=(s/(document.documentElement.scrollHeight-window.innerHeight))*100;
+  document.getElementById('scrollBar').style.width=pct+'%';
+});
+document.getElementById('btt').addEventListener('click',()=>window.scrollTo({top:0,behavior:'smooth'}));
 
-        // Scroll Effects
-        function handleScroll() {
-            const header = document.getElementById('header');
-            const scrollProgress = document.getElementById('scrollProgress');
-            
-            if (window.scrollY > 50) {
-                header.classList.add('scrolled');
-            } else {
-                header.classList.remove('scrolled');
-            }
-            
-            const scrollPercent = (window.scrollY / (document.documentElement.scrollHeight - window.innerHeight)) * 100;
-            scrollProgress.style.width = scrollPercent + '%';
-        }
+// reveal
+const revObs=new IntersectionObserver(entries=>{
+  entries.forEach(e=>{if(e.isIntersecting)e.target.classList.add('in');});
+},{threshold:.12});
+document.querySelectorAll('.reveal').forEach(el=>revObs.observe(el));
 
-        // Status Message
-        function showStatus(msg, type) {
-            const statusMsg = document.getElementById('statusMsg');
-            statusMsg.textContent = msg;
-            statusMsg.className = `status-msg ${type} show`;
-            setTimeout(() => statusMsg.classList.remove('show'), 3000);
-        }
+// counters
+const cntObs=new IntersectionObserver(entries=>{
+  entries.forEach(e=>{
+    if(e.isIntersecting){
+      const el=e.target,target=+el.dataset.target;
+      let n=0;const step=target/120;
+      const t=setInterval(()=>{n=Math.min(n+step,target);el.textContent=Math.round(n);if(n>=target)clearInterval(t);},12);
+      cntObs.unobserve(el);
+    }
+  });
+},{threshold:.5});
+document.querySelectorAll('.counter').forEach(el=>cntObs.observe(el));
 
-        // Contact Form
-        document.getElementById('contactForm').addEventListener('submit', function(e) {
-            e.preventDefault();
-            
-            emailjs.sendForm('service_9iu6x88', 'template_zf5gqzd', this)
-                .then(() => {
-                    showStatus(currentLang === 'ar' ? 'تم إرسال الرسالة!' : currentLang === 'fr' ? 'Message envoyé!' : 'Message sent!', 'success');
-                    this.reset();
-                })
-                .catch(() => {
-                    showStatus(currentLang === 'ar' ? 'فشل الإرسال' : currentLang === 'fr' ? 'Échec de l\'envoi' : 'Send failed', 'error');
-                });
-        });
+// portfolio filter
+document.querySelectorAll('.filter-btn').forEach(btn=>btn.addEventListener('click',()=>{
+  document.querySelectorAll('.filter-btn').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  const f=btn.dataset.filter;
+  document.querySelectorAll('.port-item').forEach(item=>item.style.display=(f==='all'||item.dataset.cat===f)?'block':'none');
+}));
 
-        // Intersection Observer
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting && entry.target.classList.contains('counter-section')) {
-                    animateCounters();
-                    observer.unobserve(entry.target);
-                }
-            });
-        }, { threshold: 0.1 });
+// testimonial slider
+let slide=0;
+const track=document.getElementById('testTrack');
+const slides=track.querySelectorAll('.test-slide');
+function goSlide(n){slide=(n+slides.length)%slides.length;track.style.transform=`translateX(-${slide*100}%)`;}
+document.getElementById('testPrev').addEventListener('click',()=>goSlide(slide-1));
+document.getElementById('testNext').addEventListener('click',()=>goSlide(slide+1));
+setInterval(()=>goSlide(slide+1),7000);
 
-        // Smooth Scroll
-        document.querySelectorAll('a[href^="#"]').forEach(link => {
-            link.addEventListener('click', function(e) {
-                e.preventDefault();
-                const target = document.querySelector(this.getAttribute('href'));
-                if (target) {
-                    target.scrollIntoView({ behavior: 'smooth' });
-                    document.getElementById('navMenu').classList.remove('active');
-                }
-            });
-        });
+// particles
+(function(){
+  const c=document.getElementById('particles');
+  for(let i=0;i<14;i++){
+    const s=document.createElement('span');
+    const sz=Math.random()*80+20;
+    s.style.cssText=`width:${sz}px;height:${sz}px;left:${Math.random()*100}%;bottom:-${sz}px;animation-delay:${Math.random()*15}s;animation-duration:${Math.random()*12+14}s;`;
+    c.appendChild(s);
+  }
+})();
 
-        // Close dropdowns on outside click
-        document.addEventListener('click', function(e) {
-            if (!e.target.closest('.language-switcher')) {
-                document.getElementById('langDropdown').classList.remove('active');
-            }
-        });
-
-        // Initialize
-        window.addEventListener('scroll', handleScroll);
-        document.addEventListener('DOMContentLoaded', function() {
-            observer.observe(document.querySelector('.counter-section'));
-        });
-    </script>
+// contact form
+document.getElementById('contactForm').addEventListener('submit',e=>{
+  e.preventDefault();
+  const st=document.getElementById('fStatus');
+  st.style.display='block';st.style.color='#4CAF50';
+  st.textContent=lang==='ar'?'تم إرسال الرسالة بنجاح!':lang==='fr'?'Message envoyé avec succès !':'Message sent successfully!';
+  e.target.reset();
+  setTimeout(()=>st.style.display='none',4000);
+});
+</script>
 </body>
 </html>
